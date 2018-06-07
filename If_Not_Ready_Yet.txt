@@ -1,0 +1,71 @@
+# GLIDE
+Everything that I have here, is to prove that I have not anything, by the time this 
+application is ready--- just in case someone who may have some of my work, beats me 
+to finishing it, and then charges money for it. I want to make sure that this software
+will be available to everybody for free. 
+
+This started out as a school project, for the capstone course to my associates degree.
+It was initially only going to teach College Algebra. But, as I was designing it, I 
+realized that there is no reason to limit it to a small segment of the maths. I ran 
+into a lot of pitfalls while developing this application. I even thought I had a working 
+version built at one point, until I played around with it further, (after I announced the
+"good news" to my instructor and friends), and found that I needed to learn how to do more 
+things with C#. I was having an issue with the images. I forget what they were doing, but
+it wasn't what they should have been doing.
+
+Now, everything actually does work correctly. By that, I mean that all of the pieces which
+I needed to figure out how to implement, are all working. The program itself is not finished
+yet. But the job is real easy now; I just have to finish getting the pieces together. This is
+no longer a project for me to turn into a college course. As a matter in fact, it is no longer
+the same project. This will teach far more than any one branch of mathematics. I would like for
+it to eventually teach every subject that is taught at any high end learning institution.
+
+What I currently have here is a partial program, which I am filling with pieces as I alter them,
+in order for those pieces to function in this software. I am not putting this software on github,
+in order to recieve help with a partial project from other programmers. I am simply putting it 
+here, to ensure that anyone can use it when it is finished. This year, I learned my C# course within
+a week, while taking the capstone to my degree at the same time. Unfortunately, that C# course barely
+skimmed the surface of how to write software in C#. The capstone required that my application have a 
+way for a user to install the software, and I had to give an idea for what I would make, before the 
+time ran out. I saw that Visual Studio will produce an installer for an application, which is why I 
+decided to fly through the C# course. I did not know that the information I found on Visual Studio doing
+that, was for Visual Studio 2010. I never even used Visual Studio before Febuary. So, I had to learn how
+to make a UWP application, since learning how to make an installer seemed like it would take more time.
+I had turned in a lot of the plans for what I wanted the capstone project to do, which is to use the learning
+research that this application implements. I also turned in a few pictures of how I imagined the application 
+user interface would look like, which is laid out very close to how GLIDE's user interface is. I have spent
+months doing research, just to find out how to make pieces for this program to function as they should, which
+I knew that the software would need. It is now 5 months since I started learning C#, and creating this application. 
+I failed the capstone course over a month ago, which would not have happened had I known how to make an installer
+for Windows then, because a Windows Forms application, for a beginner like me, is MUCH EASIER to make, than a UWP 
+software package. I would have chosen Java, because it's real easy to do everything which I had issues with 
+for the UWP application, but I had to choose a language that the school had credentials of me having learned.
+I would have even made this an Android app, but the course on Mobile Applications was never available, 
+until probably after I learned how to make android apps from online resources.
+
+I actually don't mind at all that I failed. I am not sure if I would have even been able to distribute what
+I would have made, if I would have turned a working copy of the program in, and passed the capstone course.
+I have learned a lot of really cool information, which I was not looking for, while researching how to 
+build the parts that this application must use.
+
+Everything will be working very soon on this page. All of the code that deals with images, which is not
+much, is what I found to be incredibly hard to find. It was like looking for a specific needle, out of 
+a cup full of other needles, all spinning around in a powerful blender, with my hand trapped inside 
+trying to grab the right one. The code for the images is on this github page, and working. That was 
+the hardest part. All of the calculations that deal with learning, were extremely easy to find, make, 
+and write. The database was a little difficult, but it was easy compared to figuring out how to update
+the images in the GUI correctly. I have never worked this hard to learn how to do something. I even
+went a little crazy for a bit, from doing nothing but rushing to get all the information that I needed
+to make this program work. It was completely WORTH IT. Failing was also completely worth it, because
+that allowed for me to share this work which is about to be finished. I hope that it is seen, and that
+people will use it. I will absolutely be helpful, the results are in the research.
+
+I linked the research that I used for the calculations, on the dartomic website at https://dartomic.com
+
+The other research I used was behaviorism. I do not currently believe that it is worth linking research 
+on that topic, because as far as Skinner's research goes, the program simply rewards the user with a "Good Job!"
+statement that displays, if the answer is correct, and it does not reward the user if the answer is incorrect. 
+That is bassically how simple GLIDER was. I am not sure, but I do not think skinner used any equations to have
+the machine space the repetitions out, but I think that would be too big of a job for a little machine that he 
+made back in the 1950's. It may have, but the equations I use are from research that was published in 1995. So
+they probably were not as good, if they were even part of the machines design. I really doubt it.
