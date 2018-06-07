@@ -1,0 +1,48 @@
+Anyone is welcome to help, that would like to help. But, just wait until I get the pieces 
+into this program so that the first version of GLIDE works. The things that I would like 
+help with after, are pretty simple. For one thing, I saw how to do most of this stuff in 
+C++ while I was researching, and that's just one of the many things that I want to do with 
+this program early on. 
+
+The following is a list of things I want to do, and would love help with doing: 
+
+1. I want to rewrite GLIDE in C++, once I finish putting this C# version together here on GitHub.
+Anyone is welcome to help with this. There are several reasons I want to do this. The best reason,
+is because it allows me to have more experience with C++. I would rather do it in C, because it's 
+more fun, and I might later, but I don't have to change the overall design if I do it in C++. I could 
+not figure out how to use C# without using object oriented design. I like C#, but it is very restrictive 
+in what I can, and can not, do. I initially wanted to rewrite this in C, but my initial design was 
+impossible to use for a C# program.
+
+2. After GLIDE is re-written in C++, (or C), it needs to work on Linux. I will more than likely use Qt 
+Creator, Gnome Builder, or some other IDE. It depends on what I like best. Later, I want to port it over to
+Apple's operating system for their computers, as well as iOS for their tablets. Also, I want to port this 
+over to Android. That may mean that I should re-write this in Java, which will be pretty boring. I'm pretty
+sure Java is it's name, to give me an idea of what drink I need while writing in that language.
+
+3. I want the users to be able to easily add their own courses to the program. Currently, it would be 
+very hard for users to add any courses to GLIDE that the users would build. They would need the source
+code, and they wouldn't be able to do it if they know nothing about programming. Except; I will have very
+clear directions for the people that want to build their own courses with the source code, for people that
+do not program, at least until the program will make that a lot easier. Building the course itself will be 
+a pretty boring task for anyone. There's no way around that yet. But allowing users to build their own 
+course, allows the program to be used for any and every course that anyone would be taking. If a person 
+builds a course out of his or her text book, than that person will make an A in the class, as long as the 
+person also does whatever weird work an instructor would assign. Plus, allowing this also allows for authors to
+submit quality free courses to Dartomic, to make available to everyone that uses GLIDE. This can eventually 
+save students from ever having to purchase an overpriced textbook ever again.
+
+4. Users would probably enjoy looking at their forgetting curve per topic, before a repetition, and directly 
+after a repetition. I wrote the equation into GLIDE, just so that users will be able to do this later.
+The scheduling of the repetitions is not calculated by the forgetting curve equation. Repetitions are 
+calculated by a spacing equation. So, the forgetting curve equation will remain pointless in the code, until
+the user can look at it. That is all it is there for. The equation is currently processed, even though it's not
+used for what I want yet. I wrote it in so that the output is stored in the database. If the user takes a long 
+break before this is available, then starts using GLIDE after the update is made, then the forgetting curve can
+be viewed for the topics already studied.
+
+As far as anything that I expect to do with this program, within the next few years, that list is it! I do want to 
+do some things with artificial intelligence later, such as having an A.I. generate a course without plagiarizing any 
+material, so that a lot more courses can be studied for free, and nobody would have to contribute in that area of 
+the software. But, I have a lot to learn before that's possible for me to play any part in making that happen. There 
+is a LOT more that I want to do with A.I. and GLIDE later too. Not just using it to automate the building of a course.
