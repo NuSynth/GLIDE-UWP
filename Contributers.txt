@@ -29,8 +29,8 @@ a pretty boring task for anyone. There's no way around that yet. But allowing us
 course, allows the program to be used for any and every course that anyone would be taking. If a person 
 builds a course out of his or her text book, than that person will make an A in the class, as long as the 
 person also does whatever weird work an instructor would assign. Plus, allowing this also allows for authors to
-submit quality free courses to Dartomic, to make available to everyone that uses GLIDE. This can eventually 
-save students from ever having to purchase an overpriced textbook ever again.
+submit quality courses to Dartomic that we can release for free. The person who builds the course will be named,
+right next to the course, unless the author wants that his or her name to remain private. The course will be made available to everyone that uses GLIDE. This can eventually save students from ever having to purchase an overpriced textbook, ever again.
 
 4. Users would probably enjoy looking at their forgetting curve per topic, before a repetition, and directly 
 after a repetition. I wrote the equation into GLIDE, just so that users will be able to do this later.
