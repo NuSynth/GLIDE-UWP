@@ -1,5 +1,5 @@
 Anyone is welcome to help, that would like to help. But, just wait until I get the pieces 
-into this program so that the first version of GLIDE works. The things that I would like 
+into this program so that the first version of GLIDE works. A lot of the things that I would like 
 help with after that, are pretty simple. For one thing, I saw how to do most of this stuff in 
 C++ while I was researching, and that's just one of the many things that I want to do with 
 this program early on. 
