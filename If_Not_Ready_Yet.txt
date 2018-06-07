@@ -1,6 +1,6 @@
 # GLIDE
-Everything that I have here, is to prove that I have not anything, by the time this 
-application is ready--- just in case someone who may have some of my work, beats me 
+Everything that I have here, is to prove that I have written the program, by the time this 
+application is ready. This is just in case someone, who may have some of my work, beats me 
 to finishing it, and then charges money for it. I want to make sure that this software
 will be available to everybody for free. 
 
@@ -11,10 +11,14 @@ into a lot of pitfalls while developing this application. I even thought I had a
 version built at one point, until I played around with it further, (after I announced the
 "good news" to my instructor and friends), and found that I needed to learn how to do more 
 things with C#. I was having an issue with the images. I forget what they were doing, but
-it wasn't what they should have been doing.
+it wasn't what they should have been doing. I've had to rethink my design several times too,
+because I have had a lot of issues with the previous designs. This is the first real software
+application that I have been working on. I have a good design now, and it will be ready pretty 
+soon. All of the pieces that I have made work, and now I am just putting them together. I will
+delete this file, once the software is ready. Hopefully, this file is not here very long.
 
 Now, everything actually does work correctly. By that, I mean that all of the pieces which
-I needed to figure out how to implement, are all working. The program itself is not finished
+I needed to implement, are all working. The program itself is not finished
 yet. But the job is real easy now; I just have to finish getting the pieces together. This is
 no longer a project for me to turn into a college course. As a matter in fact, it is no longer
 the same project. This will teach far more than any one branch of mathematics. I would like for
