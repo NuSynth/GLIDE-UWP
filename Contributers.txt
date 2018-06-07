@@ -7,7 +7,7 @@ this program early on.
 The following is a list of things I want to do, and would love help with doing: 
 
 1. I want to rewrite GLIDE in C++, once I finish putting this C# version together here on GitHub.
-Anyone is welcome to help with this. There are several reasons I want to do this. The best reason,
+Anyone is welcome to help with this. There are several reasons why I want to do this. The best reason,
 is because it allows me to have more experience with C++. I would rather do it in C, because it's 
 more fun, and I might later, but I don't have to change the overall design if I do it in C++. I could 
 not figure out how to use C# without using object oriented design. I like C#, but it is very restrictive 
