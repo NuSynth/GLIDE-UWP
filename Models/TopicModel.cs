@@ -1,15 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using SQLite.Net;
+using SQLite.Net.Attributes;
 using System.Text;
 using System.Threading.Tasks;
 
-// This class file is used to save TO the database, and restore FROM the database.
-
-// Observable image test is not the actual namespace. I just left it there in some files
-// from a test application for the observable objects that implemented images. It worked,
-// and I have been growing the application from that final thing that I had to figure out
-// how to do, in order for everything to work.
 namespace ObservableImageTest.Models
 {
     public class TopicModel
@@ -20,7 +16,7 @@ namespace ObservableImageTest.Models
         public string Top_Name { get; set; } // This is only used to make things easier for building a course. Not implemented in program itself at the moment.
         public bool Top_Studied { get; set; }
         public string Next_Date { get; set; }
-        
+
         // The number of correct problems, out of the total problems for a topic, 
         // is in the databse, just in case the range for the calculation of difficulty 
         // needs to be adjusted a little. The range for difficulty is not mentioned in
@@ -40,7 +36,7 @@ namespace ObservableImageTest.Models
         public double Engram_Retrievability { get; set; }
     }
 
-    
+
     // There can be any number of topics. I have three here just to have something at the moment.
     public class TopicManager
     {
@@ -48,10 +44,10 @@ namespace ObservableImageTest.Models
         /* topic data initial values */
         public static List<TopicModel> GetTopics()
         {
-            var Topics = new List<TopicModel>();            
+            var Topics = new List<TopicModel>();
 
-            Topics.Add(new TopicModel 
-            { 
+            Topics.Add(new TopicModel
+            {
                 Top_ID = 0000,
                 Course_ID = 0,
                 Top_Name = "Sets",
@@ -70,8 +66,8 @@ namespace ObservableImageTest.Models
                 Engram_Retrievability = 0,
             }
             );
-            Topics.Add(new TopicModel 
-            { 
+            Topics.Add(new TopicModel
+            {
                 Top_ID = 0001,
                 Course_ID = 0,
                 Top_Name = "Sub Sets",
@@ -90,8 +86,8 @@ namespace ObservableImageTest.Models
                 Engram_Retrievability = 0,
             }
             );
-            Topics.Add(new TopicModel 
-            { 
+            Topics.Add(new TopicModel
+            {
                 Top_ID = 0002,
                 Course_ID = 0,
                 Top_Name = "Union and Intersection",
@@ -114,6 +110,5 @@ namespace ObservableImageTest.Models
             return Topics;
         }
     }
-
-    
 }
+
