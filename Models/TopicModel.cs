@@ -91,7 +91,7 @@ namespace ObservableImageTest.Models
             );
             Topics.Add(new TopicModel 
             { 
-                Top_ID = 0000,
+                Top_ID = 0002,
                 Course_ID = 0,
                 Top_Name = "Union and Intersection",
                 Top_Studied = false,
