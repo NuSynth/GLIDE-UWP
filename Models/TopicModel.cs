@@ -48,7 +48,7 @@ namespace ObservableImageTest.Models
 
             Topics.Add(new TopicModel
             {
-                Top_ID = 0000,
+                Top_ID = 0,
                 Course_ID = 0,
                 Top_Name = "Sets",
                 Top_Studied = false,
@@ -68,7 +68,7 @@ namespace ObservableImageTest.Models
             );
             Topics.Add(new TopicModel
             {
-                Top_ID = 0001,
+                Top_ID = 1,
                 Course_ID = 0,
                 Top_Name = "Sub Sets",
                 Top_Studied = false,
@@ -88,7 +88,7 @@ namespace ObservableImageTest.Models
             );
             Topics.Add(new TopicModel
             {
-                Top_ID = 0002,
+                Top_ID = 2,
                 Course_ID = 0,
                 Top_Name = "Union and Intersection",
                 Top_Studied = false,
