@@ -390,6 +390,12 @@ namespace ObservableImageTest
             }
         }
 
+        // Check for DB
+
+        // Create DB from default values
+
+        // Load stored values to list from DB
+
         // ToStudy ID's Section
         private void LoadTopicIDs()
         {
@@ -405,10 +411,11 @@ namespace ObservableImageTest
 
             // Process the list of AllTopics into:
 
-            // RetryStudied TopicID's section
+            // Retry Studied TopicID's section
             // I plan on changing this so that it resets the values of the topic, back to how they were as new values,
-            // IF the retrieval calculation is equal to, or less than, 90%. I chose that, because a grade of 'A' is always better than a grade of 'B'.
-            // Right now I just have it here so it hopefully gets studied at the Primacy end of the Serial-Position Effect.
+            // IF the retrieval calculation is equal to, or less than, 90%. I chose that, because a grade of 'A' is what the users want to get.
+            // Right now I just have it here so it hopefully gets studied at the Primacy end of the Serial-Position Effect. Unless I forget, 
+            // then it shouldn't even be like this long enough to be used.
             index = ZERO;
             while (index < TopicsList.Count)
             {
@@ -428,8 +435,9 @@ namespace ObservableImageTest
                 index = index + ONE;
             }
 
-            index = ZERO;
+
             // Studied TopicID's scheduled for today section
+            index = ZERO;
             while (index < TopicsList.Count)
             {
                 if (TopicsList.ElementAt(index).Top_Studied == true)
@@ -448,8 +456,9 @@ namespace ObservableImageTest
                 index = index + ONE;
             }
 
-            index = ZERO;
+            
             // New Topic ID's section
+            index = ZERO;
             while (index < TopicsList.Count)
             {
                 if (TopicsList.ElementAt(index).Top_Studied == false)
@@ -463,6 +472,7 @@ namespace ObservableImageTest
         }
 
         // Lesson Book Section
+
     }
 
 
