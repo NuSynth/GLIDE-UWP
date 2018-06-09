@@ -4,6 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+// This class file is used to save TO the database, and restore FROM the database.
+
+// Observable image test is not the actual namespace. I just left it there in some files
+// from a test application for the observable objects that implemented images. It worked,
+// and I have been growing the application from that final thing that I had to figure out
+// how to do, in order for everything to work.
 namespace ObservableImageTest.Models
 {
     public class TopicModel
@@ -11,11 +17,8 @@ namespace ObservableImageTest.Models
         [PrimaryKey]
         public int Top_ID { get; set; }
         public int Course_ID { get; set; }
-        public string Top_Name { get; set; }
+        public string Top_Name { get; set; } // This is only used to make things easier for building a course. Not implemented in program itself at the moment.
         public bool Top_Studied { get; set; }
-        
-
-        public string First_Date { get; set; }
         public string Next_Date { get; set; }
         
         // The number of correct problems, out of the total problems for a topic, 
@@ -51,9 +54,7 @@ namespace ObservableImageTest.Models
                 Course_ID = 0,
                 Top_Name = "Sets",
                 Top_Studied = false,
-
-                First_Date = null,
-                Next_Date = null,
+                Next_Date = "none",
 
                 Num_Problems = 5,
                 Num_Correct = 0,
@@ -73,9 +74,7 @@ namespace ObservableImageTest.Models
                 Course_ID = 0,
                 Top_Name = "Sub Sets",
                 Top_Studied = false,
-
-                First_Date = null,
-                Next_Date = null,
+                Next_Date = "none",
 
                 Num_Problems = 4,
                 Num_Correct = 0,
@@ -95,9 +94,7 @@ namespace ObservableImageTest.Models
                 Course_ID = 0,
                 Top_Name = "Union and Intersection",
                 Top_Studied = false,
-
-                First_Date = null,
-                Study_Date = null,
+                Next_Date = "none",
 
                 Num_Problems = 2,
                 Num_Correct = 0,
