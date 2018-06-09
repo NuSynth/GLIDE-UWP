@@ -1,4 +1,4 @@
-﻿using ObservableImageTest.Models;
+using ObservableImageTest.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -21,13 +21,19 @@ namespace ObservableImageTest
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        // Topic Stuff
+        private List<TopicModel> TopicsList;
+        private List<StudyModel> ToStudy; // Contains ID's for the current study session
+
+        // Lesson Stuff
+
         // Answers Stuff
         private List<AnswerModel> AnswersList;
         private ObservableCollection<AnswerModel> AnswersContent;
 
         // Problems Stuff
         private List<ProblemModel> ProblemList;
-        private ObservableCollection<ProblemModel> ProblemContent;        
+        private ObservableCollection<ProblemModel> ProblemContent;
 
         // For communication between methods
         GlobalVariables globals = new GlobalVariables();
@@ -36,12 +42,17 @@ namespace ObservableImageTest
         {
             this.InitializeComponent();
 
+            // Topic
+            TopicsList = new List<TopicModel>();
+
+            // Lesson
+
             // Problem
             ProblemContent = new ObservableCollection<ProblemModel>();
             ProblemList = new List<ProblemModel>();
 
             //Answer
-            AnswersContent = new ObservableCollection<AnswerModel>();            
+            AnswersContent = new ObservableCollection<AnswerModel>();
             AnswersList = new List<AnswerModel>();
 
             SetDisplay();
@@ -88,6 +99,11 @@ namespace ObservableImageTest
         {
             const int ZERO = 0;
 
+            // Topics
+            TopicsList = TopicManager.GetTopics();
+
+            // Lesson
+
             // Problem
             ProblemList = ProblemManager.GetProblems();
 
@@ -99,9 +115,11 @@ namespace ObservableImageTest
             globals.Wait = ZERO;
             globals.WasAnswered = false;
 
-            
-            
+
+
             /* Learning Start */
+
+            // Lesson Section
 
             // Problem Section
             FirstProblem();
@@ -145,12 +163,12 @@ namespace ObservableImageTest
                     {
                         Result.Text = ($"Sorry, the correct answer was {reveal}");
                     }
-                }                
+                }
                 else
                 {
                     Result.Text = ($"Sorry, the correct answer was {reveal}");
                 }
-                
+
             }
             else
             {
@@ -160,7 +178,7 @@ namespace ObservableImageTest
                 NextAnswers();
                 globals.Wait = ZERO;
             }
-            
+
         }
 
         // Problems Section
@@ -201,7 +219,7 @@ namespace ObservableImageTest
             int problemID = ProblemList.ElementAt(globals.ProblemIndex).ProblemID;
 
             globals.ProblemID = problemID;
-            
+
 
             if (globals.InitializerIndex == 0)
             {
@@ -215,7 +233,7 @@ namespace ObservableImageTest
                 ProblemContent.Add(new ProblemModel { ProblemPath = problemPath });
             }
 
-            
+
         }
 
         // Answers Section
@@ -250,7 +268,7 @@ namespace ObservableImageTest
             // be greater than "AnswerIndexTwo," by a value of 1. 
             globals.AnswerIndexThree = globals.AnswerIndexTwo + ONE;
 
-            
+
 
 
             AnswerProblemCompare();
@@ -296,7 +314,7 @@ namespace ObservableImageTest
                 // Get the new answer ID to check
                 indexOne = globals.AnswerIndexOne;
                 answerOneID = AnswersList.ElementAt(indexOne).AnswerID;
-            }            
+            }
         }
         private void LoadAnswers()
         {
@@ -372,31 +390,79 @@ namespace ObservableImageTest
             }
         }
 
-        // Lesson Book Section
+        // ToStudy ID's Section
         private void LoadTopicIDs()
         {
-            // Get Current Date
+            const int ZERO = 0;
+            const int ONE = 1;
+            int index;
+
+            // Date section
             DateTime today = DateTime.Now;
+            DateTime topicDate;
+            int dateCompare;
+            string dateAsString;
 
+            // Process the list of AllTopics into:
 
-            // Get list of AllTopics
+            // RetryStudied TopicID's section
+            // I plan on changing this so that it resets the values of the topic, back to how they were as new values,
+            // IF the retrieval calculation is equal to, or less than, 90%. I chose that, because a grade of 'A' is always better than a grade of 'B'.
+            // Right now I just have it here so it hopefully gets studied at the Primacy end of the Serial-Position Effect.
+            index = ZERO;
+            while (index < TopicsList.Count)
+            {
+                if (TopicsList.ElementAt(index).Top_Studied == true)
+                {
+                    dateAsString = TopicsList.ElementAt(index).Next_Date;
+                    topicDate = DateTime.Parse(dateAsString);
+                    dateCompare = DateTime.Compare(topicDate, today);
 
+                    if (dateCompare < ZERO)
+                    {
+                        // Lessons and problems both depend on the ID of the topic, but answers depend on the problem ID.
+                        ToStudy.Add(new StudyModel { StudyID = index });
+                    }
+                }
 
-            /*
-             * Process the list of AllTopics into:
-             * 
-             * RetryStudied TopicID's
-             * Studied TopicID's
-             * New TopicID's
-             * 
-             */
+                index = index + ONE;
+            }
 
+            index = ZERO;
+            // Studied TopicID's scheduled for today section
+            while (index < TopicsList.Count)
+            {
+                if (TopicsList.ElementAt(index).Top_Studied == true)
+                {
+                    dateAsString = TopicsList.ElementAt(index).Next_Date;
+                    topicDate = DateTime.Parse(dateAsString);
+                    dateCompare = DateTime.Compare(topicDate, today);
 
-            /* Now add the three lists, in the order I listed, into the list called:
-             *
-             * ToStudy
-             */
+                    if (dateCompare == ZERO)
+                    {
+                        // Lessons and problems both depend on the ID of the topic, but answers depend on the problem ID.
+                        ToStudy.Add(new StudyModel { StudyID = index });
+                    }
+                }
+
+                index = index + ONE;
+            }
+
+            index = ZERO;
+            // New Topic ID's section
+            while (index < TopicsList.Count)
+            {
+                if (TopicsList.ElementAt(index).Top_Studied == false)
+                {
+                    // Lessons and problems both depend on the ID of the topic, but answers depend on the problem ID.
+                    ToStudy.Add(new StudyModel { StudyID = index });                    
+                }
+
+                index = index + ONE;
+            }
         }
+
+        // Lesson Book Section
     }
 
 
