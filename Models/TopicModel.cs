@@ -40,6 +40,8 @@ namespace ObservableImageTest.Models
         public double Engram_Retrievability { get; set; }
     }
 
+    
+    // There can be any number of topics. I have three here just to have something at the moment.
     public class TopicManager
     {
         // The database needs some initial topic data to save into it, so that is what this is for.
