@@ -12,8 +12,13 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
+// The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
+
 namespace ObservableImageTest
 {
+    /// <summary>
+    /// An empty page that can be used on its own or navigated to within a Frame.
+    /// </summary>
     public sealed partial class MainPage : Page
     {
         // Topic Stuff
@@ -31,9 +36,6 @@ namespace ObservableImageTest
         // Problems Stuff
         private List<ProblemModel> ProblemList;
         private ObservableCollection<ProblemModel> ProblemContent;
-
-        // For communication between methods
-        GlobalVariables globals = new GlobalVariables();   
 
         // For communication between methods
         GlobalVariables globals = new GlobalVariables();
@@ -147,7 +149,7 @@ namespace ObservableImageTest
 
 
         }
-        
+
         // Check Problem TopicID if globals.wait NOT= to ZERO
         // If Problem TopicID NOT equal to ToStudy value, increment problem list in loop until problem topic ID == ToStudy value, from in a new method.
         private void NExt_Click(object sender, RoutedEventArgs e)
@@ -173,12 +175,12 @@ namespace ObservableImageTest
                     {
                         Result.Text = ($"Sorry, the correct answer was {reveal}");
                     }
-                }                
+                }
                 else
                 {
                     Result.Text = ($"Sorry, the correct answer was {reveal}");
                 }
-                
+
             }
             else
             {
@@ -188,7 +190,7 @@ namespace ObservableImageTest
                 NextAnswers();
                 globals.Wait = ZERO;
             }
-            
+
         }
 
         // Check for DB
@@ -314,7 +316,7 @@ namespace ObservableImageTest
             int problemID = ProblemList.ElementAt(globals.ProblemIndex).ProblemID;
 
             globals.ProblemID = problemID;
-            
+
 
             if (globals.InitializerIndex == 0)
             {
@@ -328,7 +330,7 @@ namespace ObservableImageTest
                 ProblemContent.Add(new ProblemModel { ProblemPath = problemPath });
             }
 
-            
+
         }
 
         // Answers Section
@@ -363,7 +365,7 @@ namespace ObservableImageTest
             // be greater than "AnswerIndexTwo," by a value of 1. 
             globals.AnswerIndexThree = globals.AnswerIndexTwo + ONE;
 
-            
+
 
 
             AnswerProblemCompare();
@@ -409,7 +411,7 @@ namespace ObservableImageTest
                 // Get the new answer ID to check
                 indexOne = globals.AnswerIndexOne;
                 answerOneID = AnswersList.ElementAt(indexOne).AnswerID;
-            }            
+            }
         }
         private void LoadAnswers()
         {
@@ -501,13 +503,13 @@ namespace ObservableImageTest
             {
                 // Increment answer index
                 globals.LessonIndex = globals.LessonIndex + ONE;
-                
+
                 index = globals.LessonIndex;
 
                 // If index greater than or equal to last index value of the lesson list, reset answer index to zero.
                 if (index >= LessonsList.Count)
                 {
-                    globals.LessonIndex = ZERO; 
+                    globals.LessonIndex = ZERO;
                 }
 
                 // Get the new lesson ID to check
@@ -526,7 +528,7 @@ namespace ObservableImageTest
             if (globals.LessonInitializer == ZERO)
             {
                 LessonContent.Add(new LessonModel { LessonPath = lessonImage });
-                
+
                 globals.LessonInitializer = ONE;
             }
             else
