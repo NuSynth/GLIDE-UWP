@@ -475,12 +475,11 @@ namespace ObservableImageTest
             }
         }
 
-        // Lesson Book Section
+        // Lesson Section
         private void LessonProblemCompare()
         {
             const int ZERO = 0;
             const int ONE = 1;
-            const int TWO = 2;
 
             // Index
             int index = globals.LessonIndex;           
@@ -491,16 +490,18 @@ namespace ObservableImageTest
             // Lesson
             int LessonID = LessonsList.ElementAt(index).LessonID;
 
+            // Will cause infinite loop if topic ID for a problem does not match any lesson ID.
             while (LessonID != problemID)
             {
                 // Increment answer index
                 globals.LessonIndex = globals.LessonIndex + ONE;
+                
+                index = globals.LessonIndex;
 
                 // If index greater than or equal to last index value of the lesson list, reset answer index to zero.
-                index = globals.LessonIndex;
                 if (index >= LessonsList.Count)
                 {
-                    globals.LessonIndex = ZERO;
+                    globals.LessonIndex = ZERO; 
                 }
 
                 // Get the new lesson ID to check
@@ -512,25 +513,27 @@ namespace ObservableImageTest
         {
             const int ZERO = 0;
             const int ONE = 1;
-            int index;
 
-            index = ZERO;
-            //while (index < TopicsList.Count)
-            //{
-            //    if (TopicsList.ElementAt(index).Top_Studied == true)
-            //    {
-            //        //if (dateCompare < ZERO)
-            //        //{
-            //        //    // Lessons and problems both depend on the ID of the topic, but answers depend on the problem ID.
-            //        //    ToStudy.Add(new StudyModel { StudyID = index });
-            //        //}
-            //    }
+            // Index
+            int index = globals.LessonIndex;
+           
+            // Copy the answer values so I can use them
+            string lessonImage = LessonsList.ElementAt(index).LessonPath;
 
-            //    index = index + ONE;
-            //}
+
+            if (globals.InitializerIndex == 1)
+            {
+                LessonContent.Add(new LessonModel { LessonPath = lessonImage });
+                
+                globals.InitializerIndex++;
+            }
+            else
+            {
+
+                AnswersContent.RemoveAt(ZERO);
+                LessonContent.Add(new LessonModel { LessonPath = lessonImage });
+            }
 
         }
     }
-
-
 }
