@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -13,7 +13,6 @@ namespace ObservableImageTest.Models
         public int TopicID { get; set; }
         public int ProblemID { get; set; }
         public string ProblemPath { get; set; }
-
         
         // This will be for problems (or questions) that only need characters available on the keyboard.
         public string QuestionText { get; set; }
@@ -30,8 +29,8 @@ namespace ObservableImageTest.Models
             // The two problems are commented out to test that answers match with problems.
 
             Problems.Add(new ProblemModel { ProblemID = 0, ProblemPath = "Assets/male-01.png" });
-            // Problems.Add(new ProblemModel { ProblemID = 1, ProblemPath = "Assets/male-02.png" });
-            // Problems.Add(new ProblemModel { ProblemID = 2, ProblemPath = "Assets/male-03.png" });
+            Problems.Add(new ProblemModel { ProblemID = 1, ProblemPath = "Assets/male-02.png" });
+            Problems.Add(new ProblemModel { ProblemID = 2, ProblemPath = "Assets/male-03.png" });
             Problems.Add(new ProblemModel { ProblemID = 3, ProblemPath = "Assets/female-01.png" });
 
             return Problems;
