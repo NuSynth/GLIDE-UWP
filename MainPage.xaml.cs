@@ -113,7 +113,9 @@ namespace ObservableImageTest
             LessonsList = LessonManager.GetLessons();
 
             // For decisions
-            globals.InitializerIndex = ZERO;
+            globals.ProblemInitializer = ZERO;
+            globals.AnswerInitializer = ZERO;
+            globals.LessonInitializer = ZERO;
             globals.Wait = ZERO;
             globals.WasAnswered = false;
 
@@ -179,7 +181,10 @@ namespace ObservableImageTest
                 globals.WasAnswered = false;
                 Result.Text = ($" ");
                 NextProblem();
+                LoadProblem();
                 NextAnswers();
+                AnswerProblemCompare();
+                LoadAnswers();
                 globals.Wait = ZERO;
             }
 
@@ -264,35 +269,87 @@ namespace ObservableImageTest
 
                 index = index + ONE;
             }
+
+            globals.TopicID = ToStudy.ElementAt(ZERO);
+            globals.TopicIndex = ZERO;
         }
 
         // Problems Section
         private void FirstProblem()
         {
             const int ZERO = 0;
-
+            const int ONE = 1;
+            int topicID = ToStudy.ElementAt(globals.TopicIndex);
             globals.ProblemIndex = ZERO;
+            int problemTopic = ProblemList.ElementAt(globals.ProblemIndex).TopicID;
+            
+            while (problemTopic != topicID)
+            {
+                if (globals.ProblemIndex < ProblemList.Count)
+                {
+                    globals.ProblemIndex = globals.ProblemIndex + ONE;
+                }
+                if (globals.ProblemIndex >= ProblemList.Count)
+                {
+                    globals.ProblemIndex = ZERO; // Only for testing. Needs to set a check variable for program to show "Nothing to study."
+                }
+                problemTopic = ProblemList.ElementAt(globals.ProblemIndex).TopicID;
+            }
 
             LoadProblem();
         }
         private void NextProblem()
         {
-            globals.ProblemIndex++;
-            LoadProblem();
+            // globals.ProblemIndex++;
+
+            const int ZERO = 0;
+            const int ONE = 1;
+            int topicID = ToStudy.ElementAt(globals.TopicIndex);
+            globals.ProblemIndex = ZERO;
+            int problemTopic = ProblemList.ElementAt(globals.ProblemIndex).TopicID;
+
+            if (globals.TopicIndex < ToStudy.Count)
+            {
+                globals.TopicIndex = globals.TopicIndex + ONE;
+                topicID = ToStudy.ElementAt(globals.TopicIndex);
+            }
+            if (globals.TopicIndex >= ToStudy.Count)
+            {
+                globals.TopicIndex = ZERO; // Only for testing. Needs to set a check variable for program to show "Nothing to study."
+                topicID = ToStudy.ElementAt(globals.TopicIndex);
+            }
+
+            while (problemTopic != topicID)
+            {
+                // Didn't change because I went to puff my tobacco pipe, and forgot before sleep. This code is causing infinite loop. Correct it immediately
+                //if (globals.ProblemIndex < ProblemList.Count)
+                //{
+                //    globals.ProblemIndex = globals.ProblemIndex + ONE;
+                //}
+                //if (globals.ProblemIndex >= ProblemList.Count)
+                //{
+                //    globals.ProblemIndex = ZERO; // Only for testing. Needs to set a check variable for program to show "Nothing to study."
+                //}
+                problemTopic = ProblemList.ElementAt(globals.ProblemIndex).TopicID;
+            }
+
+            globals.TopicID = problemTopic;
         }
         private void LoadProblem()
         {
+            const int ZERO = 0;
+            const int ONE = 1;
             int problemIndex = globals.ProblemIndex;
 
             // Keep index within range
-            if (problemIndex < 0)
+            if (problemIndex < ZERO)
             {
-                globals.ProblemIndex = 0;
+                globals.ProblemIndex = ZERO;
                 problemIndex = globals.ProblemIndex;
             }
             if (problemIndex >= ProblemList.Count)
             {
-                globals.ProblemIndex = 0;
+                globals.ProblemIndex = ZERO;
                 problemIndex = globals.ProblemIndex;
             }
 
@@ -302,15 +359,14 @@ namespace ObservableImageTest
             // Copy the problem values so I can use them
             string problemPath = ProblemList.ElementAt(globals.ProblemIndex).ProblemPath;
             int problemID = ProblemList.ElementAt(globals.ProblemIndex).ProblemID;
-
             globals.ProblemID = problemID;
 
 
-            if (globals.InitializerIndex == 0)
+            if (globals.ProblemInitializer == ZERO)
             {
                 ProblemContent.Add(new ProblemModel { ProblemPath = problemPath });
 
-                globals.InitializerIndex++;
+                globals.ProblemInitializer = ONE;
             }
             else
             {
@@ -356,8 +412,7 @@ namespace ObservableImageTest
 
 
             // Move these to be called from the button instead.
-            AnswerProblemCompare();
-            LoadAnswers();
+            
         }
         private void AnswerProblemCompare()
         {
@@ -453,24 +508,24 @@ namespace ObservableImageTest
             bool correctIncorrectThree = AnswersList.ElementAt(valueThree).AnswerCorrect;
 
 
-            if (globals.InitializerIndex == 1)
+            if (globals.AnswerInitializer == ZERO)
             {
                 AnswersContent.Add(new AnswerModel { AnswerPath = answerImageOne, DisplayLetter = letterOne, AnswerCorrect = correctIncorrectOne });
                 AnswersContent.Add(new AnswerModel { AnswerPath = answerImageTwo, DisplayLetter = letterTwo, AnswerCorrect = correctIncorrectTwo });
                 AnswersContent.Add(new AnswerModel { AnswerPath = answerImageThree, DisplayLetter = letterThree, AnswerCorrect = correctIncorrectThree });
 
-                globals.InitializerIndex++;
+                globals.AnswerInitializer = ONE;
             }
             else
             {
 
-                AnswersContent.RemoveAt(ZERO);
+                AnswersContent.RemoveAt(0);
                 AnswersContent.Add(new AnswerModel { AnswerPath = answerImageOne, DisplayLetter = letterOne, AnswerCorrect = correctIncorrectOne });
 
-                AnswersContent.RemoveAt(ZERO);
+                AnswersContent.RemoveAt(0);
                 AnswersContent.Add(new AnswerModel { AnswerPath = answerImageTwo, DisplayLetter = letterTwo, AnswerCorrect = correctIncorrectTwo });
 
-                AnswersContent.RemoveAt(ZERO);
+                AnswersContent.RemoveAt(0);
                 AnswersContent.Add(new AnswerModel { AnswerPath = answerImageThree, DisplayLetter = letterThree, AnswerCorrect = correctIncorrectThree });
             }
         }
@@ -480,18 +535,13 @@ namespace ObservableImageTest
         {
             const int ZERO = 0;
             const int ONE = 1;
-
-            // Index
-            int index = globals.LessonIndex;           
-
-            // Problem's topic ID
-            int problemID = globals.TopicID;
-
-            // Lesson
+            globals.LessonIndex = ZERO;
+            int index = globals.LessonIndex;
+            int problemTopicID = globals.TopicID;
             int LessonID = LessonsList.ElementAt(index).LessonID;
 
             // Will cause infinite loop if topic ID for a problem does not match any lesson ID.
-            while (LessonID != problemID)
+            while (LessonID != problemTopicID)
             {
                 // Increment answer index
                 globals.LessonIndex = globals.LessonIndex + ONE;
@@ -513,24 +563,20 @@ namespace ObservableImageTest
         {
             const int ZERO = 0;
             const int ONE = 1;
-
-            // Index
             int index = globals.LessonIndex;
-           
-            // Copy the answer values so I can use them
             string lessonImage = LessonsList.ElementAt(index).LessonPath;
 
 
-            if (globals.InitializerIndex == 1)
+            if (globals.LessonInitializer == ZERO)
             {
                 LessonContent.Add(new LessonModel { LessonPath = lessonImage });
                 
-                globals.InitializerIndex++;
+                globals.LessonInitializer = ONE;
             }
             else
             {
 
-                AnswersContent.RemoveAt(ZERO);
+                AnswersContent.RemoveAt(0);
                 LessonContent.Add(new LessonModel { LessonPath = lessonImage });
             }
 
