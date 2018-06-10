@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,10 +8,13 @@ namespace ObservableImageTest.Models
 {
     public class GlobalVariables
     {
+        /* Course Section */
+        public int CourseID { get; set; }
+
         /* Increment Topic */
         public bool IncrementTopic { get; set; }
 
-        /* Topic section */
+        /* Topic Section */
         public int TopicID { get; set; } // This probably needs to change when I incorporate the other code I've written.
         public int TopicIndex { get; set; }
 
@@ -20,8 +23,11 @@ namespace ObservableImageTest.Models
         public int ProblemID { get; set; }
         public int ProblemIndex { get; set; }
 
-        /* Answer section. */
+        /* Answer Section. */
         public int AnswerID { get; set; }
+
+        /* Lesson Section */
+        public int LessonID { get; set; }
 
         // I need these three global indexes in order to progress through the list of images, until ID matching is implemented.
         public int AnswerIndexOne { get; set; }
