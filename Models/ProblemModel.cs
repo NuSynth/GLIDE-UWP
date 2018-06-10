@@ -26,8 +26,6 @@ namespace ObservableImageTest.Models
         {
             var Problems = new List<ProblemModel>();
 
-            // The two problems are commented out to test that answers match with problems.
-
             Problems.Add(new ProblemModel { ProblemID = 0, ProblemPath = "Assets/male-01.png" });
             Problems.Add(new ProblemModel { ProblemID = 1, ProblemPath = "Assets/male-02.png" });
             Problems.Add(new ProblemModel { ProblemID = 2, ProblemPath = "Assets/male-03.png" });
