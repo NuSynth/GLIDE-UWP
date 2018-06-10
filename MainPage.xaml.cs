@@ -321,15 +321,14 @@ namespace ObservableImageTest
 
             while (problemTopic != topicID)
             {
-                // Didn't change because I went to puff my tobacco pipe, and forgot before sleep. This code is causing infinite loop. Correct it immediately
-                //if (globals.ProblemIndex < ProblemList.Count)
-                //{
-                //    globals.ProblemIndex = globals.ProblemIndex + ONE;
-                //}
-                //if (globals.ProblemIndex >= ProblemList.Count)
-                //{
-                //    globals.ProblemIndex = ZERO; // Only for testing. Needs to set a check variable for program to show "Nothing to study."
-                //}
+                if (globals.ProblemIndex < ProblemList.Count)
+                {
+                    globals.ProblemIndex = globals.ProblemIndex + ONE;
+                }
+                if (globals.ProblemIndex >= ProblemList.Count)
+                {
+                    globals.ProblemIndex = ZERO; // Only for testing. Needs to set a check variable for program to show "Nothing to study."
+                }
                 problemTopic = ProblemList.ElementAt(globals.ProblemIndex).TopicID;
             }
 
