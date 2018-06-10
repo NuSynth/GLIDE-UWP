@@ -6,7 +6,7 @@ GLIDE is a program that teaches people, by implementing scientific research on l
 
 Like B.F. Skinner's GLIDER machine; GLIDE implements a Continuous Reinforcement schedule, for all of the material in which GLIDE is teaching to a respondent. Unlike GLIDER, the spacing of repetitions for the content of study sessions, is not able to be adjusted to eventually suit the needs of the respondent. The spacing system that Skinner implemented was very inefficient, even though the results were still much better than those that learning institutions still produce to this day. 
 
-GLIDER still resulted in a Serial-Position effect. It had to. GLIDER also did not ensure, that information for a course would not decline in a respondent's retrieval ability, much lower than 95%, even if GLIDER were to be used to learn new information from on a daily basis.
+GLIDER still resulted in a Serial-Position effect. It had to. GLIDER also did not ensure, that information for a course would not decline in a respondent's retrieval ability, much lower than 95%, even if GLIDER were to be used to learn new information from, on a daily basis.
 
 GLIDE schedules a repetition, for each individual engram, to be performed when the forgetting curve shows that the chance for the engram's retrieval decays to 95%. This results in a mix of information to perform repetitions on in a study session, and does not usually, if ever, result in a the Serial-Position effect's dip, after the second day of study for a new course. Skinner did not have the spacing calculations that GLIDE implements, which have been available now for a while.
 
