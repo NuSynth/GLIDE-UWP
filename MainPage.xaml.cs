@@ -12,15 +12,19 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
+// The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
+
 namespace ObservableImageTest
 {
     public sealed partial class MainPage : Page
     {
         // Topic Stuff
         private List<TopicModel> TopicsList;
-        private List<StudyModel> ToStudy; // Contains ID's for the current study session
+        private List<int> ToStudy = new List<int>(); // Contains ID's for the current study session.
 
         // Lesson Stuff
+        private List<LessonModel> LessonsList;
+        private ObservableCollection<LessonModel> LessonContent;
 
         // Answers Stuff
         private List<AnswerModel> AnswersList;
@@ -41,6 +45,8 @@ namespace ObservableImageTest
             TopicsList = new List<TopicModel>();
 
             // Lesson
+            LessonContent = new ObservableCollection<LessonModel>();
+            LessonsList = new List<LessonModel>();
 
             // Problem
             ProblemContent = new ObservableCollection<ProblemModel>();
@@ -96,6 +102,7 @@ namespace ObservableImageTest
 
             // Topics
             TopicsList = TopicManager.GetTopics();
+            LoadTopicIDs();
 
             // Lesson
 
@@ -323,12 +330,12 @@ namespace ObservableImageTest
             int indexThree = globals.AnswerIndexThree;
 
             // Shuffle the copied index values of the answers to use.
-            var array = new int[] { indexOne, indexTwo, indexThree };
-            new Random().Shuffle(array);
+            var indexArray = new int[] { indexOne, indexTwo, indexThree };
+            new Random().Shuffle(indexArray);
 
-            int valueOne = array[ZERO];
-            int valueTwo = array[ONE];
-            int valueThree = array[TWO];
+            int valueOne = indexArray[ZERO];
+            int valueTwo = indexArray[ONE];
+            int valueThree = indexArray[TWO];
 
             /* Assigning letters to the randomized answers that display. "a)", "b)", and "c)", 
              * need to display in alphabetic order 
@@ -423,7 +430,7 @@ namespace ObservableImageTest
                     if (dateCompare < ZERO)
                     {
                         // Lessons and problems both depend on the ID of the topic, but answers depend on the problem ID.
-                        ToStudy.Add(new StudyModel { StudyID = index });
+                        ToStudy.Add(index);
                     }
                 }
 
@@ -444,7 +451,7 @@ namespace ObservableImageTest
                     if (dateCompare == ZERO)
                     {
                         // Lessons and problems both depend on the ID of the topic, but answers depend on the problem ID.
-                        ToStudy.Add(new StudyModel { StudyID = index });
+                        ToStudy.Add(index);
                     }
                 }
 
@@ -459,7 +466,7 @@ namespace ObservableImageTest
                 if (TopicsList.ElementAt(index).Top_Studied == false)
                 {
                     // Lessons and problems both depend on the ID of the topic, but answers depend on the problem ID.
-                    ToStudy.Add(new StudyModel { StudyID = index });                    
+                    ToStudy.Add(index);                    
                 }
 
                 index = index + ONE;
@@ -467,7 +474,28 @@ namespace ObservableImageTest
         }
 
         // Lesson Book Section
+        //private void LoadLesson()
+        //{
+        //    const int ZERO = 0;
+        //    const int ONE = 1;
+        //    int index;
 
+        //    index = ZERO;
+        //    while (index < TopicsList.Count)
+        //    {
+        //        if (TopicsList.ElementAt(index).Top_Studied == true)
+        //        {                    
+        //            if (dateCompare < ZERO)
+        //            {
+        //                // Lessons and problems both depend on the ID of the topic, but answers depend on the problem ID.
+        //                ToStudy.Add(new StudyModel { StudyID = index });
+        //            }
+        //        }
+
+        //        index = index + ONE;
+        //    }
+
+        //}
     }
 
 
