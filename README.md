@@ -35,7 +35,7 @@ GLIDE
 
 Users can add their college textbooks, into their own GLIDE program. Rules to build a course need to be followed, in order for the course to be learned at maximum efficiency. These rules will be made available when GLIDE is ready to be used. 
 
-I am in no way recommending that courses built from non-free textbooks be shared.
+I am in no way recommending that courses built from non-free textbooks be shared. I also don't want anyone making courses and selling them with GLIDE, or for GLIDE. But I can not prevent that. But free courses can be built, which are equivalent in knowledge to learn, as any course that costs money which is built.
 
 I DO recommend, and WANT, courses to be built for GLIDE which are equivalent, or greater, in content to a textbook used at a high-end institution, to share with everyone. I would be happy to host these courses from the Dartomic website, to be available for download by anyone that desires the material. But, ONLY IF, the standards have been well followed in the creation of the course that is submitted, and there is no plagiarization. Any submitted courses will be available on Dartomic, pending a review of the material. These would not only be great to save people A LOT of money, but to do a better job at teaching than an institution would be providing any students using the material.  
 
