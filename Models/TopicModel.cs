@@ -11,8 +11,8 @@ namespace ObservableImageTest.Models
     public class TopicModel
     {
         [PrimaryKey]
-        public int Top_ID { get; set; }
-        public int Course_ID { get; set; }
+        public int Top_ID { get; set; } 
+        public int Course_ID { get; set; } // If more than one course, then it may be best to not start the TopicID at ZERO for the first topic, so that less of the program needs modifying to allow multiple courses.
         public string Top_Name { get; set; } // This is only used to make things easier for building a course. Not implemented in program itself at the moment.
         public bool Top_Studied { get; set; }
         public string Next_Date { get; set; }
