@@ -11,6 +11,11 @@ GLIDER still resulted in a Serial-Position effect. It had to. GLIDER also did no
 GLIDE schedules a repetition, for each individual engram, to be performed when the forgetting curve shows that the chance for the engram's retrieval decays to 95%. This results in a mix of information to perform repetitions on in a study session, and does not usually, if ever, result in a the Serial-Position effect's dip, after the second day of study for a new course. Skinner did not have the spacing calculations that GLIDE implements, which have been available now for a while. 
 
 
+### More Screenshots on the way
+
+[![screenshot](https://github.com/Dartomic/GLIDE/blob/master/Glide.png)](https://raw.github.com/Dartomic/GLIDE/blob/master/Glide.png)
+
+
 
 
 Comparison of GLIDE vs GLIDER:
