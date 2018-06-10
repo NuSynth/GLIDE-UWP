@@ -103,13 +103,14 @@ namespace ObservableImageTest
             TopicsList = TopicManager.GetTopics();
             LoadTopicIDs();
 
-            // Lesson
-
             // Problem
             ProblemList = ProblemManager.GetProblems();
 
             // Answer
             AnswersList = AnswerManager.GetAll();
+
+            // Lesson
+            LessonsList = LessonManager.GetLessons();
 
             // For decisions
             globals.InitializerIndex = ZERO;
@@ -129,6 +130,8 @@ namespace ObservableImageTest
             FirstAnswers();
             AnswerProblemCompare();
             LoadAnswers();
+
+            // Lesson Section
 
         }
 
@@ -180,6 +183,87 @@ namespace ObservableImageTest
                 globals.Wait = ZERO;
             }
 
+        }
+
+        // Check for DB
+
+        // Create DB from default values
+
+        // Load stored values to list from DB
+
+        // ToStudy ID's Section
+        private void LoadTopicIDs()
+        {
+            const int ZERO = 0;
+            const int ONE = 1;
+            int index;
+
+            // Date section
+            DateTime today = DateTime.Now;
+            DateTime topicDate;
+            int dateCompare;
+            string dateAsString;
+
+            // Process the list of AllTopics into:
+
+            // Retry Studied TopicID's section
+            // I plan on changing this so that it resets the values of the topic, back to how they were as new values,
+            // IF the retrieval calculation is equal to, or less than, 90%. I chose that, because a grade of 'A' is what the users want to get.
+            // Right now I just have it here so it hopefully gets studied at the Primacy end of the Serial-Position Effect. Unless I forget, 
+            // then it shouldn't even be like this long enough to be used.
+            index = ZERO;
+            while (index < TopicsList.Count)
+            {
+                if (TopicsList.ElementAt(index).Top_Studied == true)
+                {
+                    dateAsString = TopicsList.ElementAt(index).Next_Date;
+                    topicDate = DateTime.Parse(dateAsString);
+                    dateCompare = DateTime.Compare(topicDate, today);
+
+                    if (dateCompare < ZERO)
+                    {
+                        // Lessons and problems both depend on the ID of the topic, but answers depend on the problem ID.
+                        ToStudy.Add(index);
+                    }
+                }
+
+                index = index + ONE;
+            }
+
+
+            // Studied TopicID's scheduled for today section
+            index = ZERO;
+            while (index < TopicsList.Count)
+            {
+                if (TopicsList.ElementAt(index).Top_Studied == true)
+                {
+                    dateAsString = TopicsList.ElementAt(index).Next_Date;
+                    topicDate = DateTime.Parse(dateAsString);
+                    dateCompare = DateTime.Compare(topicDate, today);
+
+                    if (dateCompare == ZERO)
+                    {
+                        // Lessons and problems both depend on the ID of the topic, but answers depend on the problem ID.
+                        ToStudy.Add(index);
+                    }
+                }
+
+                index = index + ONE;
+            }
+
+
+            // New Topic ID's section
+            index = ZERO;
+            while (index < TopicsList.Count)
+            {
+                if (TopicsList.ElementAt(index).Top_Studied == false)
+                {
+                    // Lessons and problems both depend on the ID of the topic, but answers depend on the problem ID.
+                    ToStudy.Add(index);
+                }
+
+                index = index + ONE;
+            }
         }
 
         // Problems Section
@@ -271,7 +355,7 @@ namespace ObservableImageTest
 
 
 
-
+            // Move these to be called from the button instead.
             AnswerProblemCompare();
             LoadAnswers();
         }
@@ -391,110 +475,61 @@ namespace ObservableImageTest
             }
         }
 
-        // Check for DB
+        // Lesson Book Section
+        private void LessonProblemCompare()
+        {
+            const int ZERO = 0;
+            const int ONE = 1;
+            const int TWO = 2;
 
-        // Create DB from default values
+            // Index
+            int index = globals.LessonIndex;           
 
-        // Load stored values to list from DB
+            // Problem's topic ID
+            int problemID = globals.TopicID;
 
-        // ToStudy ID's Section
-        private void LoadTopicIDs()
+            // Lesson
+            int LessonID = LessonsList.ElementAt(index).LessonID;
+
+            while (LessonID != problemID)
+            {
+                // Increment answer index
+                globals.LessonIndex = globals.LessonIndex + ONE;
+
+                // If index greater than or equal to last index value of the lesson list, reset answer index to zero.
+                index = globals.LessonIndex;
+                if (index >= LessonsList.Count)
+                {
+                    globals.LessonIndex = ZERO;
+                }
+
+                // Get the new lesson ID to check
+                index = globals.LessonIndex;
+                LessonID = LessonsList.ElementAt(index).LessonID;
+            }
+        }
+        private void LoadLesson()
         {
             const int ZERO = 0;
             const int ONE = 1;
             int index;
 
-            // Date section
-            DateTime today = DateTime.Now;
-            DateTime topicDate;
-            int dateCompare;
-            string dateAsString;
-
-            // Process the list of AllTopics into:
-
-            // Retry Studied TopicID's section
-            // I plan on changing this so that it resets the values of the topic, back to how they were as new values,
-            // IF the retrieval calculation is equal to, or less than, 90%. I chose that, because a grade of 'A' is what the users want to get.
-            // Right now I just have it here so it hopefully gets studied at the Primacy end of the Serial-Position Effect. Unless I forget, 
-            // then it shouldn't even be like this long enough to be used.
             index = ZERO;
-            while (index < TopicsList.Count)
-            {
-                if (TopicsList.ElementAt(index).Top_Studied == true)
-                {
-                    dateAsString = TopicsList.ElementAt(index).Next_Date;
-                    topicDate = DateTime.Parse(dateAsString);
-                    dateCompare = DateTime.Compare(topicDate, today);
+            //while (index < TopicsList.Count)
+            //{
+            //    if (TopicsList.ElementAt(index).Top_Studied == true)
+            //    {
+            //        //if (dateCompare < ZERO)
+            //        //{
+            //        //    // Lessons and problems both depend on the ID of the topic, but answers depend on the problem ID.
+            //        //    ToStudy.Add(new StudyModel { StudyID = index });
+            //        //}
+            //    }
 
-                    if (dateCompare < ZERO)
-                    {
-                        // Lessons and problems both depend on the ID of the topic, but answers depend on the problem ID.
-                        ToStudy.Add(index);
-                    }
-                }
+            //    index = index + ONE;
+            //}
 
-                index = index + ONE;
-            }
-
-
-            // Studied TopicID's scheduled for today section
-            index = ZERO;
-            while (index < TopicsList.Count)
-            {
-                if (TopicsList.ElementAt(index).Top_Studied == true)
-                {
-                    dateAsString = TopicsList.ElementAt(index).Next_Date;
-                    topicDate = DateTime.Parse(dateAsString);
-                    dateCompare = DateTime.Compare(topicDate, today);
-
-                    if (dateCompare == ZERO)
-                    {
-                        // Lessons and problems both depend on the ID of the topic, but answers depend on the problem ID.
-                        ToStudy.Add(index);
-                    }
-                }
-
-                index = index + ONE;
-            }
-
-            
-            // New Topic ID's section
-            index = ZERO;
-            while (index < TopicsList.Count)
-            {
-                if (TopicsList.ElementAt(index).Top_Studied == false)
-                {
-                    // Lessons and problems both depend on the ID of the topic, but answers depend on the problem ID.
-                    ToStudy.Add(index);                    
-                }
-
-                index = index + ONE;
-            }
         }
-
-        // Lesson Book Section
-        //private void LoadLesson()
-        //{
-        //    const int ZERO = 0;
-        //    const int ONE = 1;
-        //    int index;
-
-        //    index = ZERO;
-        //    while (index < TopicsList.Count)
-        //    {
-        //        if (TopicsList.ElementAt(index).Top_Studied == true)
-        //        {                    
-        //            if (dateCompare < ZERO)
-        //            {
-        //                // Lessons and problems both depend on the ID of the topic, but answers depend on the problem ID.
-        //                ToStudy.Add(new StudyModel { StudyID = index });
-        //            }
-        //        }
-
-        //        index = index + ONE;
-        //    }
-
-        //}
     }
 
 
