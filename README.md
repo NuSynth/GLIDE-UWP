@@ -8,7 +8,7 @@ Like B.F. Skinner's GLIDER machine; GLIDE implements a Continuous Reinforcement 
 
 GLIDER still resulted in a Serial-Position effect. It had to. GLIDER also did not ensure, that information for a course would not decline in a respondent's retrieval ability, much lower than 95%, even if GLIDER were to be used to learn new information from, on a daily basis.
 
-GLIDE schedules a repetition, for each individual engram, to be performed when the forgetting curve shows that the chance for the engram's retrieval decays to 95%. This results in a mix of information to perform repetitions on in a study session, and does not usually, if ever, result in a the Serial-Position effect's dip, after the second day of study for a new course. Skinner did not have the spacing calculations that GLIDE implements, which have been available now for a while.
+GLIDE schedules a repetition, for each individual engram, to be performed when the forgetting curve shows that the chance for the engram's retrieval decays to 95%. This results in a mix of information to perform repetitions on in a study session, and does not usually, if ever, result in a the Serial-Position effect's dip, after the second day of study for a new course. Skinner did not have the spacing calculations that GLIDE implements, which have been available now for a while. 
 
 
 
