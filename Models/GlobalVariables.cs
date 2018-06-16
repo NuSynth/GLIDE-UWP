@@ -8,6 +8,10 @@ namespace ObservableImageTest.Models
 {
     public class GlobalVariables
     {
+        /* For the unit test program: TodayDate */
+        public string TodayDate { get; set; }
+
+
         /* Course Section */
         public int CourseID { get; set; }
 
@@ -22,12 +26,15 @@ namespace ObservableImageTest.Models
         // I need this global index, in order to progress through the list of images.
         public int ProblemID { get; set; }
         public int ProblemIndex { get; set; }
+        public bool ProblemsDone { get; set; }
+
 
         /* Answer Section. */
         public int AnswerID { get; set; }
 
         /* Lesson Section */
         public int LessonID { get; set; }
+        public int LessonIndex { get; set; }
 
         // I need these three global indexes in order to progress through the list of images, until ID matching is implemented.
         public int AnswerIndexOne { get; set; }
@@ -38,7 +45,7 @@ namespace ObservableImageTest.Models
         // but clicks submit, the global variable that checks if it was correct will still hold 
         // the previous value. Therefore, "WasAnswered" needs to be true so that the problem can't 
         // be marked as correct if this value is false.
-        public bool WasAnswered { get; set; }  
+        public bool WasAnswered { get; set; }
 
         public string RevealAnswer { get; set; } // The letter value of the correct answer is stored here, to display which value was correct, if the user chooses the incorrect answer.
 
@@ -47,5 +54,8 @@ namespace ObservableImageTest.Models
 
         public bool TopicInitializerIndex { get; set; }
         public int InitializerIndex { get; set; }
+        public int ProblemInitializer { get; set; }
+        public int AnswerInitializer { get; set; }
+        public int LessonInitializer { get; set; }
     }
 }
