@@ -12,13 +12,9 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
-// The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
 namespace ObservableImageTest
 {
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
     public sealed partial class MainPage : Page
     {
         // Topic Stuff
@@ -126,11 +122,13 @@ namespace ObservableImageTest
 
 
             /* Learning Start */
+            // LoadTopicIDs();
 
             // Lesson Section
 
             // Problem Section
             FirstProblem();
+            LoadProblem();
 
             // Answer Section
             FirstAnswers();
@@ -150,8 +148,6 @@ namespace ObservableImageTest
 
         }
 
-        // Check Problem TopicID if globals.wait NOT= to ZERO
-        // If Problem TopicID NOT equal to ToStudy value, increment problem list in loop until problem topic ID == ToStudy value, from in a new method.
         private void NExt_Click(object sender, RoutedEventArgs e)
         {
             const int ZERO = 0;
@@ -184,11 +180,26 @@ namespace ObservableImageTest
             }
             else
             {
-                globals.WasAnswered = false;
-                Result.Text = ($" ");
-                NextProblem();
-                NextAnswers();
-                globals.Wait = ZERO;
+                if (globals.ProblemsDone != true)
+                {
+                    globals.WasAnswered = false;
+                    Result.Text = ($" ");
+                    NextProblem();
+                    if (globals.ProblemsDone != true)
+                    {
+                        LoadProblem();
+                        NextAnswers();
+                        AnswerProblemCompare();
+                        LoadAnswers();
+                        globals.Wait = ZERO;
+                    }
+                    
+                }
+                else
+                {
+                    Result.Text = ($"Nothing left to study today. Check back tomorrow!");
+                }
+                
             }
 
         }
@@ -278,35 +289,138 @@ namespace ObservableImageTest
         }
 
         // Problems Section
-        // Compare Problem TopicID to the ToStudy value.
         private void FirstProblem()
         {
+            /* Original code */
             const int ZERO = 0;
+            const int ONE = 1;
 
+            /* Original code */
+            int topicID = ToStudy.ElementAt(globals.TopicIndex); // A single element holding a value of two for this test.            
             globals.ProblemIndex = ZERO;
+            int problemTopic = ProblemList.ElementAt(globals.ProblemIndex).TopicID;
 
-            LoadProblem();
+            while (problemTopic != topicID)
+            {
+                if (globals.ProblemIndex < ProblemList.Count)
+                {
+                    globals.ProblemIndex = globals.ProblemIndex + ONE;
+                }
+                if (globals.ProblemIndex >= ProblemList.Count)
+                {
+                    globals.ProblemIndex = ZERO; // Only for testing. Needs to set a check variable for program to show "Nothing to study."
+                }
+                problemTopic = ProblemList.ElementAt(globals.ProblemIndex).TopicID;
+            }
         }
         private void NextProblem()
         {
-            globals.ProblemIndex++;
-            LoadProblem();
+            const int ZERO = 0;
+            const int ONE = 1;
+
+            globals.ProblemsDone = false; // Set this value in a global variable so that button itself will stop executing code. Set it to true anytime an index for a list is !< the list.
+
+            int topicID;
+            int toStudyCount;
+            int topicIndex;
+
+            int numProblems;
+            int problemTopic;
+            int problemIndex;
+
+            /* Initialization */
+            // Size of lists
+            toStudyCount = ToStudy.Count;
+            numProblems = ProblemList.Count;
+
+            // Topic section
+            topicIndex = globals.TopicIndex; // Make sure this is used before this method too.
+            topicID = ToStudy.ElementAt(topicIndex);
+
+            // Problem Section           
+            problemIndex = globals.ProblemIndex; // Make sure to set this, probably in FirstProblem.
+            problemTopic = ProblemList.ElementAt(problemIndex).TopicID;
+
+            if (problemIndex < numProblems)
+            {
+                globals.ProblemIndex = globals.ProblemIndex + ONE;
+                problemIndex = globals.ProblemIndex;
+            }
+            else
+            {
+                globals.ProblemIndex = ZERO;
+                problemIndex = globals.ProblemIndex;
+            }
+
+            if (problemIndex >= numProblems)
+            {
+                globals.ProblemIndex = ZERO;
+                problemIndex = globals.ProblemIndex;
+            }
+
+            problemTopic = ProblemList.ElementAt(problemIndex).TopicID;
+
+            // The new problem may exist for a different topic. This means the topic's problems have all ran. 
+            // If so, the Calculate methods must be called. 
+            // Also, the topicID must increment. 
+            // If the topicID changes to the next one up, then the Problem Index must be set to ZERO, and a loop needs to run.
+
+            // The loop must increment the ProblemIndex.
+            // The loop must check if the TopicID of a problem, matches the current topic ID value in ToStudy.
+            // The loop must exit, once these two ID's match.
+
+            if (problemTopic != topicID)
+            {
+                // Call the Calculate methods here, after I have.
+
+                if (topicIndex < toStudyCount)
+                {
+                    // Topics can not increment in a loop, because no single topic in ToStudy should be skipped.
+                    globals.TopicIndex = globals.TopicIndex + ONE;
+                    topicIndex = globals.TopicIndex;
+
+                    if (topicIndex < toStudyCount)
+                    {
+                        topicID = ToStudy.ElementAt(topicIndex);
+                    }
+
+                }
+
+                if (topicIndex >= toStudyCount)
+                {
+                    globals.ProblemsDone = true; // to disable buttons.
+                    //   Display "No more material for todays study session."
+                }
+
+                // If the topic incremented, then the first problem with the matching topic ID needs to be found.
+
+                if (globals.ProblemsDone == false)
+                {
+                    if (problemTopic != topicID)
+                    {
+                        globals.ProblemIndex = ZERO;
+                        problemIndex = globals.ProblemIndex;
+                        problemTopic = ProblemList.ElementAt(problemIndex).TopicID;
+
+                        while (problemTopic != topicID)
+                        {
+
+                            globals.ProblemIndex = globals.ProblemIndex + ONE;
+                            problemIndex = globals.ProblemIndex;
+                            problemTopic = ProblemList.ElementAt(problemIndex).TopicID;
+                        }
+                    }
+                }
+            }
+
+            globals.TopicID = problemTopic;
+            globals.ProblemID = ProblemList.ElementAt(problemIndex).ProblemID;
         }
         private void LoadProblem()
         {
+            const int ZERO = 0;
+            const int ONE = 1;
             int problemIndex = globals.ProblemIndex;
-
-            // Keep index within range
-            if (problemIndex < 0)
-            {
-                globals.ProblemIndex = 0;
-                problemIndex = globals.ProblemIndex;
-            }
-            if (problemIndex >= ProblemList.Count)
-            {
-                globals.ProblemIndex = 0;
-                problemIndex = globals.ProblemIndex;
-            }
 
             // Get the problem ID into the global variable for the check when loading the answers later.
             //globals.ProblemID 
@@ -314,23 +428,20 @@ namespace ObservableImageTest
             // Copy the problem values so I can use them
             string problemPath = ProblemList.ElementAt(globals.ProblemIndex).ProblemPath;
             int problemID = ProblemList.ElementAt(globals.ProblemIndex).ProblemID;
-
             globals.ProblemID = problemID;
 
 
-            if (globals.InitializerIndex == 0)
+            if (globals.ProblemInitializer == ZERO)
             {
                 ProblemContent.Add(new ProblemModel { ProblemPath = problemPath });
 
-                globals.InitializerIndex++;
+                globals.ProblemInitializer = ONE;
             }
             else
             {
                 ProblemContent.RemoveAt(0);
                 ProblemContent.Add(new ProblemModel { ProblemPath = problemPath });
             }
-
-
         }
 
         // Answers Section
@@ -363,19 +474,24 @@ namespace ObservableImageTest
 
             // Just like "AnswerIndexTwo" must be greater than "AnswerIndexOne," by a value of 1; "AnswerIndexThree" should
             // be greater than "AnswerIndexTwo," by a value of 1. 
-            globals.AnswerIndexThree = globals.AnswerIndexTwo + ONE;
+             globals.AnswerIndexThree = globals.AnswerIndexTwo + ONE;
+
+            
 
 
 
+            // Move these to be called from the button instead.
 
-            AnswerProblemCompare();
-            LoadAnswers();
         }
         private void AnswerProblemCompare()
         {
             const int ZERO = 0;
             const int ONE = 1;
             const int TWO = 2;
+
+            globals.AnswerIndexOne = ZERO;
+            globals.AnswerIndexTwo = globals.AnswerIndexOne + ONE;
+            globals.AnswerIndexThree = globals.AnswerIndexTwo + ONE;
 
             // Index
             int indexOne = globals.AnswerIndexOne;
@@ -386,8 +502,7 @@ namespace ObservableImageTest
             int problemID = globals.ProblemID;
 
             // Answer
-            int answerOneID = AnswersList.ElementAt(indexOne).AnswerID;
-            int answerThreeID = AnswersList.ElementAt(indexThree).AnswerID;
+            int answerOneID = AnswersList.ElementAt(indexOne).ProblemID;
 
             while (answerOneID != problemID)
             {
@@ -410,7 +525,8 @@ namespace ObservableImageTest
 
                 // Get the new answer ID to check
                 indexOne = globals.AnswerIndexOne;
-                answerOneID = AnswersList.ElementAt(indexOne).AnswerID;
+                answerOneID = AnswersList.ElementAt(indexOne).ProblemID;
+
             }
         }
         private void LoadAnswers()
@@ -425,12 +541,12 @@ namespace ObservableImageTest
             int indexThree = globals.AnswerIndexThree;
 
             // Shuffle the copied index values of the answers to use.
-            var array = new int[] { indexOne, indexTwo, indexThree };
-            new Random().Shuffle(array);
+            var indexArray = new int[] { indexOne, indexTwo, indexThree };
+            new Random().Shuffle(indexArray);
 
-            int valueOne = array[ZERO];
-            int valueTwo = array[ONE];
-            int valueThree = array[TWO];
+            int valueOne = indexArray[ZERO];
+            int valueTwo = indexArray[ONE];
+            int valueThree = indexArray[TWO];
 
             /* Assigning letters to the randomized answers that display. "a)", "b)", and "c)", 
              * need to display in alphabetic order 
@@ -465,31 +581,30 @@ namespace ObservableImageTest
             bool correctIncorrectThree = AnswersList.ElementAt(valueThree).AnswerCorrect;
 
 
-            if (globals.InitializerIndex == 1)
+            if (globals.AnswerInitializer == ZERO)
             {
                 AnswersContent.Add(new AnswerModel { AnswerPath = answerImageOne, DisplayLetter = letterOne, AnswerCorrect = correctIncorrectOne });
                 AnswersContent.Add(new AnswerModel { AnswerPath = answerImageTwo, DisplayLetter = letterTwo, AnswerCorrect = correctIncorrectTwo });
                 AnswersContent.Add(new AnswerModel { AnswerPath = answerImageThree, DisplayLetter = letterThree, AnswerCorrect = correctIncorrectThree });
 
-                globals.InitializerIndex++;
+                globals.AnswerInitializer = ONE;
             }
             else
             {
 
-                AnswersContent.RemoveAt(ZERO);
+                AnswersContent.RemoveAt(0);
                 AnswersContent.Add(new AnswerModel { AnswerPath = answerImageOne, DisplayLetter = letterOne, AnswerCorrect = correctIncorrectOne });
 
-                AnswersContent.RemoveAt(ZERO);
+                AnswersContent.RemoveAt(0);
                 AnswersContent.Add(new AnswerModel { AnswerPath = answerImageTwo, DisplayLetter = letterTwo, AnswerCorrect = correctIncorrectTwo });
 
-                AnswersContent.RemoveAt(ZERO);
+                AnswersContent.RemoveAt(0);
                 AnswersContent.Add(new AnswerModel { AnswerPath = answerImageThree, DisplayLetter = letterThree, AnswerCorrect = correctIncorrectThree });
             }
         }
 
         // Lesson Section
-        // Compare lesson to topic ID instead.
-        private void LessonTopicCompare()
+        private void LessonProblemCompare()
         {
             const int ZERO = 0;
             const int ONE = 1;
@@ -540,6 +655,4 @@ namespace ObservableImageTest
 
         }
     }
-
-
 }
