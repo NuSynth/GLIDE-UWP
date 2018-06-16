@@ -1,493 +1,399 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Console;
 
-namespace Teacher_No_GUI
+namespace Calculate_Tests
 {
-    class Program
+    public class Program
     {
+        public static List<TopicModel> TopicsList = new List<TopicModel>();
+        public static List<int> ToStudy = new List<int>(); // Contains ID's for the current study session.
+        public static List<int> ToStudyDateTest = new List<int>();
+        public static GlobalVariables globals = new GlobalVariables();
 
-        ////	/* 
-        ////	   ln(K) is used in the calculatations of Retrievability and Stability 
-        ////	   of engrams to 95% accuracy, where K is equal to 0.95 . The value which 
-        ////	   is input to the natural logarithm never differs for the equations from 
-        ////	   the research that this software is based upon. The result of ln(K) is
-        ////	   stored within the constant labeled KNOWLEDGE_LINK.
-        ////	*/           
-
-        static void Main(string[] args)
-        {
-
-            /* Call method here to fill 2 lists with:
-             * New Topic ID's, and Rehearsal Topic ID's. */
-
-            // initializeComponent(); <-- or whatever it's called, I don't remember
-        }
+        // Constants
         public const double KNOWLEDGE_LINK = -0.0512932943875506;
         public const double ONE = 1;
         public const double NEGATIVE_ONE = -1;
-        public const double SINGLE_DAY = 1440; // 1440 is the quatity in minutes of a day. It's global because future updates will also need access to it.
+        public const double SINGLE_DAY = 1440; // 1440 is the quatity in minutes of a day. Probably better to just count a day as 1, instead of by 1440 minutes.
 
-        MyGlobals globalStorage = new MyGlobals();
-
-        private void Button_Click()
-        {
-            Practice_This_Topic();
-        }
-
-        //private static void Process_Learning_Software()
-        //{
-        //    Perform_Topic_Review();
-        //    Introduce_New_Topic();
-        //}
-
-        //private static void Perform_Topic_Review()
-        //{
-        //    ////	Read system date
-        //    var dateAndTime = DateTime.Now;
-        //    var today = dateAndTime.Date;
+        
+        
 
 
+        public static void Main(string[] args)
+        {           
+            // Test Selection 
+            // const int ZERO = 0;
+            bool runTest = true;
+            string choiceAsString;
+            int choice;
 
+            globals.TopicIndex = 0;
 
-        //    ////	Open student record file:
-        //    ////    FillDB_Or_UseDB(); <--- Might do this @ program entry point instead
+            while (runTest == true)
+            {                
+                Write("\nTest choices:");
+                Write("\n 0) Increment TopicIndex");
+                Write("\n 1) Calculate_Forgetting_Curve: ");
+                Write("\n 2) Colculate_Topic_Difficulty: ");
+                Write("\n 3) Colculate_Interval_Time: ");
+                Write("\n 4) Calculat_Engram_Stability: ");
+                Write("\n 5) Calculate_Engram_Retrievability ");
+                Write("\n 6) Process_New_Date: ");  
+                
+                Write("\nEnter one of the integers to run one of the tests: ");
+                ReadLine();
 
+                choiceAsString = ReadLine();
+                choice = Convert.ToInt32(choiceAsString);
 
+                
+                switch (choice)
+                {
+                    case 1:
+                    {
+                        // 1
+                        // Unchecked
+                        Calculate_Forgetting_Curve();
+                        Write("Calculate forgetting curve ran.");
+                        ReadLine();
+                        Write("\n");
+                        break;
+                    }
+                        
+                    case 2:
+                    {
+                        // 2
+                        // Unchecked
+                        Colculate_Topic_Difficulty();
+                        Write("Colculate_Topic_Difficulty ran.");
+                        ReadLine();
+                        Write("\n");
+                        break;
+                    }
+                    case 3:
+                    {
+                        // 3
+                        // Unchecked
+                        Colculate_Interval_Time();
+                        Write("Colculate_Interval_Time ran.");
+                        ReadLine();
+                        Write("\n");
+                        break;
+                    }
+                    case 4:
+                    {
+                        // 4
+                        // Unchecked
+                        Calculat_Engram_Stability();
+                        Write("Calculat_Engram_Stability ran.");
+                        ReadLine();
+                        Write("\n");
+                        break;
+                    }
+                        
+                    case 5:
+                    {
+                        // 5
+                        // Unchecked
+                        Calculate_Engram_Retrievability();
+                        Write("Calculate_Engram_Retrievability ran.");
+                        ReadLine();
+                        Write("\n");
+                        break;
+                    }
+                    case 6:
+                    {
+                        // 6
+                        // Unchecked
+                        Process_New_Date();
+                        Write("Process_New_Date ran.");
+                        ReadLine();
+                        Write("\n");
+                        break;
+                    }
+                       
+                    default:
+                    {
+                        Console.WriteLine("Not an avalailable choice.");
+                        ReadLine();
+                        Write("\n");
+                        break;
+                    }
+                }
 
-
-        //    ////	DOWHILE student record file Date column <= today AND {t.Previous_Session} != today
-        //    Practice_this_topic();
-
-        //    ////	ENDDO
-        //}
-
-        //private static void Introduce_New_Topic()
-        //{
-
-        //    ////	DOWHILE student record file Date column == NEW_TOPIC AND NOT= EOF
-        //    ////		Practice_this_topic
-        //    ////		set student record file linecount to zero
-        //    ////		Open student record file
-        //    ////	ENDDO
-        //    ////END
-        //}
-
-        public void Practice_This_Topic()
-        {
-            ////	//Initialize variables
-            ////	set missedAnswers to zero
-            Process_Course_Materials();// Process_Course_Materials(reference to missedAnswers)            
-                                       ////	Calculating_forgetting_curve(value of missedAnswers);
-
-
-            Process_New_Date();
-
-            ////END
-        }
-
-        public void Process_Course_Materials()//reference to missedAnswers)
-        {
-            ////	set totalProblems to student record totalProblems column
-            ////	set correctProblems to zero
-            ////	set problemsValue= (2.5 * totalProblems)
-            ////	set singleProblem = (2.5 * ( totalProblems / one))
-            ////	set missedAnswers = (2.5 * totalProblems)
-            ////	Open directory with name == student record ID column
-            ////	Open answers record file
-            ////	set answers record linecount to zero
-            ////	Read answers row
-            ////	set answer to answers record row
-            ////	set problem image ID to zero
-            ////	set punisher image ID to zero
-            ////	set reinforcer image ID to zero
-            ////	Display instructions text file in left side of window
-            ////	DOWHILE correctProblems < totalProblems
-            ////		Display problem image in right side of window
-            ////		Prompt user for input
-            ////		Get input
-            ////		IF input NOT= to answer
-            ////			missedAnswers = missedAnswers + one
-            ////			Hide problem image
-            ////			Display punisher image in right side of window
-            ////			wait for user to go back to problem
-            ////			Close punisher image
-            ////			missedAnswers = missedAnswers - one
-            ////		ENDIF
-            ////		IF input == to answer THEN			
-            ////			Close problem image
-            ////			Display reinforcer image in right side of window
-            ////			wait for user to go to next problem
-            ////			Close reinforcer image
-            ////			IF correctProblems < totalProblems THEN
-            ////				increment answers record linecount
-            ////				Read answers record row
-            ////				set answer to answers record row
-            ////				increment problem image ID
-            ////				increment punishment image ID
-            ////				increment reinforcer image ID
-            ////			ENDIF
-            ////// Add Retrievability to display in Review_past_topics course work
-            ////// before topic is finished, to show low, then when
-            ////// answered correctly, to show high.
-            /////* Example: 
-            ////		IF student record file Date column == today
-            ////	IF date != new THEN
-            ////		Display Retrievability at input prompts
-            ////	ENDIF
-
-            ////	// Always display retrievability when topic is is finished
-            ////	IF correctAnswers == totalAnswers THEN
-            ////		Display new Retrievability after reinforcer display
-            ////	ENDIF
-            ////*/
-            ////		ENDIF
-            ////	ENDDO
-            ////	Go to previous directory
-        }
-
-        ////// All values, except for the the natural logarithm of 0.95, are initially set at zero in the student record
-        ////Calculate_forgetting_curve(value of missedAnswers)
-        public void Calculate_Forgetting_Curve()
-        {
-            double ithRepetition = _TopicInfo.ElementAt(globalStorage.Index).Top_Repetition;
-
-            ithRepetition += ONE;
-            if (ithRepetition == ONE)
-            {
-                Colculate_Topic_Difficulty();
             }
 
-            _TopicInfo.ElementAt(globalStorage.Index).Top_Repetition = ithRepetition;
-            Colculate_Interval_Time();
-            Calculat_Engram_Stability();
-            Calculate_Engram_Retrievability();
         }
 
-        //Calculate_topic_difficulty(value of missed, reference to difficulty, value of totalProblems)
-        public void Colculate_Topic_Difficulty()
+        // 0
+        // Unchecked
+        private static void Increment_TopicIndex()
+        {
+            const int ONE = 1;
+            Write("Current TopicIndex == {0}", globals.TopicIndex);
+            ReadLine();
+
+            globals.TopicIndex = globals.TopicIndex + ONE;
+
+            Write("New TopicIndex == {0}", globals.TopicIndex);
+            ReadLine();
+        }
+        
+        // 1
+        // Unchecked
+        private static void Calculate_Forgetting_Curve ()
+        {
+            const double ONE = 1;
+            double ithRepetition = TopicsList.ElementAt(globals.TopicIndex).Top_Repetition;
+
+            ithRepetition = ithRepetition + ONE;
+            if (ithRepetition == ONE)
+            {
+                Write("\nithRepetition == {0}", ithRepetition);
+                ReadLine();
+                Write("\Colculate_Topic_Difficulty can be called here, or a cariable set, \nwhich tests in a selection statement, following this method, can call it.");
+                ReadLine();
+                // Colculate_Topic_Difficulty();
+            }
+            Write("\nIf message about difficulty does not directly preceed this message, \nthen do not call calculate_difficulty.");
+            ReadLine();
+
+            TopicsList.ElementAt(globals.TopicIndex).Top_Repetition = ithRepetition;
+            Write("\n TopicsList's Top_Repetition set = {0}", ithRepetition);  
+            ReadLine();
+
+            Write("\nThe follwing methods were called from this method, in the design:");
+            Write("\nColculate_Interval_Time");  
+            Write("\nCalculat_Engram_Stability");  
+            Write("\nCalculate_Engram_Retrievability");
+            Write("\n\n\nIt is better to call those methods, from the same one that calls this method, \nin the same intended order."); 
+            ReadLine();
+        }
+
+        // 2
+        // Unchecked
+        private static void Colculate_Topic_Difficulty ()
         {
             // Since intervalTime multiplies against difficulty, and difficulty is set only once
             // then a topic could be scheduled every day for a long time if too close to 1.0, and too 
             // far apart if above 2.5
 
-            //int index = globalStorage.Index + globalStorage.One; Not sure why I wrote the stuff to the left of this message.
+            //int TopicIndex = globals.TopicIndex + globals.One; Not sure why I wrote the stuff to the left of this message.
+
+            Write("\nIntitalization: ");
+            
 
             const double LOW_DIFFICULTY = 2.5;
             const double HIGH_DIFFICULTY = 1.3;
             double rise = LOW_DIFFICULTY - HIGH_DIFFICULTY;
-            double totalProblems = _TopicInfo.ElementAt(globalStorage.Index).Num_Problems;
-            double correctProblems = _TopicInfo.ElementAt(globalStorage.Index).Num_Correct;
+            double totalProblems = TopicsList.ElementAt(globals.TopicIndex).Num_Problems;
+            double correctProblems = TopicsList.ElementAt(globals.TopicIndex).Num_Correct;
             double run = totalProblems;
-            double slope = rise / run;
+            double slope = rise / run;            
 
             // Slope-Intercept formula y = mx + b
             double difficulty = (slope * correctProblems) + HIGH_DIFFICULTY;
 
+            Write("\nLOW_DIFFICULTY = {0}", LOW_DIFFICULTY);
+            Write("\nHIGH_DIFFICULTY = {0}", HIGH_DIFFICULTY);
+            Write("\nrise = {0}", rise);
+            Write("\ntotalProblems = {0}", totalProblems);
+            Write("\ncorrectProblems = {0}", correctProblems);
+            Write("\nrun = {0}", run);
+            Write("\nslope = {0}", slope);
+            Write("\ndifficulty = {0}", difficulty);
+            Write("\nPress Enter to write the difficulty to the DB of the topic, and exit the method.");
+            ReadLine();
+
             //  Write difficulty to student record file Difficulty column
-            _TopicInfo.ElementAt(globalStorage.Index).Top_Difficulty = difficulty;
+            TopicsList.ElementAt(globals.TopicIndex).Top_Difficulty = difficulty;            
         }
 
-        ////Calculate_interval_time(value of ithRepetition)
-        public void Colculate_Interval_Time()
+        // 3
+        // Unchecked
+        private static void Colculate_Interval_Time ()
         {
-            double difficulty = _TopicInfo.ElementAt(globalStorage.Index).Top_Difficulty;
-            double ithRepetition = _TopicInfo.ElementAt(globalStorage.Index).Top_Repetition;
-            double intervalRemaining = _TopicInfo.ElementAt(globalStorage.Index).Interval_Remaining;
-            double intervalLength = _TopicInfo.ElementAt(globalStorage.Index).Interval_Length;
+            const double ONE = 1;
+
+            Write("\nCalculate Interval Time, variable initialization. \nPress Enter.");
+            ReadLine();
+            double difficulty = TopicsList.ElementAt(globals.TopicIndex).Top_Difficulty;
+            double ithRepetition = TopicsList.ElementAt(globals.TopicIndex).Top_Repetition;
+            double intervalRemaining = TopicsList.ElementAt(globals.TopicIndex).Interval_Remaining;
+            double intervalLength = TopicsList.ElementAt(globals.TopicIndex).Interval_Length;
+
+            Write("\ndifficulty = {0}", difficulty);
+            Write("\nithRepetition = {0}", ithRepetition);
+            Write("\nintervalRemaining = {0}", intervalRemaining);
+            Write("\nintervalLength = {0}", intervalLength);
+            ReadLine();
+
+            
             //     Second repetition will occur the next day. 
             //	   Although, the research document does not precisely
             //	   state a time frame until the second repetition. The 
             //	   values of the two variables may need to be changed, 
             //	   if the spacing is too far apart.
 
+            Write("\nIF ithRepetition == ONE");
+            ReadLine();
             if (ithRepetition == ONE)
             {
+                Write("\nithRepetition is == ONE");
+                ReadLine();
+
                 // The researech document says that s == r @ 1st repetition
                 intervalRemaining = SINGLE_DAY;
                 intervalLength = SINGLE_DAY;
+                Write("\intervalRemaining = {0}", intervalRemaining);                
+                Write("\intervalLength = {0}", intervalLength);
+                ReadLine();
             }
             else
             {
+                Write("\nithRepetition is NOT= ONE");
+                ReadLine();
                 intervalLength = intervalLength * difficulty;
+
+                Write("\nintervalLength = {0}", intervalLength);
+                ReadLine();
             }
+            Write("\nSelection sequence complete.");
+            ReadLine();
 
             intervalRemaining = intervalLength;
+            Write("\intervalRemaining = intervalLength, which is == {0}", intervalLength);
+            ReadLine();
+
 
             //    Write intervalLength to student record file Interval column
-            _TopicInfo.ElementAt(globalStorage.Index).Interval_Length = intervalLength;
+            TopicsList.ElementAt(globals.TopicIndex).Interval_Length = intervalLength;
+            Write("\nWrite intervalLength to student record file Interval column");
+            ReadLine();
 
             //    Write remainingTime to student record file RTime column
-            _TopicInfo.ElementAt(globalStorage.Index).Interval_Remaining = intervalRemaining;
-        }
+            TopicsList.ElementAt(globals.TopicIndex).Interval_Remaining = intervalRemaining;     
+            Write("\nWrite remainingTime to student record file RTime column.");
+            ReadLine();
 
-        public void Calculat_Engram_Stability()
+            Write("\nCalculate Interval Time is complete \nPress Enter.");
+            ReadLine();
+        }
+        
+        // 4
+        // Unchecked
+        private static void Calculat_Engram_Stability ()
         {
+            Write("\nCalculat_Engram_Stability: variable initialization phase. \nPress Enter.");
+            ReadLine();
+            const double NEGATIVE_ONE = -1;
             // remainingTime and intervalLength represent the variables r and s of the research document, respectively.
             // The values of remainingTime, and intervalLength, represent a quantity of hours.
 
-            double intervalRemaining = _TopicInfo.ElementAt(globalStorage.Index).Interval_Remaining;
-            double intervalLength = _TopicInfo.ElementAt(globalStorage.Index).Interval_Length;
+            double intervalRemaining = TopicsList.ElementAt(globals.TopicIndex).Interval_Remaining;
+            double intervalLength = TopicsList.ElementAt(globals.TopicIndex).Interval_Length;
 
             // LOOK AT STUDY'S FORMULA TO DOUBLE CHECK THIS CALCULATION.
             double stabilityOfEngram = (NEGATIVE_ONE * intervalLength) / KNOWLEDGE_LINK;
 
+            Write("\nintervalRemaining = {0}", intervalRemaining);
+            Write("\nintervalLength = {0}", intervalLength);
+            Write("\nstabilityOfEngram = {0}", stabilityOfEngram);
+            ReadLine();
+
             // Write Stability to student record file Stability column
-            _TopicInfo.ElementAt(globalStorage.Index).Engram_Stability = stabilityOfEngram;
+            TopicsList.ElementAt(globals.TopicIndex).Engram_Stability = stabilityOfEngram;
+            Write("\nTopicsList's Engram_Stability = {0}", stabilityOfEngram);
+            ReadLine();   
+
+            Write("\nCalculat_Engram_Stability is complete \nPress Enter.");
+            ReadLine();         
         }
 
-        public void Calculate_Engram_Retrievability()
+        // 5
+        // Unchecked
+        private static void Calculate_Engram_Retrievability ()
         {
-            double intervalLength = _TopicInfo.ElementAt(globalStorage.Index).Interval_Length;
-            double intervalRemaining = _TopicInfo.ElementAt(globalStorage.Index).Interval_Remaining;
-            double stabilityOfEngram = _TopicInfo.ElementAt(globalStorage.Index).Engram_Stability;
+            Write("\nCalculate_Engram_Retrievability: variable initialization phase. \nPress Enter.");
+            ReadLine();
+
+            double intervalLength = TopicsList.ElementAt(globals.TopicIndex).Interval_Length;
+            double intervalRemaining = TopicsList.ElementAt(globals.TopicIndex).Interval_Remaining;
+            double stabilityOfEngram = TopicsList.ElementAt(globals.TopicIndex).Engram_Stability;
             double power = NEGATIVE_ONE * (intervalLength - intervalRemaining) / stabilityOfEngram;
             double retrievability = Math.Exp(power);
 
+            Write("\nintervalLength = {0}", intervalLength);
+            Write("\nintervalRemaining = {0}", intervalRemaining);
+            Write("\nstabilityOfEngram = {0}", stabilityOfEngram);
+            Write("\npower = {0}", power);
+            Write("\nretrievability = {0}", retrievability);
+            ReadLine();
+
+
+
             ////	Write retrievability to student record file Retrievability column
-            _TopicInfo.ElementAt(globalStorage.Index).Interval_Length = retrievability;
+            TopicsList.ElementAt(globals.TopicIndex).Interval_Length = retrievability;       
+            Write("\nTopicsList's Interval_Length = {0}", retrievability);
+            ReadLine();        
+
+            Write("\Calculate_Engram_Retrievability is complete \nPress Enter.");
+            ReadLine(); 
         }
 
-
-        public void Process_New_Date()
+        // 6
+        // Unchecked
+        private static void Process_New_Date ()
         {
-            int index = globalStorage.Index;
-            double intervalLength = _TopicInfo.ElementAt(globalStorage.Index).Interval_Length;
-            double intervalRemaining = _TopicInfo.ElementAt(globalStorage.Index).Interval_Remaining;
+            Write("\nProcess_New_Date: variable initialization phase. \nPress Enter.");
+            ReadLine();
 
+            int TopicIndex = globals.TopicIndex;
+            double intervalLength = TopicsList.ElementAt(globals.TopicIndex).Interval_Length;
+            double intervalRemaining = TopicsList.ElementAt(globals.TopicIndex).Interval_Remaining;
             double days = Convert.ToInt32(intervalLength / intervalRemaining);
             DateTime today = DateTime.Now;
             DateTime daysAway = today.AddDays(days);
-            _TopicInfo.ElementAt(globalStorage.Index).Study_Date = Convert.ToString(daysAway);
-            // Increment the array I will use as the index of IEnumerable
+
+            Write("\nTopicIndex = {0}", TopicIndex);
+            Write("\nintervalLength = {0}", intervalLength);
+            Write("\nintervalRemaining = {0}", intervalRemaining);
+            Write("\ndays = {0}", days);
+            Write("\ntoday = {0}", today);
+            Write("\ndaysAway = {0}", daysAway);
+            ReadLine();
+
+            TopicsList.ElementAt(globals.TopicIndex).Study_Date = Convert.ToString(daysAway);
+            // Increment the array I will use as the TopicIndex of IEnumerable    
+
+            Write("\nTopicsList's Study_Date = {0}", daysAway);
+            ReadLine();           
         }
-
-        /* Might be a good part to write code that updates the database. */
-
-
-        /* Need to store index values for:
-         * 
-         * ElementAt(globalStorage.Index) 
-         *  
-         * into two arrays, or lists. One array, or list, for 
-         * indexes of dates <= todays date, another array for 
-         * blank dates (new dates).
-         * 
-         * This will make:
-         * 
-         *      globalStorage.Index
-         *  
-         *  become:
-         *  
-         *      reviewArray(index) 
-         *      
-         *      and
-         *      newArray(index)
-         *      
-         *  Those arrays will copy into another list:
-         *      
-         *      index = 0;
-         *      If ( reviewArray(index)  != null ) // reviewArray is null, if there is nothing to review up to the current date.
-         *      {
-         *          currentIndexList = reviewArray(index);
-         *          Perform_Study; // or whatever it's called. The indexes will run out, 
-         *          // and the next phase needs to begin, which is to make index = 0; currentIndexList = newArray(index);
-         *      }
-         *      index = 0;
-         *      currentIndexList = newArray(index);
-         *      Perform_Study;
-         *      
-         *      // No else selection needed.
-         *      
-         *      
-         * /
-       
-
-        /* New method that decides to make or use DB */
-        public async void FillDB_Or_UseDB()
-        {
-            var dataFile = "courses.sqlite";
-            var folder = ApplicationData.Current.LocalFolder;
-
-            // This returns null if it doesn't exist
-            var file = await folder.TryGetItemAsync(dataFile);
-
-            // Create new DB if one does not exist.
-            if (file == null)
-            {
-                // This check may need to be carried out in a different method
-                Fill_Empty_DB();
-            }
-
-            // Displays Database Contents       
-            Implement_Existing_File();
-
-        }
-
-        // Fills db from default values if file just made
-        public async void Fill_Empty_DB()
-        {
-            _TopicInfo = _DefaultTopicInfo;
-
-            // Almost the same as original
-            using (SQLiteConnection connection = await Initialize_Db_Connection())
-            {
-                connection.CreateTable<TopicInfo>();
-
-                // Creates the database, or fills it. Not sure yet.
-                foreach (var info in _TopicInfo)
-                {
-                    connection.InsertOrReplace(info);
-                }
-
-            }
-        }
-
-        // This reads data values from existing db
-        public async void Implement_Existing_File()
-        {
-            using (var conn = await Initialize_Db_Connection())
-            {
-                var infos = from p in conn.Table<TopicInfo>() select p;
-
-                // Table values
-                var names = string.Join("\n", infos.Select(t =>
-                $"\nTopic ID: {t.Top_ID} " +
-                $"\nTopic Name: {t.Top_Name} " +
-                $"\nCourse ID Number: {t.Course_ID}" +
-
-                $"\nTopic Studied: {t.Top_Studied} " +
-                $"\nPrevious Study Date: {t.Previous_Session}" +
-                $"\nDate Studied: {t.Study_Date} " +
-
-                $"\nNumber of Problems: {t.Num_Problems} " +
-                $"\nCorrect 1st Answers: {t.Num_Correct} " +
-                $"\nTopic Difficulty: {t.Top_Difficulty} " +
-                $"\nithRepetition: {t.Top_Repetition} " +
-                $"\nRemaining interval: {t.Interval_Remaining} " +
-                $"\nInterval Length: {t.Interval_Length} " +
-                $"\nEngram Stability: {t.Engram_Stability} " +
-                $"\nEngram Retrievability: {t.Engram_Retrievability} "));
-
-                //var id = string.Join("\n", infos.Select(t => t.Top_ID));
-                //Result.Text = names;
-                textHolder.HoldText = names;
-            }
-        }
-
-        // This array is made because I want to store data, 
-        //and this array is the current data
-        TopicInfo[] _TopicInfo = Array.Empty<TopicInfo>();
-
-        // This database needs some initial topic data to save into it, so that is what this is for.
-        /* topic data initial values */
-        private static TopicInfo[] _DefaultTopicInfo = new TopicInfo[]
-        {
-           new TopicInfo()
-            {
-                Top_ID = 0001,
-                Top_Name = "Sets",
-                Top_Studied = false,
-
-                First_Date = null,
-                Study_Date = null,
-                Num_Problems = 5,
-                Num_Correct = 0,
-
-                Top_Difficulty = 0,
-                Top_Repetition = 0,
-                Interval_Remaining = 0,
-
-                Interval_Length = 0,
-                Engram_Stability = 0,
-                Engram_Retrievability = 0,
-
-                Course_ID = 0001,
-            },
-           new TopicInfo()
-            {
-                Top_ID = 0002,
-                Top_Name = "Sub Sets",
-                Top_Studied = false,
-
-                First_Date = null,
-                Study_Date = null,
-                Num_Problems = 4,
-                Num_Correct = 0,
-
-                Top_Difficulty = 0,
-                Top_Repetition = 0,
-                Interval_Remaining = 0,
-
-                Interval_Length = 0,
-                Engram_Stability = 0,
-                Engram_Retrievability = 0,
-
-                Course_ID = 0001,
-            },
-           new TopicInfo()
-            {
-                Top_ID = 0003,
-                Top_Name = "Union and Intersection",
-                Top_Studied = false,
-
-                First_Date = null,
-                Study_Date = null,
-                Num_Problems = 2,
-                Num_Correct = 0,
-
-                Top_Difficulty = 0,
-                Top_Repetition = 0,
-                Interval_Remaining = 0,
-
-                Interval_Length = 0,
-                Engram_Stability = 0,
-                Engram_Retrievability = 0,
-
-                Course_ID = 0001,
-            },
-        };
-
-        /* Create database if file does not exist */
-        private async Task<SQLiteConnection> Initialize_Db_Connection()
-        {
-
-            // This group of code will essentially do what the first button does 
-            // in the database program I copied, except it only makes the db if 
-            // the file does not exist.
-
-            var dataFile = "courses.sqlite";
-            var folder = ApplicationData.Current.LocalFolder;
-
-            // This returns null if it doesn't exist
-            var file = await folder.TryGetItemAsync(dataFile);
-
-            // SQLite wants an actual path to create the database in.
-            var sqlpath = Path.Combine(folder.Path, dataFile);
-
-            // Now the database is created, by creating the connection. SQLitePlatformWinRT is needed here, so 
-            // that SQLite knows what it's dealing with. 13:18 in video 19
-            return new SQLiteConnection(new SQLite.Net.Platform.WinRT.SQLitePlatformWinRT(), sqlpath);
-
-        }
-
-
-
     }
-    // This is needed to save topic information.
-    /* topic info class */
-    public class TopicInfo
+
+    // TopicModel Class File Contents
+    public class TopicModel
     {
-        [PrimaryKey]
-        public int Top_ID { get; set; }
-        public string Top_Name { get; set; }
+        public int Top_ID { get; set; } 
+        public int Course_ID { get; set; } // If more than one course, then it may be best to not start the TopicID at ZERO for the first topic, so that less of the program needs modifying to allow multiple courses.
+        public string Top_Name { get; set; } // This is only used to make things easier for building a course. I can't think of why this would be needed, other than for that purpose.
         public bool Top_Studied { get; set; }
 
-        public string First_Date { get; set; }
+        public string Next_Date { get; set; }
+        public string First_Date { get; set; }  // I might have a feature that displays the progress of topics since their first study dates.
 
-        public string Study_Date { get; set; }
+        // The number of correct problems, out of the total problems for a topic, 
+        // is in the databse, just in case the range for the calculation of difficulty 
+        // needs to be adjusted a little. The range for difficulty is not mentioned in
+        // any research I could find. But, there definitely is a range. 1.3 for hardest, 
+        // and 2.5 for easiest, appears to me to be correct. I will need to analyze the
+        // results of research better, to see if the values need to be changed. Close is
+        // good enough to me, until the program is fully functional.
         public double Num_Problems { get; set; }
         public double Num_Correct { get; set; }
 
@@ -498,18 +404,155 @@ namespace Teacher_No_GUI
         public double Interval_Length { get; set; }
         public double Engram_Stability { get; set; }
         public double Engram_Retrievability { get; set; }
+    }
+    // Part of Topic Model. There can be any number of topics. I have three here just to have something at the moment.
+    public class TopicManager : TopicModel
+    {
+        // The database needs some initial topic data to save into it, so that is what this is for.
+        /* topic data initial values */
+        public static List<TopicModel> GetTopics()
+        {
+            var Topics = new List<TopicModel>();
 
-        public int Course_ID { get; set; }
+            Topics.Add(new TopicModel
+            {
+                Top_ID = 0,
+                Course_ID = 0,
+                Top_Name = "Sets",
+                Top_Studied = false,
+                Next_Date = "none",
 
+                Num_Problems = 5,
+                Num_Correct = 0,
+
+                Top_Difficulty = 0,
+                Top_Repetition = 0,
+                Interval_Remaining = 0,
+
+                Interval_Length = 0,
+                Engram_Stability = 0,
+                Engram_Retrievability = 0,
+            }
+            );
+            Topics.Add(new TopicModel
+            {
+                Top_ID = 1,
+                Course_ID = 0,
+                Top_Name = "Sub Sets",
+                Top_Studied = false,
+                Next_Date = "none",
+
+                Num_Problems = 4,
+                Num_Correct = 0,
+
+                Top_Difficulty = 0,
+                Top_Repetition = 0,
+                Interval_Remaining = 0,
+
+                Interval_Length = 0,
+                Engram_Stability = 0,
+                Engram_Retrievability = 0,
+            }
+            );
+            Topics.Add(new TopicModel
+            {
+                Top_ID = 2,
+                Course_ID = 0,
+                Top_Name = "Union and Intersection",
+                Top_Studied = false,
+                Next_Date = "none",
+
+                Num_Problems = 2,
+                Num_Correct = 0,
+
+                Top_Difficulty = 0,
+                Top_Repetition = 0,
+                Interval_Remaining = 0,
+
+                Interval_Length = 0,
+                Engram_Stability = 0,
+                Engram_Retrievability = 0,
+            }
+            );
+
+            return Topics;
+        }
     }
 
-    public class MyGlobals
+    // Global Variable Class File Contents
+    public class GlobalVariables
     {
-        public int Index { get; set; }
-        public string HoldText { get; set; }
+        // The variables that also exist in TopicModel, are here to reduce any confusion in the logic. These will be used as a layer between the processing, and the topic class, which is a layer between these variables, and the database.
+        /* Topic Section */
+        public int TopicID { get; set; } // This probably needs to change when I incorporate the other code I've written.
+
+        /* Course Section */
+        public int CourseID { get; set; }
+
+        public bool Top_Studied { get; set; }
+
+        public string Next_Date { get; set; }
+        public string First_Date {get; set; } // I might have a feature that displays the progress of topics since their first study dates.
+
+        public string TodayDate { get; set; } // To store as First_Date, and to compare against Next_Date.
+
+
+        /* The block of code, between these same comment lines, is only for calculations that also exist in DB. */
+        public double Num_Problems { get; set; }
+        public double Num_Correct { get; set; }
+
+        public double Top_Difficulty { get; set; }
+        public double Top_Repetition { get; set; }
+        public double Interval_Remaining { get; set; }
+
+        public double Interval_Length { get; set; }
+        public double Engram_Stability { get; set; }
+        public double Engram_Retrievability { get; set; }
+        /* The block of code, between these same comment lines, is only for calculations that also exist in DB. */
+
+        public double Missed_Answers { get; set; } // Might not use this variable, can't remember. Get rid of it if I don't.
+
+        
+
+        /* Increment Topic */
+        public bool IncrementTopic { get; set; } // This can PROBABLY go. I believe it was going to do what TopicTopicIndex is doing, in a bad design I had that used both variables.
+
+        
+
+        public int TopicTopicIndex { get; set; }
+
+        /* Problem Section */
+        // I need this global TopicIndex, in order to progress through the list of images.
+        public int ProblemID { get; set; }
+        public int ProblemTopicIndex { get; set; }
+
+        /* Answer Section. */
+        public int AnswerID { get; set; }
+
+        /* Lesson Section */
+        public int LessonID { get; set; }
+
+        // I need these three global TopicIndexes in order to progress through the list of images, until ID matching is implemented.
+        public int AnswerTopicIndexOne { get; set; }
+        public int AnswerTopicIndexTwo { get; set; }
+        public int AnswerTopicIndexThree { get; set; }
+
+        // If the user selected an answer to the previous problem, and not the current problem, 
+        // but clicks submit, the global variable that checks if it was correct will still hold 
+        // the previous value. Therefore, "WasAnswered" needs to be true so that the problem can't 
+        // be marked as correct if this value is false.
+        public bool WasAnswered { get; set; }  
+
+        public string RevealAnswer { get; set; } // The letter value of the correct answer is stored here, to display which value was correct, if the user chooses the incorrect answer.
+
+        public int Wait { get; set; } // This is used to allow the user to see the answer, and press the button again without throwing the calculation off once the user is ready to do the next problem.
+        public bool CheckCorrect { get; set; }
+
+        public bool TopicInitializerTopicIndex { get; set; }
+        public int InitializerTopicIndex { get; set; }
     }
 }
 
 
 /* This works to iterate through the database, when the name "_Settings" is changed to the IEnumerable array looking things name. */
-// _TopicInfo.ElementAt(globalIndex).AttributeName = "Name2";
+// TopicsList.ElementAt(globalTopicIndex).AttributeName = "Name2";
