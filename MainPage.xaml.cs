@@ -153,6 +153,8 @@ namespace ObservableImageTest
             const int ZERO = 0;
             const int ONE = 1;
             string reveal = globals.RevealAnswer;
+            double totalProblems = TopicsList.ElementAt(globals.TopicIndex).Num_Problems;
+            double correctProblems = TopicsList.ElementAt(globals.TopicIndex).Num_Correct;
 
             // Gives feedback after answer, or goes to next problem after feedback.
             if (globals.Wait == ZERO)
@@ -165,6 +167,10 @@ namespace ObservableImageTest
                     {
                         // I need to increment a counter of correct answers here for the topic,
                         // and zero the variable somewhere else after the topic is calculated.
+
+                        correctProblems = correctProblems + ONE;
+                        TopicsList.ElementAt(globals.TopicIndex).Num_Correct = correctProblems;
+
                         Result.Text = "Good Job!";
                     }
                     else
@@ -315,7 +321,8 @@ namespace ObservableImageTest
         }
         private void NextProblem()
         {
-            const int ZERO = 0;
+            const double ZERO_DOUBLE = 0;
+            const int ZERO_INT = 0;
             const int ONE = 1;
 
             globals.ProblemsDone = false; // Set this value in a global variable so that button itself will stop executing code. Set it to true anytime an index for a list is !< the list.
@@ -348,13 +355,13 @@ namespace ObservableImageTest
             }
             else
             {
-                globals.ProblemIndex = ZERO;
+                globals.ProblemIndex = ZERO_INT;
                 problemIndex = globals.ProblemIndex;
             }
 
             if (problemIndex >= numProblems)
             {
-                globals.ProblemIndex = ZERO;
+                globals.ProblemIndex = ZERO_INT;
                 problemIndex = globals.ProblemIndex;
             }
 
@@ -372,6 +379,7 @@ namespace ObservableImageTest
             if (problemTopic != topicID)
             {
                 CalculateAndSave();
+                TopicsList.ElementAt(globals.TopicIndex).Num_Correct = ZERO_DOUBLE;
 
                 if (topicIndex < toStudyCount)
                 {
@@ -398,7 +406,7 @@ namespace ObservableImageTest
                 {
                     if (problemTopic != topicID)
                     {
-                        globals.ProblemIndex = ZERO;
+                        globals.ProblemIndex = ZERO_INT;
                         problemIndex = globals.ProblemIndex;
                         problemTopic = ProblemList.ElementAt(problemIndex).TopicID;
 
@@ -655,6 +663,7 @@ namespace ObservableImageTest
 
         }
 
+        // Calculate Section
         private void CalculateAndSave()
         {
             const double ONE = 1;
@@ -672,7 +681,6 @@ namespace ObservableImageTest
             ProcessDate();
             SaveProgress();
         }
-
         private void AddRepetition()
         {
             const double ONE = 1;
@@ -681,7 +689,6 @@ namespace ObservableImageTest
             ithRepetition = ithRepetition + ONE;
             TopicsList.ElementAt(globals.TopicIndex).Top_Repetition = ithRepetition;
         }
-
         private void TopicDifficulty()
         {
             // Since intervalTime multiplies against difficulty, and difficulty is set only once
@@ -699,7 +706,6 @@ namespace ObservableImageTest
             
             TopicsList.ElementAt(globals.TopicIndex).Top_Difficulty = difficulty; // Write difficulty to student record file Difficulty column
         }
-
         private void IntervalTime()
         {
             const double ONE = 1;
@@ -730,7 +736,6 @@ namespace ObservableImageTest
             TopicsList.ElementAt(globals.TopicIndex).Interval_Length = intervalLength; // Write intervalLength to student record Interval.
             TopicsList.ElementAt(globals.TopicIndex).Interval_Remaining = intervalRemaining; // Write remainingTime to student record file RTime column
         }
-
         private void EngramStability()
         {
             const double KNOWLEDGE_LINK = -0.0512932943875506;
@@ -744,7 +749,6 @@ namespace ObservableImageTest
             stabilityOfEngram = (NEGATIVE_ONE * intervalLength) / KNOWLEDGE_LINK; // S = -s/ln(K), where K = 0.95, and the natural logarithm of K equals KNOWLEDGE_LINK.            
             TopicsList.ElementAt(globals.TopicIndex).Engram_Stability = stabilityOfEngram; // Write Stability to student record file Stability column
         }
-
         private void EngramRetrievability()
         {
             const double NEGATIVE_ONE = -1;
@@ -756,7 +760,6 @@ namespace ObservableImageTest
 
             TopicsList.ElementAt(globals.TopicIndex).Engram_Retrievability = retrievability;
         }
-
         private void ProcessDate()
         {
             int TopicIndex = globals.TopicIndex;
@@ -770,6 +773,7 @@ namespace ObservableImageTest
             TopicsList.ElementAt(globals.TopicIndex).Next_Date = nextDateString;            
         }
 
+        // Save & Load Topic Section
         private void SaveProgress()
         {
 
