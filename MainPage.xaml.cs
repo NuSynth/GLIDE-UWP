@@ -371,7 +371,7 @@ namespace ObservableImageTest
 
             if (problemTopic != topicID)
             {
-                // Call the Calculate methods here, after I have.
+                CalculateAndSave();
 
                 if (topicIndex < toStudyCount)
                 {
@@ -652,6 +652,126 @@ namespace ObservableImageTest
                 AnswersContent.RemoveAt(0);
                 LessonContent.Add(new LessonModel { LessonPath = lessonImage });
             }
+
+        }
+
+        private void CalculateAndSave()
+        {
+            const double ONE = 1;
+            AddRepetition();
+
+            double ithRepetition = TopicsList.ElementAt(globals.TopicIndex).Top_Repetition;
+            if (ithRepetition == ONE)
+            {
+                TopicDifficulty();
+            }
+            
+            IntervalTime();
+            EngramStability();
+            EngramRetrievability();
+            ProcessDate();
+            SaveProgress();
+        }
+
+        private void AddRepetition()
+        {
+            const double ONE = 1;
+            double ithRepetition = TopicsList.ElementAt(globals.TopicIndex).Top_Repetition;
+
+            ithRepetition = ithRepetition + ONE;
+            TopicsList.ElementAt(globals.TopicIndex).Top_Repetition = ithRepetition;
+        }
+
+        private void TopicDifficulty()
+        {
+            // Since intervalTime multiplies against difficulty, and difficulty is set only once
+            // then a topic could be scheduled every day for a long time if too close to 1.0, and too 
+            // far apart if above 2.5
+
+            const double LOW_DIFFICULTY = 2.5;
+            const double HIGH_DIFFICULTY = 1.3;
+            double rise = LOW_DIFFICULTY - HIGH_DIFFICULTY;
+            double totalProblems = TopicsList.ElementAt(globals.TopicIndex).Num_Problems;
+            double correctProblems = TopicsList.ElementAt(globals.TopicIndex).Num_Correct;
+            double run = totalProblems;
+            double slope = rise / run;            
+            double difficulty = (slope * correctProblems) + HIGH_DIFFICULTY; // Slope-Intercept formula y = mx + b
+            
+            TopicsList.ElementAt(globals.TopicIndex).Top_Difficulty = difficulty; // Write difficulty to student record file Difficulty column
+        }
+
+        private void IntervalTime()
+        {
+            const double ONE = 1;
+            const double SINGLE_DAY = 1440; // 1440 is the quatity in minutes of a day. I'm using minutes, instead of whole days, to be more precise.
+            double difficulty = TopicsList.ElementAt(globals.TopicIndex).Top_Difficulty;
+            double ithRepetition = TopicsList.ElementAt(globals.TopicIndex).Top_Repetition;
+            double intervalRemaining = TopicsList.ElementAt(globals.TopicIndex).Interval_Remaining;
+            double intervalLength = TopicsList.ElementAt(globals.TopicIndex).Interval_Length;
+
+            //     Second repetition will occur the next day. 
+            //	   Although, the research document does not precisely
+            //	   state a time frame until the second repetition. The 
+            //	   values of the two variables may need to be changed, 
+            //	   if the spacing is too far apart.
+
+            if (ithRepetition == ONE)
+            {
+                // The researech document says that s == r @ 1st repetition
+                intervalRemaining = SINGLE_DAY;
+                intervalLength = SINGLE_DAY;
+            }
+            else
+            {
+                intervalLength = intervalLength * difficulty;
+            }
+
+            intervalRemaining = intervalLength;            
+            TopicsList.ElementAt(globals.TopicIndex).Interval_Length = intervalLength; // Write intervalLength to student record Interval.
+            TopicsList.ElementAt(globals.TopicIndex).Interval_Remaining = intervalRemaining; // Write remainingTime to student record file RTime column
+        }
+
+        private void EngramStability()
+        {
+            const double KNOWLEDGE_LINK = -0.0512932943875506;
+            const double NEGATIVE_ONE = -1;
+
+            // remainingTime and intervalLength represent the variables r and s, respectively, from the research document.
+            double intervalRemaining = TopicsList.ElementAt(globals.TopicIndex).Interval_Remaining;
+            double intervalLength = TopicsList.ElementAt(globals.TopicIndex).Interval_Length;
+            double stabilityOfEngram;
+
+            stabilityOfEngram = (NEGATIVE_ONE * intervalLength) / KNOWLEDGE_LINK; // S = -s/ln(K), where K = 0.95, and the natural logarithm of K equals KNOWLEDGE_LINK.            
+            TopicsList.ElementAt(globals.TopicIndex).Engram_Stability = stabilityOfEngram; // Write Stability to student record file Stability column
+        }
+
+        private void EngramRetrievability()
+        {
+            const double NEGATIVE_ONE = -1;
+            double intervalLength = TopicsList.ElementAt(globals.TopicIndex).Interval_Length;
+            double intervalRemaining = TopicsList.ElementAt(globals.TopicIndex).Interval_Remaining;
+            double stabilityOfEngram = TopicsList.ElementAt(globals.TopicIndex).Engram_Stability;
+            double power = NEGATIVE_ONE * (intervalLength - intervalRemaining) / stabilityOfEngram;
+            double retrievability = Math.Exp(power);
+
+            TopicsList.ElementAt(globals.TopicIndex).Engram_Retrievability = retrievability;
+        }
+
+        private void ProcessDate()
+        {
+            int TopicIndex = globals.TopicIndex;
+            double intervalLength = TopicsList.ElementAt(globals.TopicIndex).Interval_Length;
+            double intervalRemaining = TopicsList.ElementAt(globals.TopicIndex).Interval_Remaining;
+            double days = Convert.ToInt32(intervalLength / intervalRemaining);
+            DateTime today = DateTime.Now;
+            DateTime nextDate = today.AddDays(days);
+            string nextDateString = nextDate.ToString("d");
+
+            TopicsList.ElementAt(globals.TopicIndex).Next_Date = nextDateString;            
+        }
+
+        private void SaveProgress()
+        {
 
         }
     }
