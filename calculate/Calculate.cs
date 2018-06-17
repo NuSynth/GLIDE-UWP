@@ -594,7 +594,3 @@ namespace Calculate_Tests
         public int InitializerTopicIndex { get; set; }
     }
 }
-
-
-/* This works to iterate through the database, when the name "_Settings" is changed to the IEnumerable array looking things name. */
-// TopicsList.ElementAt(globalTopicIndex).AttributeName = "Name2";
