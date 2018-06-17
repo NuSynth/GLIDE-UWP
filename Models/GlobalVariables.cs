@@ -8,7 +8,7 @@ namespace ObservableImageTest.Models
 {
     public class GlobalVariables
     {
-        /* For the unit test program: TodayDate */
+        /* Probably not needed. I'll remove it after I check that part. */
         public string TodayDate { get; set; }
 
 
