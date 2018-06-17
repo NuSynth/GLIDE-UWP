@@ -153,8 +153,7 @@ namespace ObservableImageTest
             const int ZERO = 0;
             const int ONE = 1;
             string reveal = globals.RevealAnswer;
-            double totalProblems = TopicsList.ElementAt(globals.TopicIndex).Num_Problems;
-            double correctProblems = TopicsList.ElementAt(globals.TopicIndex).Num_Correct;
+            double correctProblems;
 
             // Gives feedback after answer, or goes to next problem after feedback.
             if (globals.Wait == ZERO)
@@ -168,6 +167,7 @@ namespace ObservableImageTest
                         // I need to increment a counter of correct answers here for the topic,
                         // and zero the variable somewhere else after the topic is calculated.
 
+                        correctProblems = TopicsList.ElementAt(globals.TopicIndex).Num_Correct;
                         correctProblems = correctProblems + ONE;
                         TopicsList.ElementAt(globals.TopicIndex).Num_Correct = correctProblems;
 
