@@ -20,14 +20,19 @@ namespace Calculate_Tests
         public const double NEGATIVE_ONE = -1;
         public const double SINGLE_DAY = 1440; // 1440 is the quatity in minutes of a day. Probably better to just count a day as 1, instead of by 1440 minutes.
 
-        
-        
+
+
 
 
         public static void Main(string[] args)
-        {           
+        {
+            // Get topics for the list.
+            TopicsList = TopicManager.GetTopics();
+
             // Test Selection 
             // const int ZERO = 0;
+            // Test Selection
+            const int ZERO = 0;
             bool runTest = true;
             string choiceAsString;
             int choice;
@@ -35,7 +40,7 @@ namespace Calculate_Tests
             globals.TopicIndex = 0;
 
             while (runTest == true)
-            {                
+            {
                 Write("\nTest choices:");
                 Write("\n 0) Increment TopicIndex");
                 Write("\n 1) Calculate_Forgetting_Curve: ");
@@ -43,93 +48,119 @@ namespace Calculate_Tests
                 Write("\n 3) Colculate_Interval_Time: ");
                 Write("\n 4) Calculat_Engram_Stability: ");
                 Write("\n 5) Calculate_Engram_Retrievability ");
-                Write("\n 6) Process_New_Date: ");  
-                
-                Write("\nEnter one of the integers to run one of the tests: ");
-                ReadLine();
+                Write("\n 6) Process_New_Date: ");
 
+                Write("\nEnter one of the integers to run one of the tests: ");
                 choiceAsString = ReadLine();
                 choice = Convert.ToInt32(choiceAsString);
 
-                
+
                 switch (choice)
                 {
+                    /* This top section, (as in: on top, or upper, not topic), is for me to manually do what other parts of the program do. */
+                    case 0:
+                        {
+                            // 0
+                            // Unchecked
+                            Write("\nBefore method call: Topic index is == {0}. \nPress Enter.", globals.TopicIndex);
+                            ReadLine();
+                            Increment_TopicIndex();
+                            Write("\nThe method ran. \nTopic index is now == {0}. \nPress Enter.", globals.TopicIndex);
+                            ReadLine();
+                            Write("\n");
+                            break;
+                        }
+                    case 7:
+                        {
+                            // 7
+                            // Unchecked                            
+                            Write("\n");
+                            ReadLine();
+                            Write("\n");
+                            break;
+                        }
+
+
+
                     case 1:
-                    {
-                        // 1
-                        // Unchecked
-                        Calculate_Forgetting_Curve();
-                        Write("Calculate forgetting curve ran.");
-                        ReadLine();
-                        Write("\n");
-                        break;
-                    }
-                        
+                        {
+                            // 1
+                            // Unchecked
+                            Calculate_Forgetting_Curve();
+                            Write("\nCalculate forgetting curve ran.");
+                            ReadLine();
+                            Write("\n");
+                            break;
+                        }
+
                     case 2:
-                    {
-                        // 2
-                        // Unchecked
-                        Colculate_Topic_Difficulty();
-                        Write("Colculate_Topic_Difficulty ran.");
-                        ReadLine();
-                        Write("\n");
-                        break;
-                    }
+                        {
+                            // 2
+                            // Unchecked
+                            Colculate_Topic_Difficulty();
+                            Write("\nColculate_Topic_Difficulty ran.");
+                            ReadLine();
+                            Write("\n");
+                            break;
+                        }
                     case 3:
-                    {
-                        // 3
-                        // Unchecked
-                        Colculate_Interval_Time();
-                        Write("Colculate_Interval_Time ran.");
-                        ReadLine();
-                        Write("\n");
-                        break;
-                    }
+                        {
+                            // 3
+                            // Unchecked
+                            Colculate_Interval_Time();
+                            Write("\nColculate_Interval_Time ran.");
+                            ReadLine();
+                            Write("\n");
+                            break;
+                        }
                     case 4:
-                    {
-                        // 4
-                        // Unchecked
-                        Calculat_Engram_Stability();
-                        Write("Calculat_Engram_Stability ran.");
-                        ReadLine();
-                        Write("\n");
-                        break;
-                    }
-                        
+                        {
+                            // 4
+                            // Unchecked
+                            Calculat_Engram_Stability();
+                            Write("\nCalculat_Engram_Stability ran.");
+                            ReadLine();
+                            Write("\n");
+                            break;
+                        }
+
                     case 5:
-                    {
-                        // 5
-                        // Unchecked
-                        Calculate_Engram_Retrievability();
-                        Write("Calculate_Engram_Retrievability ran.");
-                        ReadLine();
-                        Write("\n");
-                        break;
-                    }
+                        {
+                            // 5
+                            // Unchecked
+                            Calculate_Engram_Retrievability();
+                            Write("\nCalculate_Engram_Retrievability ran.");
+                            ReadLine();
+                            Write("\n");
+                            break;
+                        }
                     case 6:
-                    {
-                        // 6
-                        // Unchecked
-                        Process_New_Date();
-                        Write("Process_New_Date ran.");
-                        ReadLine();
-                        Write("\n");
-                        break;
-                    }
-                       
+                        {
+                            // 6
+                            // Unchecked
+                            Process_New_Date();
+                            Write("\nProcess_New_Date ran.");
+                            ReadLine();
+                            Write("\n");
+                            break;
+                        }
+
+
+
                     default:
-                    {
-                        Console.WriteLine("Not an avalailable choice.");
-                        ReadLine();
-                        Write("\n");
-                        break;
-                    }
+                        {
+                            Console.WriteLine("Not an avalailable choice.");
+                            ReadLine();
+                            Write("\n");
+                            break;
+                        }
                 }
 
             }
 
         }
 
+        /* This top section is for me to manually do what other parts of the program need to do, for these tests to work. */
         // 0
         // Unchecked
         private static void Increment_TopicIndex()
@@ -143,10 +174,17 @@ namespace Calculate_Tests
             Write("New TopicIndex == {0}", globals.TopicIndex);
             ReadLine();
         }
-        
+
+
+
+
+
         // 1
         // Unchecked
-        private static void Calculate_Forgetting_Curve ()
+        // This method currently just increments ithRepetition, and calls the Calculate_Topic_Difficulty from a selection check.
+        // This method can be renamed, to Increment_Repetition.
+        // Calculate_Topic_Difficulty can be called from the method that calls this method, from the same selection statement that it is currently called from.
+        private static void Calculate_Forgetting_Curve()
         {
             const double ONE = 1;
             double ithRepetition = TopicsList.ElementAt(globals.TopicIndex).Top_Repetition;
@@ -156,7 +194,7 @@ namespace Calculate_Tests
             {
                 Write("\nithRepetition == {0}", ithRepetition);
                 ReadLine();
-                Write("\Colculate_Topic_Difficulty can be called here, or a cariable set, \nwhich tests in a selection statement, following this method, can call it.");
+                Write("\nColculate_Topic_Difficulty can be called here, or from the method that called the current one. \nIt needs to be directly after this method. \nIt would also need to be checked from the same selection test.");
                 ReadLine();
                 // Colculate_Topic_Difficulty();
             }
@@ -164,20 +202,20 @@ namespace Calculate_Tests
             ReadLine();
 
             TopicsList.ElementAt(globals.TopicIndex).Top_Repetition = ithRepetition;
-            Write("\n TopicsList's Top_Repetition set = {0}", ithRepetition);  
+            Write("\n TopicsList's Top_Repetition set = {0}", ithRepetition);
             ReadLine();
 
             Write("\nThe follwing methods were called from this method, in the design:");
-            Write("\nColculate_Interval_Time");  
-            Write("\nCalculat_Engram_Stability");  
+            Write("\nColculate_Interval_Time");
+            Write("\nCalculat_Engram_Stability");
             Write("\nCalculate_Engram_Retrievability");
-            Write("\n\n\nIt is better to call those methods, from the same one that calls this method, \nin the same intended order."); 
+            Write("\n\n\nIt is better to call those methods, from the same one that calls this method, \nin the same intended order.");
             ReadLine();
         }
 
         // 2
         // Unchecked
-        private static void Colculate_Topic_Difficulty ()
+        private static void Colculate_Topic_Difficulty()
         {
             // Since intervalTime multiplies against difficulty, and difficulty is set only once
             // then a topic could be scheduled every day for a long time if too close to 1.0, and too 
@@ -186,7 +224,7 @@ namespace Calculate_Tests
             //int TopicIndex = globals.TopicIndex + globals.One; Not sure why I wrote the stuff to the left of this message.
 
             Write("\nIntitalization: ");
-            
+
 
             const double LOW_DIFFICULTY = 2.5;
             const double HIGH_DIFFICULTY = 1.3;
@@ -194,7 +232,7 @@ namespace Calculate_Tests
             double totalProblems = TopicsList.ElementAt(globals.TopicIndex).Num_Problems;
             double correctProblems = TopicsList.ElementAt(globals.TopicIndex).Num_Correct;
             double run = totalProblems;
-            double slope = rise / run;            
+            double slope = rise / run;
 
             // Slope-Intercept formula y = mx + b
             double difficulty = (slope * correctProblems) + HIGH_DIFFICULTY;
@@ -207,16 +245,16 @@ namespace Calculate_Tests
             Write("\nrun = {0}", run);
             Write("\nslope = {0}", slope);
             Write("\ndifficulty = {0}", difficulty);
-            Write("\nPress Enter to write the difficulty to the DB of the topic, and exit the method.");
+            Write("\nPress Enter to write the difficulty to TopicList.ElementAt(index).Top_Difficulty, and exit the method.");
             ReadLine();
 
             //  Write difficulty to student record file Difficulty column
-            TopicsList.ElementAt(globals.TopicIndex).Top_Difficulty = difficulty;            
+            TopicsList.ElementAt(globals.TopicIndex).Top_Difficulty = difficulty;
         }
 
         // 3
         // Unchecked
-        private static void Colculate_Interval_Time ()
+        private static void Colculate_Interval_Time()
         {
             const double ONE = 1;
 
@@ -233,7 +271,7 @@ namespace Calculate_Tests
             Write("\nintervalLength = {0}", intervalLength);
             ReadLine();
 
-            
+
             //     Second repetition will occur the next day. 
             //	   Although, the research document does not precisely
             //	   state a time frame until the second repetition. The 
@@ -250,8 +288,8 @@ namespace Calculate_Tests
                 // The researech document says that s == r @ 1st repetition
                 intervalRemaining = SINGLE_DAY;
                 intervalLength = SINGLE_DAY;
-                Write("\intervalRemaining = {0}", intervalRemaining);                
-                Write("\intervalLength = {0}", intervalLength);
+                Write("\nintervalRemaining = {0}", intervalRemaining);
+                Write("\nintervalLength = {0}", intervalLength);
                 ReadLine();
             }
             else
@@ -267,7 +305,7 @@ namespace Calculate_Tests
             ReadLine();
 
             intervalRemaining = intervalLength;
-            Write("\intervalRemaining = intervalLength, which is == {0}", intervalLength);
+            Write("\nintervalRemaining = intervalLength, which is == {0}", intervalLength);
             ReadLine();
 
 
@@ -277,17 +315,17 @@ namespace Calculate_Tests
             ReadLine();
 
             //    Write remainingTime to student record file RTime column
-            TopicsList.ElementAt(globals.TopicIndex).Interval_Remaining = intervalRemaining;     
+            TopicsList.ElementAt(globals.TopicIndex).Interval_Remaining = intervalRemaining;
             Write("\nWrite remainingTime to student record file RTime column.");
             ReadLine();
 
             Write("\nCalculate Interval Time is complete \nPress Enter.");
             ReadLine();
         }
-        
+
         // 4
         // Unchecked
-        private static void Calculat_Engram_Stability ()
+        private static void Calculat_Engram_Stability()
         {
             Write("\nCalculat_Engram_Stability: variable initialization phase. \nPress Enter.");
             ReadLine();
@@ -309,15 +347,15 @@ namespace Calculate_Tests
             // Write Stability to student record file Stability column
             TopicsList.ElementAt(globals.TopicIndex).Engram_Stability = stabilityOfEngram;
             Write("\nTopicsList's Engram_Stability = {0}", stabilityOfEngram);
-            ReadLine();   
+            ReadLine();
 
             Write("\nCalculat_Engram_Stability is complete \nPress Enter.");
-            ReadLine();         
+            ReadLine();
         }
 
         // 5
         // Unchecked
-        private static void Calculate_Engram_Retrievability ()
+        private static void Calculate_Engram_Retrievability()
         {
             Write("\nCalculate_Engram_Retrievability: variable initialization phase. \nPress Enter.");
             ReadLine();
@@ -338,17 +376,17 @@ namespace Calculate_Tests
 
 
             ////	Write retrievability to student record file Retrievability column
-            TopicsList.ElementAt(globals.TopicIndex).Interval_Length = retrievability;       
-            Write("\nTopicsList's Interval_Length = {0}", retrievability);
-            ReadLine();        
+            TopicsList.ElementAt(globals.TopicIndex).Engram_Retrievability = retrievability;
+            Write("\nTopicsList's Engram_Retrievability = {0}", retrievability);
+            ReadLine();
 
-            Write("\Calculate_Engram_Retrievability is complete \nPress Enter.");
-            ReadLine(); 
+            Write("\nCalculate_Engram_Retrievability is complete \nPress Enter.");
+            ReadLine();
         }
 
         // 6
         // Unchecked
-        private static void Process_New_Date ()
+        private static void Process_New_Date()
         {
             Write("\nProcess_New_Date: variable initialization phase. \nPress Enter.");
             ReadLine();
@@ -358,28 +396,30 @@ namespace Calculate_Tests
             double intervalRemaining = TopicsList.ElementAt(globals.TopicIndex).Interval_Remaining;
             double days = Convert.ToInt32(intervalLength / intervalRemaining);
             DateTime today = DateTime.Now;
-            DateTime daysAway = today.AddDays(days);
+            DateTime nextDate = today.AddDays(days);
+            string nextDateString = nextDate.ToString("d");
 
             Write("\nTopicIndex = {0}", TopicIndex);
             Write("\nintervalLength = {0}", intervalLength);
             Write("\nintervalRemaining = {0}", intervalRemaining);
             Write("\ndays = {0}", days);
             Write("\ntoday = {0}", today);
-            Write("\ndaysAway = {0}", daysAway);
+            Write("\nnextDate = {0}", nextDate);
+            Write("\nnextDateString = {0}", nextDateString);
             ReadLine();
 
-            TopicsList.ElementAt(globals.TopicIndex).Study_Date = Convert.ToString(daysAway);
+            TopicsList.ElementAt(globals.TopicIndex).Next_Date = nextDateString;
             // Increment the array I will use as the TopicIndex of IEnumerable    
 
-            Write("\nTopicsList's Study_Date = {0}", daysAway);
-            ReadLine();           
+            Write("\nTopicsList's Study_Date = {0}", nextDateString);
+            ReadLine();
         }
     }
 
     // TopicModel Class File Contents
     public class TopicModel
     {
-        public int Top_ID { get; set; } 
+        public int Top_ID { get; set; }
         public int Course_ID { get; set; } // If more than one course, then it may be best to not start the TopicID at ZERO for the first topic, so that less of the program needs modifying to allow multiple courses.
         public string Top_Name { get; set; } // This is only used to make things easier for building a course. I can't think of why this would be needed, other than for that purpose.
         public bool Top_Studied { get; set; }
@@ -492,7 +532,7 @@ namespace Calculate_Tests
         public bool Top_Studied { get; set; }
 
         public string Next_Date { get; set; }
-        public string First_Date {get; set; } // I might have a feature that displays the progress of topics since their first study dates.
+        public string First_Date { get; set; } // I might have a feature that displays the progress of topics since their first study dates.
 
         public string TodayDate { get; set; } // To store as First_Date, and to compare against Next_Date.
 
@@ -500,26 +540,28 @@ namespace Calculate_Tests
         /* The block of code, between these same comment lines, is only for calculations that also exist in DB. */
         public double Num_Problems { get; set; }
         public double Num_Correct { get; set; }
-
         public double Top_Difficulty { get; set; }
-        public double Top_Repetition { get; set; }
-        public double Interval_Remaining { get; set; }
 
-        public double Interval_Length { get; set; }
+        public double Top_Repetition { get; set; } // ithRepetition
+        public double Interval_Remaining { get; set; } // Denoted as 's' in the study. 
+        public double Interval_Length { get; set; }  // Denoted as 'r' in the study.
+
         public double Engram_Stability { get; set; }
         public double Engram_Retrievability { get; set; }
         /* The block of code, between these same comment lines, is only for calculations that also exist in DB. */
 
-        public double Missed_Answers { get; set; } // Might not use this variable, can't remember. Get rid of it if I don't.
 
-        
+        // Might not use Missed_Answers, can't remember. Get rid of it if I don't.
+        public double Missed_Answers { get; set; } 
+
+
 
         /* Increment Topic */
         public bool IncrementTopic { get; set; } // This can PROBABLY go. I believe it was going to do what TopicTopicIndex is doing, in a bad design I had that used both variables.
 
-        
 
-        public int TopicTopicIndex { get; set; }
+
+        public int TopicIndex { get; set; }
 
         /* Problem Section */
         // I need this global TopicIndex, in order to progress through the list of images.
@@ -541,7 +583,7 @@ namespace Calculate_Tests
         // but clicks submit, the global variable that checks if it was correct will still hold 
         // the previous value. Therefore, "WasAnswered" needs to be true so that the problem can't 
         // be marked as correct if this value is false.
-        public bool WasAnswered { get; set; }  
+        public bool WasAnswered { get; set; }
 
         public string RevealAnswer { get; set; } // The letter value of the correct answer is stored here, to display which value was correct, if the user chooses the incorrect answer.
 
