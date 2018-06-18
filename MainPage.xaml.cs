@@ -115,9 +115,6 @@ namespace ObservableImageTest
 
 
             /* Learning Start */
-            // LoadTopicIDs();
-
-            // Lesson Section
 
             // Problem Section
             FirstProblem();
@@ -129,7 +126,8 @@ namespace ObservableImageTest
             LoadAnswers();
 
             // Lesson Section
-
+            LessonProblemCompare();
+            LoadLesson();
         }
 
         private void ListView_ItemClick(object sender, ItemClickEventArgs e)
@@ -190,6 +188,8 @@ namespace ObservableImageTest
                         NextAnswers();
                         AnswerProblemCompare();
                         LoadAnswers();
+                        LessonProblemCompare();
+                        LoadLesson();
                         globals.Wait = ZERO;
                     }
 
@@ -198,16 +198,8 @@ namespace ObservableImageTest
                 {
                     Result.Text = ($"Nothing left to study today. Check back tomorrow!");
                 }
-
             }
-
         }
-
-        // Check for DB
-
-        // Create DB from default values
-
-        // Load stored values to list from DB
 
         // ToStudy ID's Section
         private void LoadTopicIDs()
@@ -651,7 +643,7 @@ namespace ObservableImageTest
             else
             {
 
-                AnswersContent.RemoveAt(0);
+                LessonContent.RemoveAt(0);
                 LessonContent.Add(new LessonModel { LessonPath = lessonImage });
             }
 
