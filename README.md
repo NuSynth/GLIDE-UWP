@@ -1,6 +1,16 @@
-# GLIDE
+# It's Ready!
 
-GLIDE is not ready to be used yet. It is not ready for people, other than myself, to contribute to it either. It will be ready VERY soon though. Currently, it is only in development for the Universal Windows Platform. 
+GLIDE is finally ready! Currently; it only works for the Universal Windows Platform. Versions for Linux, Android, and Apple devices, are on the way!
+
+This will be ready for the Windows Store, as free as this source code, once a UI is built for people to more quickly add their courses.
+
+Currently, courses can be added very easily, but the TopicModel, LessonModel, and AnswerModel files need to be edited before compiling, so that the program will have your course. Do not worry, this process is VERY easy to do.
+
+Full instructions are on the way, so that even a person with ZERO programming experience, can build a course into the program, and compile it. 
+
+If you do not know much about behavioral psychology, then wait for the instructions before starting to build your course! The question files, and the lesson files, are not always best to just copy and past from a textbook. They need to be designed a certain way, for best results.
+
+# GLIDE
 
 GLIDE is a program that teaches people, by implementing scientific research on learning. It's name is inspired by the teaching machine that B.F. Skinner invented, which he named "GLIDER." GLIDE is better than GLIDER, because it uses research that did not exist at the time GLIDER was invented. 
 
