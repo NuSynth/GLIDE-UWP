@@ -1,10 +1,10 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ObservableImageTest.Models
+namespace Glide.Models
 {
     public class LessonModel
     {
@@ -21,9 +21,9 @@ namespace ObservableImageTest.Models
         {
             var Lessons = new List<LessonModel>();
 
-            Lessons.Add(new LessonModel { CourseID = 0, LessonID = 0, LessonPath = "Assets/male-01.png" });
-            Lessons.Add(new LessonModel { CourseID = 0, LessonID = 1, LessonPath = "Assets/male-01.png" });
-            Lessons.Add(new LessonModel { CourseID = 0, LessonID = 2, LessonPath = "Assets/female-01.png" });
+            Lessons.Add(new LessonModel { CourseID = 0, LessonID = 0, LessonPath = "Assets/LessonImages/0.png" });
+            Lessons.Add(new LessonModel { CourseID = 0, LessonID = 1, LessonPath = "Assets/LessonImages/1.png" });
+            Lessons.Add(new LessonModel { CourseID = 0, LessonID = 2, LessonPath = "Assets/LessonImages/2.png" });
 
             return Lessons;
         }
