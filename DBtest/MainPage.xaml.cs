@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -35,50 +35,51 @@ namespace NewTestProjectOne
 
         GlobalVariables globalStorage = new GlobalVariables();
 
+        // <!-- Page 1 -->
+        // <!-- Initializatiion Phase -->
+        // <!-- Per Index Value --> 
 
-        /* Negative One Button */
-        // Increment the index by 1
-        private void Negative_One_Button_Click(object sender, RoutedEventArgs e)
+        // Page 1: Step 1 
+        // So Index Will Be In Range
+        private void Button_Click_7(object sender, RoutedEventArgs e)
         {
             /* Erase this Once I take parts from DataBase Example 1 that I should use, 
              * after I'm finished with DataBase Example 2 Copy. */
 
-            // Increment global index at very last write to Ienumerable element
-            globalStorage.TopicIndex++;
 
+            // Need to do a method call for this
+            _TruckInfo = _DefaultTruckInfo;
         }
 
-        /* Negative 2.9 Button */
-        // Decrement the index by 1
-        private void Negative_TwoNine_Click(object sender, RoutedEventArgs e)
+        // Page 1: Step 2 
+        // IF File Exists, or Else
+
+        // IF
+        private void Button_Two_PointOne_Click(object sender, RoutedEventArgs e)
         {
             /* Erase this Once I take parts from DataBase Example 1 that I should use, 
              * after I'm finished with DataBase Example 2 Copy. */
 
-            // Increment global index at very last write to Ienumerable element
-            globalStorage.TopicIndex--;
+            // Contains: var storedDateTime = _DbInfo.ElementAt(global index).Stored_Date;
+            // var storedDateTime = _TruckInfo.ElementAt(globalStorage.TopicIndex).Stored_Date;
 
+
+            CreateDBwithFeedback();
         }
 
-
-        /* Zeroth Button */
-        // Display Index Value
-        private void Button_Click(object sender, RoutedEventArgs e)
+        // Else
+        private void Button_Click_6(object sender, RoutedEventArgs e)
         {
             /* Erase this Once I take parts from DataBase Example 1 that I should use, 
              * after I'm finished with DataBase Example 2 Copy. */
 
-            // Contains: var displayIndex = ("ElementAt({global index})");
-            string displayIndex = ($" ElementAt({$"{ globalStorage.TopicIndex }"})");
 
-            // Contains: ResultLeft.Text = displayIndex;
-            ResultLeft.Text = displayIndex;
+            // Need to do a method call for this
+            DataBase_To_List();
         }
 
-
-
-        /* First Button */
-        // Read Date
+        // Page 1: Step 3
+        // Read List Contents
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             /* Erase this Once I take parts from DataBase Example 1 that I should use, 
@@ -109,8 +110,14 @@ namespace NewTestProjectOne
             }
         }
 
-        /* Button 1.1*/
-        // Store Date Into Array
+
+
+        // <!-- Page 2 -->
+        // <!-- Updating Phase -->
+        // <!-- Per Index Value -->
+
+        // Page 2: Step 1 
+        // Store Date into List
         private void Button_Click_One_PointOne(object sender, RoutedEventArgs e)
         {
             /* Erase this Once I take parts from DataBase Example 1 that I should use, 
@@ -157,9 +164,8 @@ namespace NewTestProjectOne
             }
         }
 
-
-        /* Second Button */
-        // Add a day
+        // Page 2: Step 2 
+        // Add a Day
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
             /* Erase this Once I take parts from DataBase Example 1 that I should use, 
@@ -167,27 +173,13 @@ namespace NewTestProjectOne
 
             //globalStorage.TopicIndex = 0;
             int one = 1;
-            if(_TruckInfo.Length > one)
+            if (_TruckInfo.Length > one)
             {
                 // Will throw excception if DB has not been filled yet.
                 if (_TruckInfo.ElementAt(globalStorage.TopicIndex).Stored_Date != "false")
                 {
-                    // The code in this "if" block, was all that was in this button click event handler.
-                    // This if-else was wrapped around it, in order to test out adding more than just a single day to today.
-
-
-                    // The code in the following "else" block, was all that was in this button click event handler.
-                    // This if-else was wrapped around it, in order to test out adding more than just a single day to today.
-                    // The code in this "if" block, is a modified version of what occurs in the else block.
-                    // This "if" block allows days to continue to be added, and stored, in the array for the database.
-
-                    // Contains: DateTime AddMinutes(1440) to var newDateTime
                     string minutesAsString = "1440";
                     int minutesAsInt = Convert.ToInt32(minutesAsString);
-
-                    // Testing this line that I found on StackExchange
-                    //var theDate = _TruckInfo.ElementAt(globalStorage.TopicIndex).Stored_Date;
-                    // string dateString = Convert.ToString(theDate);
 
                     DateTime today = DateTime.Now;
 
@@ -220,54 +212,6 @@ namespace NewTestProjectOne
                     // Update _DbInfo.ElementAt(global index).Stored_Date;
                     _TruckInfo.ElementAt(globalStorage.TopicIndex).Stored_Date = dateToStore;
                 }
-            
-                //// Will throw excception if DB has not been filled yet.
-                //if (_TruckInfo.ElementAt(globalStorage.TopicIndex).Stored_Date != "false")
-                //{
-                //    // The code in this "if" block, was all that was in this button click event handler.
-                //    // This if-else was wrapped around it, in order to test out adding more than just a single day to today.
-
-
-                //    // The code in the following "else" block, was all that was in this button click event handler.
-                //    // This if-else was wrapped around it, in order to test out adding more than just a single day to today.
-                //    // The code in this "if" block, is a modified version of what occurs in the else block.
-                //    // This "if" block allows days to continue to be added, and stored, in the array for the database.
-
-                //    // Contains: DateTime AddMinutes(1440) to var newDateTime
-                //    string minutesAsString = "1440";
-                //    int minutesAsInt = Convert.ToInt32(minutesAsString);
-
-                //    // Testing this line that I found on StackExchange
-                //    var theDate = _TruckInfo.ElementAt(globalStorage.TopicIndex).Stored_Date;
-                //    string dateString = Convert.ToString(theDate);
-
-                //    DateTime myDate = DateTime.ParseExact(dateString, "yyyyMMdd", null);
-
-
-                //    DateTime daysAway = myDate.AddMinutes(minutesAsInt);
-
-                //    DateTime studyDate = daysAway.Date; // This value is great for checing if a session is due for the day.
-                //    var dateToStore = studyDate.ToString("yyyyMMdd");
-
-                //    // Update _DbInfo.ElementAt(global index).Stored_Date;
-                //    _TruckInfo.ElementAt(globalStorage.TopicIndex).Stored_Date = dateToStore;
-                //}
-                //else
-                //{
-                //    // Contains: DateTime AddMinutes(1440) to var newDateTime
-                //    string minutesAsString = "1440";
-                //    int minutesAsInt = Convert.ToInt32(minutesAsString);
-
-                //    DateTime today = DateTime.Now;
-
-                //    DateTime daysAway = today.AddMinutes(minutesAsInt);
-
-                //    DateTime studyDate = daysAway.Date; // This value is great for checing if a session is due for the day.
-                //    var dateToStore = studyDate.ToString("yyyyMMdd");
-
-                //    // Update _DbInfo.ElementAt(global index).Stored_Date;
-                //    _TruckInfo.ElementAt(globalStorage.TopicIndex).Stored_Date = dateToStore;
-                //}
             }
             else
             {
@@ -276,23 +220,8 @@ namespace NewTestProjectOne
 
         }
 
-        /* Button 2.1 */
-        // Create DB
-        private void Button_Two_PointOne_Click(object sender, RoutedEventArgs e)
-        {
-            /* Erase this Once I take parts from DataBase Example 1 that I should use, 
-             * after I'm finished with DataBase Example 2 Copy. */
-
-            // Contains: var storedDateTime = _DbInfo.ElementAt(global index).Stored_Date;
-            // var storedDateTime = _TruckInfo.ElementAt(globalStorage.TopicIndex).Stored_Date;
-
-
-            CreateDBwithFeedback();
-        }
-
-
-        /* Third Button */
-        // Recreate DB and fill it with what the array has
+        // Page 2: Step 3
+        // Recreate DB & Fill From List
         private void Button_Click_3(object sender, RoutedEventArgs e)
         {
             /* Erase this Once I take parts from DataBase Example 1 that I should use, 
@@ -303,88 +232,43 @@ namespace NewTestProjectOne
         }
 
 
-        /* Fourth Button */
-        // Delete DB
-        private async void Button_Click_4(object sender, RoutedEventArgs e)
+
+
+        /* These 3 buttons control the index for this test program. */
+        // Increment the index by 1
+        private void Negative_One_Button_Click(object sender, RoutedEventArgs e)
         {
             /* Erase this Once I take parts from DataBase Example 1 that I should use, 
              * after I'm finished with DataBase Example 2 Copy. */
 
-            // This button is simply to make testing everything easier
-            // Call method that only deletes the file
-            await OpenOrRecreateConnection(true);
+            // Increment global index at very last write to Ienumerable element
+            globalStorage.TopicIndex++;
+
         }
-
-
-        /* 
-         * Buttons five and six test what I wanted in CheckForDataBase(), this should be 
-         * called before anything displays in the algebra teacher program.
-         */
-
-        /* Fith Button */
-        // Create DB
-        private async void Button_Click_5(object sender, RoutedEventArgs e)
+        private void Negative_TwoNine_Click(object sender, RoutedEventArgs e)
         {
             /* Erase this Once I take parts from DataBase Example 1 that I should use, 
              * after I'm finished with DataBase Example 2 Copy. */
 
-            // This stuff is in the CheckForDataBase() method, except for the
-            // feedback that I have print in the text box.
-            var filename = "trucks.db";
-            var folder = ApplicationData.Current.LocalFolder;
-
-            // This returns null if it doesn't exist
-            var file = await folder.TryGetItemAsync(filename);
-
-            if (file == null)
-            {
-                // New method that:
-                // 1) Creates the database
-                // 2) Opens the database connection
-                // 3) Fills the Database with the dafault values
-                // 4) Fills a list with the database valuse (same as default)
-                CreateDataBase();
-                ResultRight.Text = "The file did not exist, so the database file should have just been created. Now it should exist, so see if it worked.";
-
-            }
-
-            if (file != null)
-            {
-                // New method that:
-                // 1) Opens the databasee connection
-                // 2) Fills a list with database saved values.
-                DataBase_To_List();
-                ResultRight.Text = "The file exists, Heopefully the array is also now filled with DB content.";
-            }
+            // Increment global index at very last write to Ienumerable element
+            globalStorage.TopicIndex--;
 
         }
-
-
-        /* Sixth Button */
-        // Load List from DB
-        private void Button_Click_6(object sender, RoutedEventArgs e)
+        private void Button_Click(object sender, RoutedEventArgs e)
         {
             /* Erase this Once I take parts from DataBase Example 1 that I should use, 
              * after I'm finished with DataBase Example 2 Copy. */
 
+            // Contains: var displayIndex = ("ElementAt({global index})");
+            string displayIndex = ($" ElementAt({$"{ globalStorage.TopicIndex }"})");
 
-            // Need to do a method call for this
-            DataBase_To_List();
+            // Contains: ResultLeft.Text = displayIndex;
+            ResultLeft.Text = displayIndex;
         }
 
-        /* Seventh Button */
-        // Load List from DB
-        private void Button_Click_7(object sender, RoutedEventArgs e)
-        {
-            /* Erase this Once I take parts from DataBase Example 1 that I should use, 
-             * after I'm finished with DataBase Example 2 Copy. */
 
 
-            // Need to do a method call for this
-            _TruckInfo = _DefaultTruckInfo;
-        }
-
-        // It finally WORKS!!!!
+        /* The following three methods are used for input/output of DB */
         public async void DataBase_To_List()
         {
             using (SQLiteConnection conn = await OpenOrRecreateConnection())
@@ -404,90 +288,14 @@ namespace NewTestProjectOne
                 string[] entries = dates.Split(',');
                 foreach (var attribute in dates)
                 {
-                    
+
                     int lengthEntries = entries.Length;
-                    if(index < lengthEntries)
+                    if (index < lengthEntries)
                     {
                         _TruckInfo.ElementAt(index).Stored_Date = entries[index];
-                    }   
+                    }
 
                     index++;
-                }
-
-            }
-
-        }
-
-        // Copy the bare minimal until this does exactly what I want
-        // P2 - #1 - Master 
-        //public async void CheckForDataBase()
-        //{
-        //    var filename = "trucks.db";
-        //    var folder = ApplicationData.Current.LocalFolder;
-
-        //    // This returns null if it doesn't exist
-        //    var file = await folder.TryGetItemAsync(filename);
-
-        //    if (file == null)
-        //    {
-        //        // New method that:
-        //        // 1) Creates the database
-        //        // 2) Opens the database connection
-        //        // 3) Fills the Database with the dafault values
-        //        // 4) Fills a list with the database valuse (same as default)
-        //        CreateDataBase();                
-        //    }
-
-        //    if (file != null)
-        //    {
-        //        // New method that:
-        //        // 1) Opens the databasee connection
-        //        // 2) Fills a list with database saved values.
-
-
-
-        //        // Test this!!!!!!
-        //        // If this works, just do a loop for every value, probably per value.
-        //        using (var conn = await OpenOrRecreateConnection(true))
-        //        {
-        //            int index = 0;
-        //            var infos = from p in conn.Table<TruckInfo>() select p;
-        //            var names = infos.Select(t => t.Name);
-
-        //            // Creates the database, or fills it. Not sure yet.
-        //            foreach (var info in names.ElementAt(index))
-        //            {
-        //                _TruckInfo.ElementAt(index).Name = names.ElementAt(index);
-        //                index++;
-        //            }
-
-        //        }
-        //    }
-
-        //}
-
-        // Copy the bare minimal amount of parts until this does exactly what I want
-        // P2 - #1 - Sub #1
-        public async void CreateDataBase()
-        {
-            // Sets _TruckInfo to the default values, so that the new database
-            // will be filled with the default values.
-            // 4) Fills a list with the database valuse (same as default)
-            _TruckInfo = _DefaultTruckInfo;
-
-            // 1) Creates the database.
-            // conn is an object of type SQLiteConnection, which is given the OpenOrRecreateConnection return vlaue to work with.
-            // 2) Opens the database connection simply by using the method OpenOrRecreateConnection
-            using (SQLiteConnection conn = await OpenOrRecreateConnection())
-            {
-                // The CreateTable property of the SQLiteConnection class, creates a table out of the
-                // TruckInfo class, inside of the returned value of OpenOrRecreateConnection
-                conn.CreateTable<TruckInfo>();
-                foreach (var info in _TruckInfo)
-                {
-                    // 3) Fills the Database with the dafault values, 
-                    // by inserting them into the table that was just created.
-                    conn.InsertOrReplace(info);
                 }
 
             }
@@ -592,41 +400,6 @@ namespace NewTestProjectOne
             }
 
         }
-
-        // Copy the bare minimal until this does exactly what I want
-        // P2 - #3
-        //public async void ReadDataBase()
-        //{
-        //    var filename = "trucks.db";
-        //    var folder = ApplicationData.Current.LocalFolder;
-
-        //    // This returns null if it doesn't exist
-        //    var file = await folder.TryGetItemAsync(filename);
-
-        //    // If file exists, then read the data base, ELSE { Print ("File does not exist") }
-        //    if (file != null)
-        //    {
-        //        // From ReadDB button of DataBase Example 2 Copy ( which is modified
-        //        // from the original program.
-        //        using (var conn = await OpenOrRecreateConnection())
-        //        {
-        //            var infos = from p in conn.Table<TruckInfo>() select p;
-
-        //            var names = string.Join(", ", infos.Select(t => $"{t.Name} has {t.Style}"));
-
-
-
-        //            ResultRight.Text = names;
-        //        }
-
-        //    }
-        //    else
-        //    {
-        //        string noData = "File does not exist";
-        //        ResultRight.Text = noData;
-        //    }
-
-        //}
 
         // Skeleton parts from DataBase Example 2 Copy
 
