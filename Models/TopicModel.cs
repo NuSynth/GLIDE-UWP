@@ -11,11 +11,13 @@ namespace ObservableImageTest.Models
     public class TopicModel
     {
         [PrimaryKey]
-        public int Top_ID { get; set; } 
+        public int Top_ID { get; set; }
         public int Course_ID { get; set; } // If more than one course, then it may be best to not start the TopicID at ZERO for the first topic, so that less of the program needs modifying to allow multiple courses.
-        public string Top_Name { get; set; } // This is only used to make things easier for building a course. Not implemented in program itself at the moment.
+        public string Top_Name { get; set; } // This is only used to make things easier for building a course. I can't think of why this would be needed, other than for that purpose.
         public bool Top_Studied { get; set; }
+
         public string Next_Date { get; set; }
+        public string First_Date { get; set; }  // I might have a feature that displays the progress of topics since their first study dates.
 
         // The number of correct problems, out of the total problems for a topic, 
         // is in the databse, just in case the range for the calculation of difficulty 
@@ -52,7 +54,9 @@ namespace ObservableImageTest.Models
                 Course_ID = 0,
                 Top_Name = "Sets",
                 Top_Studied = false,
+
                 Next_Date = "none",
+                First_Date = "none",
 
                 Num_Problems = 5,
                 Num_Correct = 0,
@@ -72,7 +76,9 @@ namespace ObservableImageTest.Models
                 Course_ID = 0,
                 Top_Name = "Sub Sets",
                 Top_Studied = false,
+
                 Next_Date = "none",
+                First_Date = "none",
 
                 Num_Problems = 4,
                 Num_Correct = 0,
@@ -92,7 +98,9 @@ namespace ObservableImageTest.Models
                 Course_ID = 0,
                 Top_Name = "Union and Intersection",
                 Top_Studied = false,
+
                 Next_Date = "none",
+                First_Date = "none",
 
                 Num_Problems = 2,
                 Num_Correct = 0,
