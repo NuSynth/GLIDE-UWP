@@ -8,15 +8,10 @@ namespace ObservableImageTest.Models
 {
     public class GlobalVariables
     {
-        /* Probably not needed. I'll remove it after I check that part. */
-        public string TodayDate { get; set; }
-
+        public bool FileExists { get; set; } 
 
         /* Course Section */
         public int CourseID { get; set; }
-
-        /* Increment Topic */
-        public bool IncrementTopic { get; set; }
 
         /* Topic Section */
         public int TopicID { get; set; } // This probably needs to change when I incorporate the other code I've written.
@@ -35,8 +30,8 @@ namespace ObservableImageTest.Models
         /* Lesson Section */
         public int LessonID { get; set; }
         public int LessonIndex { get; set; }
-
-        // I need these three global indexes in order to progress through the list of images, until ID matching is implemented.
+        
+        /* Answer Section */
         public int AnswerIndexOne { get; set; }
         public int AnswerIndexTwo { get; set; }
         public int AnswerIndexThree { get; set; }
