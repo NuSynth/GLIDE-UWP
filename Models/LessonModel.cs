@@ -21,8 +21,6 @@ namespace ObservableImageTest.Models
         {
             var Lessons = new List<LessonModel>();
 
-            // The two problems are commented out to test that answers match with problems.
-
             Lessons.Add(new LessonModel { CourseID = 0, LessonID = 0, LessonPath = "Assets/male-01.png" });
             Lessons.Add(new LessonModel { CourseID = 0, LessonID = 1, LessonPath = "Assets/male-01.png" });
             Lessons.Add(new LessonModel { CourseID = 0, LessonID = 2, LessonPath = "Assets/female-01.png" });
