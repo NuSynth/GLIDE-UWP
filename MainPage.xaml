@@ -181,7 +181,7 @@
                        FontSize="25" 
                        TextWrapping="WrapWholeWords" 
                        x:Name="Result" 
-                       Text="Good Job!" />
+                       Text=" " />
             </StackPanel>
             
         </StackPanel>
@@ -229,22 +229,17 @@
                       Margin="20,10,10,20" 
                       Padding="20">            
             <StackPanel>
-                <ItemsControl  ItemsSource="{x:Bind ProblemContent}" 
+                <ItemsControl  ItemsSource="{x:Bind LessonContent}" 
                                Margin="20" 
                                VerticalAlignment="Center" 
                                HorizontalAlignment="Center">
                     <ItemsControl.ItemTemplate>
-                        <DataTemplate x:DataType="data:ProblemModel">
+                        <DataTemplate x:DataType="data:LessonModel">
                             <StackPanel>
-                                <Image Source="{x:Bind ProblemPath}" Height="150" />
+                                <Image Source="{x:Bind LessonPath}" Height="150" />
                                 <StackPanel Orientation="Horizontal" 
                                     Margin="0,10,0,0" 
-                                    HorizontalAlignment="Center">
-                                    <TextBlock Foreground="White" 
-                                                FontSize="25" 
-                                                TextWrapping="WrapWholeWords" 
-                                                x:Name="Result" 
-                                                Text="{x:Bind QuestionText}" />
+                                    HorizontalAlignment="Center">                                    
                                 </StackPanel>
                             </StackPanel>
                         </DataTemplate>
