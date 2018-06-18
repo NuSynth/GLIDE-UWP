@@ -771,12 +771,19 @@ namespace ObservableImageTest
         }
 
 
-        /* DataBase Section */
+        /* Save & Load Topic Section */
 
         // Save
-        private void SaveProgress()
+        public async void SaveProgress()
         {
-
+            using (SQLiteConnection conn = await RecreateOpen(true))
+            {
+                conn.CreateTable<TopicModel>();
+                foreach (var info in TopicsList)
+                {
+                    conn.InsertOrReplace(info);
+                }
+            }
         }
 
         // Check for file.
@@ -802,7 +809,7 @@ namespace ObservableImageTest
         // If file does NOT exist.
         public async void CreateDB()
         {
-            using (SQLiteConnection conn = await OpenRecreateConnection())
+            using (SQLiteConnection conn = await RecreateOpen())
             {
                 conn.CreateTable<TopicModel>();
                 foreach (var info in TopicsList)
@@ -816,7 +823,7 @@ namespace ObservableImageTest
         // THEN Get every value, for each element, into the list, and replace the initial values.
         public async void DbToList()
         {
-            using (SQLiteConnection conn = await OpenRecreateConnection())
+            using (SQLiteConnection conn = await RecreateOpen())
             {
                 var infos = from p in conn.Table<TopicModel>() select p;
 
@@ -881,7 +888,7 @@ namespace ObservableImageTest
                 double intervalLength;
                 double engramStability;
                 double engramRetrievability;
-                
+
 
                 // Using a single loop, so that this stage may run quicker, than if a loop occured for each variable of each element.
                 int index = 0;
@@ -920,9 +927,9 @@ namespace ObservableImageTest
                         TopicsList.ElementAt(index).First_Date = firstDate;
 
                         TopicsList.ElementAt(index).Num_Problems = numProblem;
-                        TopicsList.ElementAt(index).Num_Correct = numCorrect;
+                        TopicsList.ElementAt(index).Num_Correct = correctNum;
 
-                        TopicsList.ElementAt(index).Top_Difficulty = topDifficult;
+                        TopicsList.ElementAt(index).Top_Difficulty = topDifficulty;
                         TopicsList.ElementAt(index).Top_Repetition = topRep;
                         TopicsList.ElementAt(index).Interval_Remaining = intervalRemaining;
 
@@ -930,15 +937,13 @@ namespace ObservableImageTest
                         TopicsList.ElementAt(index).Engram_Stability = engramStability;
                         TopicsList.ElementAt(index).Engram_Retrievability = engramRetrievability;
                     }
-
                     index++;
                 }
             }
-
         }
 
         /* Open or recreate the database */
-        private async Task<SQLiteConnection> OpenRecreateConnection(bool ReCreate = false)
+        private async Task<SQLiteConnection> RecreateOpen(bool ReCreate = false)
         {
             var filename = "Topics.db";
             var folder = ApplicationData.Current.LocalFolder;
