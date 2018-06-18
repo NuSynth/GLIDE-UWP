@@ -11,7 +11,9 @@ using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
-
+using System.Threading.Tasks;
+using Windows.Storage;
+using System.IO;
 
 namespace ObservableImageTest
 {
@@ -75,33 +77,24 @@ namespace ObservableImageTest
             titleBar.ButtonInactiveForegroundColor = Colors.White;
         }
 
-
-        /* 
-         * The logic of the commented out block of code right here might be useful for the updated version
-         * of this program, which will allow the users to make their own courses out of any text book.
-         */
-        //private void NewContactButton_Click(object sender, RoutedEventArgs e)
-        //{
-
-        //    string avatar = ((Icon)AvatarComboBox.SelectedValue).IconPath;
-        //    string avatarID = ((Icon)AvatarComboBox.SelectedValue).IconID;
-        //    Contacts.Add(new Contact { FirstName = FirstNameTextBox.Text, LastName = LastNameTextBox.Text, AvatarPath = avatar, AvatarID = avatarID });
-
-
-        //    FirstNameTextBox.Text = "";
-        //    LastNameTextBox.Text = "";
-        //    AvatarComboBox.SelectedIndex = -1;
-
-        //    FirstNameTextBox.Focus(FocusState.Programmatic);
-        //}
-
         private void SetDisplay()
         {
             const int ZERO = 0;
 
             // Topics
-            TopicsList = TopicManager.GetTopics();
+            TopicsList = TopicManager.GetTopics(); // Allows default values to be used, or replaced with saved values.
             LoadTopicIDs();
+
+            // DataBase
+            CheckForFile();
+            if (globals.FileExists == false)
+            {
+                CreateDB();
+            }
+            else
+            {
+                DbToList();
+            }
 
             // Problem
             ProblemList = ProblemManager.GetProblems();
@@ -199,13 +192,13 @@ namespace ObservableImageTest
                         LoadAnswers();
                         globals.Wait = ZERO;
                     }
-                    
+
                 }
                 else
                 {
                     Result.Text = ($"Nothing left to study today. Check back tomorrow!");
                 }
-                
+
             }
 
         }
@@ -378,7 +371,8 @@ namespace ObservableImageTest
 
             if (problemTopic != topicID)
             {
-                CalculateAndSave();
+                CalculateLearning();
+                SaveProgress();
                 TopicsList.ElementAt(globals.TopicIndex).Num_Correct = ZERO_DOUBLE;
 
                 if (topicIndex < toStudyCount)
@@ -482,9 +476,9 @@ namespace ObservableImageTest
 
             // Just like "AnswerIndexTwo" must be greater than "AnswerIndexOne," by a value of 1; "AnswerIndexThree" should
             // be greater than "AnswerIndexTwo," by a value of 1. 
-             globals.AnswerIndexThree = globals.AnswerIndexTwo + ONE;
+            globals.AnswerIndexThree = globals.AnswerIndexTwo + ONE;
 
-            
+
 
 
 
@@ -664,7 +658,7 @@ namespace ObservableImageTest
         }
 
         // Calculate Section
-        private void CalculateAndSave()
+        private void CalculateLearning()
         {
             const double ONE = 1;
             AddRepetition();
@@ -674,12 +668,11 @@ namespace ObservableImageTest
             {
                 TopicDifficulty();
             }
-            
+
             IntervalTime();
             EngramStability();
             EngramRetrievability();
             ProcessDate();
-            SaveProgress();
         }
         private void AddRepetition()
         {
@@ -701,9 +694,9 @@ namespace ObservableImageTest
             double totalProblems = TopicsList.ElementAt(globals.TopicIndex).Num_Problems;
             double correctProblems = TopicsList.ElementAt(globals.TopicIndex).Num_Correct;
             double run = totalProblems;
-            double slope = rise / run;            
+            double slope = rise / run;
             double difficulty = (slope * correctProblems) + HIGH_DIFFICULTY; // Slope-Intercept formula y = mx + b
-            
+
             TopicsList.ElementAt(globals.TopicIndex).Top_Difficulty = difficulty; // Write difficulty to student record file Difficulty column
         }
         private void IntervalTime()
@@ -732,7 +725,7 @@ namespace ObservableImageTest
                 intervalLength = intervalLength * difficulty;
             }
 
-            intervalRemaining = intervalLength;            
+            intervalRemaining = intervalLength;
             TopicsList.ElementAt(globals.TopicIndex).Interval_Length = intervalLength; // Write intervalLength to student record Interval.
             TopicsList.ElementAt(globals.TopicIndex).Interval_Remaining = intervalRemaining; // Write remainingTime to student record file RTime column
         }
@@ -770,12 +763,204 @@ namespace ObservableImageTest
             DateTime nextDate = today.AddDays(days);
             string nextDateString = nextDate.ToString("d");
 
-            TopicsList.ElementAt(globals.TopicIndex).Next_Date = nextDateString;            
+            TopicsList.ElementAt(globals.TopicIndex).Next_Date = nextDateString;
+            if (TopicsList.ElementAt(globals.TopicIndex).Top_Studied == false)
+            {
+                TopicsList.ElementAt(globals.TopicIndex).Top_Studied = true;
+            }
         }
 
-        // Save & Load Topic Section
+
+        /* DataBase Section */
+
+        // Save
         private void SaveProgress()
         {
+
+        }
+
+        // Check for file.
+        private async void CheckForFile()
+        {
+            var filename = "Topics.db";
+            var folder = ApplicationData.Current.LocalFolder;
+
+            // This returns null if it doesn't exist
+            var file = await folder.TryGetItemAsync(filename);
+
+            if (file != null)
+            {
+                // File is deleted if it does exist
+                globals.FileExists = true;
+            }
+            else
+            {
+                globals.FileExists = false;
+            }
+        }
+
+        // If file does NOT exist.
+        public async void CreateDB()
+        {
+            using (SQLiteConnection conn = await OpenRecreateConnection())
+            {
+                conn.CreateTable<TopicModel>();
+                foreach (var info in TopicsList)
+                {
+                    conn.InsertOrReplace(info);
+                }
+            }
+        }
+
+        // If file DOES exist
+        // THEN Get every value, for each element, into the list, and replace the initial values.
+        public async void DbToList()
+        {
+            using (SQLiteConnection conn = await OpenRecreateConnection())
+            {
+                var infos = from p in conn.Table<TopicModel>() select p;
+
+                /* Use one of these for every value for each element of the topic list. */
+                var topIDs = string.Join(",", infos.Select(t => $"{t.Top_ID.ToString()}"));
+                var courseIDs = string.Join(",", infos.Select(t => $"{t.Course_ID.ToString()}"));
+                var topsStudied = string.Join(",", infos.Select(t => $"{t.Top_Studied.ToString()}"));
+
+                var nextDates = string.Join(",", infos.Select(t => $"{t.Next_Date}"));
+                var firstDates = string.Join(",", infos.Select(t => $"{t.First_Date}"));
+
+                var numProblems = string.Join(",", infos.Select(t => $"{t.Num_Problems.ToString()}"));
+                var numCorrect = string.Join(",", infos.Select(t => $"{t.Num_Correct.ToString()}"));
+
+                var topDifficulties = string.Join(",", infos.Select(t => $"{t.Top_Difficulty.ToString()}"));
+                var topReps = string.Join(",", infos.Select(t => $"{t.Top_Repetition.ToString()}"));
+                var intervalRemains = string.Join(",", infos.Select(t => $"{t.Interval_Remaining.ToString()}"));
+
+                var intervalLengths = string.Join(",", infos.Select(t => $"{t.Interval_Length.ToString()}"));
+                var engramStabilities = string.Join(",", infos.Select(t => $"{t.Engram_Stability.ToString()}"));
+                var engramRetrievabilities = string.Join(",", infos.Select(t => $"{t.Engram_Retrievability.ToString()}"));
+
+
+                /* Splitting */
+                string[] topIdEntries = topIDs.Split(',');
+                string[] courseIDEntries = courseIDs.Split(',');
+                string[] topStudiedEntries = topsStudied.Split(',');
+
+                string[] nextDateEntries = nextDates.Split(',');
+                string[] firstDateEntries = firstDates.Split(',');
+
+                string[] numProblemEntries = numProblems.Split(',');
+                string[] numCorrectEntries = numCorrect.Split(',');
+
+                string[] topDifficultEntries = topDifficulties.Split(',');
+                string[] topRepEntries = topReps.Split(',');
+                string[] intervalRemainingEntries = intervalRemains.Split(',');
+
+                string[] intervalLengthEntries = intervalLengths.Split(',');
+                string[] engramStabilityEntries = engramStabilities.Split(',');
+                string[] engramRetrievabilityEntries = engramRetrievabilities.Split(',');
+
+
+                /* 
+                Naming the variables here, so that program does not loop the naming of new memory units. 
+                Not sure if it would happen that way, but just in case. 
+                */
+                int topID;
+                int courseID;
+                bool topStudied;
+
+                string nextDate;
+                string firstDate;
+
+                double numProblem;
+                double correctNum;
+
+                double topDifficulty;
+                double topRep;
+                double intervalRemaining;
+
+                double intervalLength;
+                double engramStability;
+                double engramRetrievability;
+                
+
+                // Using a single loop, so that this stage may run quicker, than if a loop occured for each variable of each element.
+                int index = 0;
+                string[] Entries = topIDs.Split(','); // This one is just for the size of the list.
+                int lengthEntries;
+                foreach (var attribute in topIDs)
+                {
+                    lengthEntries = Entries.Length;
+                    if (index < lengthEntries)
+                    {
+                        /* Preparing for list. */
+                        topID = Convert.ToInt32(topIdEntries[index]);
+                        courseID = Convert.ToInt32(courseIDEntries[index]);
+                        topStudied = Convert.ToBoolean(topStudiedEntries[index]);
+
+                        nextDate = nextDateEntries[index];
+                        firstDate = firstDateEntries[index];
+
+                        numProblem = Convert.ToDouble(numProblemEntries[index]);
+                        correctNum = Convert.ToDouble(numCorrectEntries[index]);
+
+                        topDifficulty = Convert.ToDouble(topDifficultEntries[index]);
+                        topRep = Convert.ToDouble(topRepEntries[index]);
+                        intervalRemaining = Convert.ToDouble(intervalRemainingEntries[index]);
+
+                        intervalLength = Convert.ToDouble(intervalLengthEntries[index]);
+                        engramStability = Convert.ToDouble(engramStabilityEntries[index]);
+                        engramRetrievability = Convert.ToDouble(engramRetrievabilityEntries[index]);
+
+                        /* Loading to list */
+                        TopicsList.ElementAt(index).Top_ID = topID;
+                        TopicsList.ElementAt(index).Course_ID = courseID;
+                        TopicsList.ElementAt(index).Top_Studied = topStudied;
+
+                        TopicsList.ElementAt(index).Next_Date = nextDate;
+                        TopicsList.ElementAt(index).First_Date = firstDate;
+
+                        TopicsList.ElementAt(index).Num_Problems = numProblem;
+                        TopicsList.ElementAt(index).Num_Correct = numCorrect;
+
+                        TopicsList.ElementAt(index).Top_Difficulty = topDifficult;
+                        TopicsList.ElementAt(index).Top_Repetition = topRep;
+                        TopicsList.ElementAt(index).Interval_Remaining = intervalRemaining;
+
+                        TopicsList.ElementAt(index).Interval_Length = intervalLength;
+                        TopicsList.ElementAt(index).Engram_Stability = engramStability;
+                        TopicsList.ElementAt(index).Engram_Retrievability = engramRetrievability;
+                    }
+
+                    index++;
+                }
+            }
+
+        }
+
+        /* Open or recreate the database */
+        private async Task<SQLiteConnection> OpenRecreateConnection(bool ReCreate = false)
+        {
+            var filename = "Topics.db";
+            var folder = ApplicationData.Current.LocalFolder;
+
+            // Delete current database if it is to be recreated
+            if (ReCreate)
+            {
+                // This returns null if it doesn't exist
+                var file = await folder.TryGetItemAsync(filename);
+
+                if (file != null)
+                {
+                    // File is deleted if it does exist
+                    await file.DeleteAsync();
+                }
+            }
+            // SQLite needs a path to connect with the database.
+            var sqlpath = Path.Combine(folder.Path, filename);
+
+            // Now the database is created, by creating the connection. SQLitePlatformWinRT is needed here, so 
+            // that SQLite knows what platform the database is being managed within.
+            return new SQLiteConnection(new SQLite.Net.Platform.WinRT.SQLitePlatformWinRT(), sqlpath);
 
         }
     }
