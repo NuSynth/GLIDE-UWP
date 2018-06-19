@@ -10,6 +10,8 @@ Full instructions are on the way, so that even a person with ZERO programming ex
 
 If you do not know much about behavioral psychology, then wait for the instructions before starting to build your course! The question files, and the lesson files, are not always best to just copy and past from a textbook. They need to be designed a certain way, for best results.
 
+https://github.com/Dartomic/GLIDE/blob/master/warnings.md
+
 # GLIDE
 
 GLIDE is a program that teaches people, by implementing scientific research on learning. It's name is inspired by the teaching machine that B.F. Skinner invented, which he named "GLIDER." GLIDE is better than GLIDER, because it uses research that did not exist at the time GLIDER was invented. 
