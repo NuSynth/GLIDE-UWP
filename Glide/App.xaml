@@ -1,8 +1,8 @@
-<Application
-    x:Class="ObservableImageTest.App"
+﻿<Application
+    x:Class="Glide.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:ObservableImageTest"
+    xmlns:local="using:Glide"
     RequestedTheme="Light">
 
     <Application.Resources>

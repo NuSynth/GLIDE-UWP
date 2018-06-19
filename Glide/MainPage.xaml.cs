@@ -1,4 +1,4 @@
-using Glide.Models;
+﻿using Glide.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
