@@ -10,7 +10,7 @@ Full instructions are on the way, so that even a person with ZERO programming ex
 
 If you do not know much about behavioral psychology, then wait for the instructions before starting to build your course! The question files, and the lesson files, are not always best to just copy and past from a textbook. They need to be designed a certain way, for best results.
 
-https://github.com/Dartomic/GLIDE/blob/master/warnings.md
+If you want to build a course into GLIDE for you to study, then see https://github.com/Dartomic/GLIDE/blob/master/warnings.md for some issues that you currently need to be aware of. Some updates coming up soon, will make these issues disapear. The only real issue you need to be aware of, is that you should back up the database file for now. The link explains why.
 
 # GLIDE
 
