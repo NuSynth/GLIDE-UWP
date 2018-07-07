@@ -8,7 +8,7 @@ The course directory hierarchy should probably be organized like this:
 
 CourseName
     Chapter Number
-        Topic
+        Topic Number
         LessonImageFile <=== One lesson image per topic
         Problem Number <=== 1 directory per problem. Greater number of problems-per-topic == more accurate calculation of intervals.
             One Problem Image File
