@@ -1,0 +1,30 @@
+I'm just posting this, in the off-chance hope that someone might want to start doing one of these features, before I
+get to doing them myself.
+
+The user interface should allow people to add a courses, by using the open file picker. 
+The course should be a directory, with it's name being that of the course.
+
+The course directory hierarchy should probably be organized like this:
+
+CourseName
+    Chapter Number
+        Topic
+        LessonImageFile <=== One lesson image per topic
+        Problem Number <=== 1 directory per problem. Greater number of problems-per-topic == more accurate calculation of intervals.
+            One Problem Image File
+            Three Answer Image Files <=== One correct answeer image, two incorrect answer images.
+                
+Including the use of a chapter directory, allows for the course to be more easily managed for the user creating the course.
+
+
+This is a fairly easy job. The class files for problems, and lessons, would only need a single line of code for the object.
+The answer class file, would only need three lines of code now too. The course directory would have to be iterated through 
+loops, that builds the strings of the paths as the loops run. A course name tuple should probably be added to the data base 
+table template. The Course should be made the PK, and the Topic should be made the FK.
+
+A UI should also be built to display a course library, of courses the user adds into GLIDE.
+
+I don't mind doing these myself. But right now I'm focussing on stuff for Linux. I'll do this before the app reservation expires, 
+in the Windows Store, if no one wants to do these themselves. I want to do it, but I like using Linux better, and I like C better,
+so I'm building stuff in Linux right now. (Actually, I'm building my Gentoo Linux OS right now.) But I'll get back to updating this
+version, so that nobody will have to compile it themselves to use it.
