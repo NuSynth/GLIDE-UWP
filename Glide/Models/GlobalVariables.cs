@@ -39,9 +39,7 @@ namespace Glide.Models
         public int LessonIndex { get; set; }
         
         /* Answer Section */
-        public int AnswerIndexOne { get; set; }
-        public int AnswerIndexTwo { get; set; }
-        public int AnswerIndexThree { get; set; }
+        public int AnswerIndex { get; set; }
 
         // If the user selected an answer to the previous problem, and not the current problem, 
         // but clicks submit, the global variable that checks if it was correct will still hold 
@@ -49,7 +47,7 @@ namespace Glide.Models
         // be marked as correct if this value is false.
         public bool WasAnswered { get; set; }
 
-        public string RevealAnswer { get; set; } // The letter value of the correct answer is stored here, to display which value was correct, if the user chooses the incorrect answer.
+        public bool ViewedAnswer { get; set; } 
 
         public int Wait { get; set; } // This is used to allow the user to see the answer, and press the button again without throwing the calculation off once the user is ready to do the next problem.
         public bool CheckCorrect { get; set; }
