@@ -24,18 +24,3 @@ In the mean time; occasionally make a back up of the database file. I would copy
 For the personal courses of any particular user; creating the problem images, and answer images, will not always be as simple as copy and pasting, from an e-book, or from images of a physical book. A lot of text books have "filler" material. The authors will often write many lines, that would not hurt the material if it were scribled over, before making their point that a student needs to learn. Often, this filler material consists of a lot of bad jokes, needless analogies, or sometimes they just love making people read a lot to find the knowledge that the reader needs to learn. This is even true for a GPL algebra book that I looked into copying and pasting, to make a course for GLIDE to offer right away. I am guessing that about 60% of that book was filler material, and that person wasn't even getting paid per page.
 
 If you make a course for yourself, you will not fully benefit from GLIDE, if you copy and paste the filler material that is present, in many of the textbooks available. For every topic of a text book that you want GLIDE to teach you, you need to leave all of that filler material out. In the context of GLIDE, a topic is the smallest section of a chapter.
-
-
-# 4) Answer images
-
-Currently, there are 3 answer choices per-topic. The machine that Skinner made, "GLIDER," did not use multiple choice, because the user of the machine may retrieve the incorrect choice as being the answer to the problem, or question. This means that the user would have to respond to the question, by possibly writing down the answer, and then having the machine reveal the answer, once the user was ready. But, there is also research to show that people will cheat, even when they do not have anything to gain by doing so. 
-
-If the program were to reveal an answer, as a response to a user indicating that an answer has been decided on, then the responsibility would lie on the user to tell the program if his, her, or it's, answer was correct, or incorrect. I have seen too many people lie to themselves, in order to avert the anxiety they may feel due to being incorrect. For these people, which may be the majority of people, the better answer system would actually be worse. This is just how most brains are wired. 
-
-What would happen, is that the difficulty calculation would not be calculated correctly. This would cause the spacing of repetitions for each study of a topic that the lie occured for, to not occur frequently enough to be learned. These users will complain about my program, and cause people that would not lie to it, to not even bother with it.
-
-# Solution
-
-I just realized how this can be resolved.
-
-The program will soon have a solution to this in an update. The first repetition will still have the three answer choices per-problem, or per-question. The first repetion is when difficulty is calculated. The repetitions after that, will implement the answer system that Skinner's machine used, to prevent the user from exercising the engram of the other two answer choices.
