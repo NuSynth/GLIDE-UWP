@@ -1,4 +1,4 @@
-﻿using Glide.Models;
+using Glide.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -26,44 +26,26 @@ namespace Glide
 {
     public sealed partial class MainPage : Page
     {
-        // Topic Stuff
         private List<TopicModel> TopicsList;
-        private List<int> ToStudy = new List<int>(); // Contains ID's for the current study session.
-
-        // Lesson Stuff
+        private List<int> ToStudy = new List<int>();
         private List<LessonModel> LessonsList;
         private ObservableCollection<LessonModel> LessonContent;
-
-        // Answers Stuff
         private List<AnswerModel> AnswersList;
         private ObservableCollection<AnswerModel> AnswersContent;
-
-        // Problems Stuff
         private List<ProblemModel> ProblemList;
         private ObservableCollection<ProblemModel> ProblemContent;
-
-        // For communication between methods
         GlobalVariables globals = new GlobalVariables();
 
         public MainPage()
         {
             this.InitializeComponent();
-
-            // Topic
             TopicsList = new List<TopicModel>();
-
-            // Lesson
             LessonContent = new ObservableCollection<LessonModel>();
             LessonsList = new List<LessonModel>();
-
-            // Problem
             ProblemContent = new ObservableCollection<ProblemModel>();
             ProblemList = new List<ProblemModel>();
-
-            //Answer
             AnswersContent = new ObservableCollection<AnswerModel>();
             AnswersList = new List<AnswerModel>();
-
             SetDisplay();
         }
 
@@ -87,12 +69,8 @@ namespace Glide
         private void SetDisplay()
         {
             const int ZERO = 0;
-
-            // Topics
             TopicsList = TopicManager.GetTopics(); // Allows default values to be used, or replaced with saved values.
             LoadTopicIDs();
-
-            // DataBase
             CheckForFile();
             if (globals.FileExists == false)
             {
@@ -102,55 +80,60 @@ namespace Glide
             {
                 DbToList();
             }
-
-            // Problem
             ProblemList = ProblemManager.GetProblems();
-
-            // Answer
             AnswersList = AnswerManager.GetAll();
-
-            // Lesson
             LessonsList = LessonManager.GetLessons();
-
-            // For decisions
             globals.ProblemInitializer = ZERO;
             globals.AnswerInitializer = ZERO;
             globals.LessonInitializer = ZERO;
             globals.Wait = ZERO;
             globals.WasAnswered = false;
-
-
-
-            /* Learning Start */
-
-            // Problem Section
             FirstProblem();
             LoadProblem();
-
-            // Answer Section
-            FirstAnswers();
-            AnswerProblemCompare();
-            LoadAnswers();
-
-            // Lesson Section
             LessonProblemCompare();
             LoadLesson();
         }
-
-        private void ListView_ItemClick(object sender, ItemClickEventArgs e)
+        private void Correct_Click(object sender, RoutedEventArgs e)
         {
-            var answer = (AnswerModel)e.ClickedItem;
-            globals.CheckCorrect = answer.AnswerCorrect;
-            globals.WasAnswered = true;
-
+            if (globals.ViewedAnswer == true)
+            {
+                globals.CheckCorrect = true;
+                globals.WasAnswered = true;
+                globals.ViewedAnswer = false;
+            }
+            else
+            {
+                // Result.Text = "Click Check Answer before clicking Correct"
+            }
+        }
+        private void Wrong_Click(object sender, RoutedEventArgs e)
+        {
+            if (globals.ViewedAnswer == true)
+            {
+                globals.CheckCorrect = false;
+                globals.WasAnswered = true;
+                globals.ViewedAnswer = false;
+            }
+            else
+            {
+                Feedback.Text = "Click Check Answer before clicking Incorrect";
+            }
 
         }
+        private void View_Click(object sender, RoutedEventArgs e)
+        {
+            globals.ViewedAnswer = true;
 
-        private void NExt_Click(object sender, RoutedEventArgs e)
+            if (globals.ProblemsDone != true)
+            {
+                AnswerProblemCompare();
+                LoadAnswers();
+            }
+        }
+        private void Next_Click(object sender, RoutedEventArgs e)
         {
             const int ZERO = 0;
             const int ONE = 1;
-            string reveal = globals.RevealAnswer;
             double correctProblems;
 
             // Gives feedback after answer, or goes to next problem after feedback.
@@ -169,46 +152,36 @@ namespace Glide
                         correctProblems = correctProblems + ONE;
                         TopicsList.ElementAt(globals.TopicIndex).Num_Correct = correctProblems;
 
-                        Result.Text = "Good Job!";
-                    }
-                    else
-                    {
-                        Result.Text = ($"Sorry, the correct answer was {reveal}");
+                        Feedback.Text = "Good Job!";
                     }
                 }
                 else
                 {
-                    Result.Text = ($"Sorry, the correct answer was {reveal}");
+                    Feedback.Text = "View the answer, click Correct if your answer matches, or Incorrect if your answer does not. Then, click \"Submit\"";
                 }
-
             }
             else
             {
                 if (globals.ProblemsDone != true)
                 {
                     globals.WasAnswered = false;
-                    Result.Text = ($" ");
+                    Feedback.Text = ($" ");
                     NextProblem();
                     if (globals.ProblemsDone != true)
                     {
                         LoadProblem();
-                        NextAnswers();
-                        AnswerProblemCompare();
-                        LoadAnswers();
                         LessonProblemCompare();
                         LoadLesson();
+                        LoadBlank();
                         globals.Wait = ZERO;
                     }
-
                 }
                 else
                 {
-                    Result.Text = ($"Nothing left to study today. Check back tomorrow!");
+                    Feedback.Text = "Nothing left to study today. Check back tomorrow!";
                 }
             }
         }
-
-        // ToStudy ID's Section
         private void LoadTopicIDs()
         {
             const int ZERO = 0;
@@ -284,6 +257,11 @@ namespace Glide
 
             globals.TopicID = ToStudy.ElementAt(ZERO);
             globals.TopicIndex = ZERO;
+        }
+        private void LoadBlank()
+        {
+            AnswersContent.RemoveAt(0);
+            AnswersContent.Add(new AnswerModel { AnswerPath = "Assets/blank.png" });
         }
 
         // Problems Section
@@ -446,161 +424,43 @@ namespace Glide
         }
 
         // Answers Section
-        private void FirstAnswers()
-        {
-            const int ZERO = 0;
-            const int ONE = 1;
-            const int TWO = 2;
-
-            globals.AnswerIndexOne = ZERO;
-            globals.AnswerIndexTwo = ONE;
-            globals.AnswerIndexThree = TWO;
-
-        }
-        private void NextAnswers()
-        {
-            const int ONE = 1;
-
-            // Every problem has three answer choices. All answer choices are in a single list.
-            // When the problem is incremented to the next problem, then the current three answer choices need to
-            // increment to the next three answer choices. Therefore; the value of the index for the first answer choice, 
-            // of the next three problems, is one greater than the value of the index for the previous THIRD answer choice,
-            // before that third answer choice was randomly shuffled into the observable collection.
-            globals.AnswerIndexOne = globals.AnswerIndexThree + ONE;
-
-            // Now that "AnswerIndexOne" is greater by a value of 1 than what "AnswerIndexThree" was for
-            // the previous problem, AnswerIndexTwo needs to be greater by a value of 1, than the new value
-            // of "AnswerIndexOne."
-            globals.AnswerIndexTwo = globals.AnswerIndexOne + ONE;
-
-            // Just like "AnswerIndexTwo" must be greater than "AnswerIndexOne," by a value of 1; "AnswerIndexThree" should
-            // be greater than "AnswerIndexTwo," by a value of 1. 
-            globals.AnswerIndexThree = globals.AnswerIndexTwo + ONE;
-
-
-
-
-
-            // Move these to be called from the button instead.
-
-        }
         private void AnswerProblemCompare()
         {
             const int ZERO = 0;
             const int ONE = 1;
-            const int TWO = 2;
-
-            globals.AnswerIndexOne = ZERO;
-            globals.AnswerIndexTwo = globals.AnswerIndexOne + ONE;
-            globals.AnswerIndexThree = globals.AnswerIndexTwo + ONE;
-
-            // Index
-            int indexOne = globals.AnswerIndexOne;
-            int indexTwo = globals.AnswerIndexTwo;
-            int indexThree = globals.AnswerIndexThree;
-
-            // Problem
+            globals.AnswerIndex = ZERO;
+            int index = globals.AnswerIndex;
             int problemID = globals.ProblemID;
+            int answerID = AnswersList.ElementAt(index).ProblemID;
 
-            // Answer
-            int answerOneID = AnswersList.ElementAt(indexOne).ProblemID;
-
-            while (answerOneID != problemID)
+            while (answerID != problemID)
             {
-                // Increment answer index
-                globals.AnswerIndexOne = globals.AnswerIndexThree + ONE;
-                globals.AnswerIndexTwo = globals.AnswerIndexOne + ONE;
-                globals.AnswerIndexThree = globals.AnswerIndexTwo + ONE;
-
-                indexOne = globals.AnswerIndexOne;
-                indexThree = globals.AnswerIndexThree;
-
-                // If indexThree greater than last index value of the answer list, reset answer index to zero. 
-                indexThree = globals.AnswerIndexThree;
-                if (indexThree >= AnswersList.Count)
+                globals.AnswerIndex = globals.AnswerIndex + ONE;
+                index = globals.AnswerIndex;
+                if (index >= AnswersList.Count)
                 {
-                    globals.AnswerIndexOne = ZERO;
-                    globals.AnswerIndexTwo = ONE;
-                    globals.AnswerIndexThree = TWO;
+                    globals.AnswerIndex = ZERO;
                 }
-
-                // Get the new answer ID to check
-                indexOne = globals.AnswerIndexOne;
-                answerOneID = AnswersList.ElementAt(indexOne).ProblemID;
-
+                index = globals.AnswerIndex;
+                answerID = AnswersList.ElementAt(index).ProblemID;
             }
         }
         private void LoadAnswers()
         {
             const int ZERO = 0;
             const int ONE = 1;
-            const int TWO = 2;
-
-
-            int indexOne = globals.AnswerIndexOne;
-            int indexTwo = globals.AnswerIndexTwo;
-            int indexThree = globals.AnswerIndexThree;
-
-            // Shuffle the copied index values of the answers to use.
-            var indexArray = new int[] { indexOne, indexTwo, indexThree };
-            new Random().Shuffle(indexArray);
-
-            int valueOne = indexArray[ZERO];
-            int valueTwo = indexArray[ONE];
-            int valueThree = indexArray[TWO];
-
-            /* Assigning letters to the randomized answers that display. "a)", "b)", and "c)", 
-             * need to display in alphabetic order 
-             * The number of the labels for "valueNumber" and "letterNumber" should match, because they are used for the same answer for each of the labels.
-             */
-            string letterOne = "a) ";
-            string letterTwo = "b) ";
-            string letterThree = "c) ";
-
-            // This is used to display which answer choice is correct, if the user selects the incorrect answer.
-            if (indexOne == valueOne)
-            {
-                globals.RevealAnswer = letterOne;
-            }
-            if (indexOne == valueTwo)
-            {
-                globals.RevealAnswer = letterTwo;
-            }
-            if (indexOne == valueThree)
-            {
-                globals.RevealAnswer = letterThree;
-            }
-
-            // Copy the answer values so I can use them
-            string answerImageOne = AnswersList.ElementAt(valueOne).AnswerPath;
-            bool correctIncorrectOne = AnswersList.ElementAt(valueOne).AnswerCorrect;
-
-            string answerImageTwo = AnswersList.ElementAt(valueTwo).AnswerPath;
-            bool correctIncorrectTwo = AnswersList.ElementAt(valueTwo).AnswerCorrect;
-
-            string answerImageThree = AnswersList.ElementAt(valueThree).AnswerPath;
-            bool correctIncorrectThree = AnswersList.ElementAt(valueThree).AnswerCorrect;
-
+            int index = globals.AnswerIndex;
+            string answerImage = AnswersList.ElementAt(index).AnswerPath;
 
             if (globals.AnswerInitializer == ZERO)
             {
-                AnswersContent.Add(new AnswerModel { AnswerPath = answerImageOne, DisplayLetter = letterOne, AnswerCorrect = correctIncorrectOne });
-                AnswersContent.Add(new AnswerModel { AnswerPath = answerImageTwo, DisplayLetter = letterTwo, AnswerCorrect = correctIncorrectTwo });
-                AnswersContent.Add(new AnswerModel { AnswerPath = answerImageThree, DisplayLetter = letterThree, AnswerCorrect = correctIncorrectThree });
-
+                AnswersContent.Add(new AnswerModel { AnswerPath = answerImage });
                 globals.AnswerInitializer = ONE;
             }
             else
             {
-
                 AnswersContent.RemoveAt(0);
-                AnswersContent.Add(new AnswerModel { AnswerPath = answerImageOne, DisplayLetter = letterOne, AnswerCorrect = correctIncorrectOne });
-
-                AnswersContent.RemoveAt(0);
-                AnswersContent.Add(new AnswerModel { AnswerPath = answerImageTwo, DisplayLetter = letterTwo, AnswerCorrect = correctIncorrectTwo });
-
-                AnswersContent.RemoveAt(0);
-                AnswersContent.Add(new AnswerModel { AnswerPath = answerImageThree, DisplayLetter = letterThree, AnswerCorrect = correctIncorrectThree });
+                AnswersContent.Add(new AnswerModel { AnswerPath = answerImage });
             }
         }
 
@@ -617,12 +477,12 @@ namespace Glide
             // Will cause infinite loop if topic ID for a problem does not match any lesson ID.
             while (LessonID != problemTopicID)
             {
-                // Increment answer index
+                // Increment lesson index
                 globals.LessonIndex = globals.LessonIndex + ONE;
 
                 index = globals.LessonIndex;
 
-                // If index greater than or equal to last index value of the lesson list, reset answer index to zero.
+                // If index greater than or equal to last index value of the lesson list, reset answer lesson to zero.
                 if (index >= LessonsList.Count)
                 {
                     globals.LessonIndex = ZERO;
@@ -768,11 +628,6 @@ namespace Glide
                 TopicsList.ElementAt(globals.TopicIndex).Top_Studied = true;
             }
         }
-
-
-        /* Save & Load Topic Section */
-
-        // Save
         public async void SaveProgress()
         {
             using (SQLiteConnection conn = await RecreateOpen(true))
@@ -784,8 +639,6 @@ namespace Glide
                 }
             }
         }
-
-        // Check for file.
         private async void CheckForFile()
         {
             var filename = "Topics.db";
@@ -804,8 +657,6 @@ namespace Glide
                 globals.FileExists = false;
             }
         }
-
-        // If file does NOT exist.
         public async void CreateDB()
         {
             using (SQLiteConnection conn = await RecreateOpen())
@@ -817,9 +668,6 @@ namespace Glide
                 }
             }
         }
-
-        // If file DOES exist
-        // THEN Get every value, for each element, into the list, and replace the initial values.
         public async void DbToList()
         {
             using (SQLiteConnection conn = await RecreateOpen())
@@ -940,8 +788,6 @@ namespace Glide
                 }
             }
         }
-
-        /* Open or recreate the database */
         private async Task<SQLiteConnection> RecreateOpen(bool ReCreate = false)
         {
             var filename = "Topics.db";
@@ -965,7 +811,6 @@ namespace Glide
             // Now the database is created, by creating the connection. SQLitePlatformWinRT is needed here, so 
             // that SQLite knows what platform the database is being managed within.
             return new SQLiteConnection(new SQLite.Net.Platform.WinRT.SQLitePlatformWinRT(), sqlpath);
-
         }
     }
 }
