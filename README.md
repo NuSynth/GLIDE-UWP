@@ -31,7 +31,7 @@ GLIDE
 
 
 
-Users can add their textbooks, into GLIDE. The questions, or problems, need to be as direct as possible. The lessons need to only contain information that is relevent; this means no filler material. Having only dirrectly relevant information in the courses, increases the chance that it is the information that will be learned.
+Users can add their textbooks, into GLIDE. The questions, or problems, need to be as direct as possible. The lessons need to only contain a page number of a text book, or the chapter and section (such as "11.6").
 
 
 See https://github.com/Dartomic/GLIDE/blob/master/warnings.md for some issues that users currently need to be aware of. Some updates are coming up soon, which will make these issues disapear. The only real issue you need to be aware of, is that you should back up the database file for now. 
