@@ -1,5 +1,19 @@
 # GLIDE
 
+I made a new version of this application. This one looks nice, but it takes too long to set a course up. I will improve this one over time, so that it is better than the new veersion of this that I made. But, that will take a long time. This requires a lot to become better than the new version.
+
+The new version is better for multiple reasons:
+
+1) It is much simpler because it uses the command line, instead of the graphical user interface. I realized that this is a program that I currently would rather use in the command line, because it is quicker to make flash cards, or questions and answers, on paper, than it is to make images, or questions and answers, on the computer to work in this software.
+
+2) The new version works on multiple operating systems. This version only works on Windows.
+
+3) A course can be set up for the new version in a few hours. It may take weeks to set a course up for this version, which is what I realized when I decided that I want to start using it finally.
+
+This version will get better, once I know how to make A.I.. The A.I. will make the questions and answers, or the problems and solutions-- I know that for certain. I hope to also have the A.I. generate an accurate lesson too, but I have no idea if that is feasible in the near future, for me to do anyway.
+
+The new version that I recommend using is called GlideCLI, and it is found here: https://github.com/Dartomic/GlideCLI
+
 Research that all calculations, are based on, except for two, can be found at https://www.ane.pl/pdf/5535.pdf
 
 GLIDE is a program that teaches people, by implementing scientific research on learning. It's name is inspired by the teaching machine that B.F. Skinner invented, which he named "GLIDER." GLIDE is better than GLIDER, because it uses research that did not exist at the time GLIDER was invented. 
