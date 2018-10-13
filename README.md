@@ -1,6 +1,6 @@
 # GLIDE
 
-I made a new version of this application. This one looks nice, but it takes too long to set a course up. I will improve this one over time, so that it is better than the new veersion of this that I made. But, that will take a long time. This requires a lot to become better than the new version.
+I made a new version of this application. This one looks nice, but it takes too long to set a course up. I will improve this one over time, so that it is better than the new version of this that I made. But, that will take a long time. This requires a lot to become better than the new version.
 
 The new version is better for multiple reasons:
 
