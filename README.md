@@ -4,7 +4,7 @@ I made a new version of this application. This one looks nice, but it takes too 
 
 The new version is better for multiple reasons:
 
-1) It is much simpler because it uses the command line, instead of the graphical user interface. I realized that this is a program that I currently would rather use in the command line, because it is quicker to make flash cards, or questions and answers, on paper, than it is to make images, or questions and answers, on the computer to work in this software.
+1) It is much simpler because it uses the command line, instead of the graphical user interface. I realized that this is a program which I would currently rather use in the command line, because it is quicker to make flash cards, or questions and answers, on paper, than it is to make images, or questions and answers, on the computer to work in this software.
 
 2) The new version works on multiple operating systems. This version only works on Windows.
 
