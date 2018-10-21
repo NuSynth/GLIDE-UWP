@@ -614,10 +614,10 @@ namespace Glide
         }
         private void ProcessDate()
         {
+            const double SINGLE_DAY = 1440;
             int TopicIndex = globals.TopicIndex;
             double intervalLength = TopicsList.ElementAt(globals.TopicIndex).Interval_Length;
-            double intervalRemaining = TopicsList.ElementAt(globals.TopicIndex).Interval_Remaining;
-            double days = Convert.ToInt32(intervalLength / intervalRemaining);
+            double days = Convert.ToInt32(intervalLength / SINGLE_DAY);
             DateTime today = DateTime.Now;
             DateTime nextDate = today.AddDays(days);
             string nextDateString = nextDate.ToString("d");
@@ -626,7 +626,7 @@ namespace Glide
             if (TopicsList.ElementAt(globals.TopicIndex).Top_Studied == false)
             {
                 TopicsList.ElementAt(globals.TopicIndex).Top_Studied = true;
-            }
+}
         }
         public async void SaveProgress()
         {
